@@ -1,0 +1,172 @@
+import { Meta } from '@storybook/blocks';
+import React from 'react';
+import { createThemeTokens, themeTokensToCssVars } from '@cre/web-ui';
+
+<Meta title="Foundations/Tokens" />
+
+# Tokens
+
+Tokens are the **single source of truth** for colors and component states in the CRE Web UI.
+
+The current approach is:
+
+- **Palette tokens**: raw color ramps (ex: `primary.500`).
+- **Semantic tokens**: design-intent names (ex: `background`, `text`).
+- **Component tokens**: stateful component values (ex: button `hoverBg`, `disabledFg`).
+
+Theme mode (Light/Dark) is controlled from the Storybook toolbar (`Theme`).
+
+---
+
+## Palette
+
+The palette is fixed for now and seeded from:
+
+- `primary.500 = #8A0538`
+- `primary.500 (dark) = #591DB9`
+
+```ts
+import { getBasePalette } from '@cre/web-ui';
+```
+
+---
+
+## Semantic tokens (Light vs Dark)
+
+{(() => {
+  const light = createThemeTokens('light');
+  const dark = createThemeTokens('dark');
+
+  const rows = [
+    { name: 'background', light: light.semantic.background, dark: dark.semantic.background },
+    { name: 'surface', light: light.semantic.surface, dark: dark.semantic.surface },
+    { name: 'text', light: light.semantic.text, dark: dark.semantic.text },
+    { name: 'textMuted', light: light.semantic.textMuted, dark: dark.semantic.textMuted },
+    { name: 'border', light: light.semantic.border, dark: dark.semantic.border }
+  ];
+
+  return (
+    <div style={{ overflowX: 'auto' }}>
+      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>Token</th>
+            <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>Light</th>
+            <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>Dark</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.name}>
+              <td style={{ padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>
+                <code>{r.name}</code>
+              </td>
+              <td style={{ padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ width: 14, height: 14, borderRadius: 4, background: r.light, border: '1px solid var(--cre-color-border)' }} />
+                  <code>{r.light}</code>
+                </span>
+              </td>
+              <td style={{ padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ width: 14, height: 14, borderRadius: 4, background: r.dark, border: '1px solid var(--cre-color-border)' }} />
+                  <code>{r.dark}</code>
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+})()}
+
+---
+
+## Component tokens: Button
+
+The button uses stateful tokens to define its normal/hover/active/disabled colors.
+
+{(() => {
+  const tokens = createThemeTokens('light');
+  const button = tokens.components.button;
+
+  const rows = [
+    { name: 'bg', value: button.bg },
+    { name: 'fg', value: button.fg },
+    { name: 'border', value: button.border },
+    { name: 'hoverBg', value: button.hoverBg },
+    { name: 'hoverFg', value: button.hoverFg },
+    { name: 'hoverBorder', value: button.hoverBorder },
+    { name: 'activeBg', value: button.activeBg },
+    { name: 'activeFg', value: button.activeFg },
+    { name: 'activeBorder', value: button.activeBorder },
+    { name: 'disabledBg', value: button.disabledBg },
+    { name: 'disabledFg', value: button.disabledFg },
+    { name: 'disabledBorder', value: button.disabledBorder }
+  ];
+
+  return (
+    <div style={{ overflowX: 'auto' }}>
+      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>Token</th>
+            <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.name}>
+              <td style={{ padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>
+                <code>{r.name}</code>
+              </td>
+              <td style={{ padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ width: 14, height: 14, borderRadius: 4, background: r.value, border: '1px solid var(--cre-color-border)' }} />
+                  <code>{r.value}</code>
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+})()}
+
+---
+
+## CSS Variables (contract)
+
+Internally we map tokens to CSS variables so every component can style itself consistently.
+
+{(() => {
+  const vars = themeTokensToCssVars(createThemeTokens('light'));
+  const entries = Object.entries(vars).sort(([a], [b]) => a.localeCompare(b));
+
+  return (
+    <div style={{ overflowX: 'auto' }}>
+      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>CSS variable</th>
+            <th style={{ textAlign: 'left', padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>Example (Light)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {entries.map(([key, value]) => (
+            <tr key={key}>
+              <td style={{ padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>
+                <code>{key}</code>
+              </td>
+              <td style={{ padding: 8, borderBottom: '1px solid var(--cre-color-border)' }}>
+                <code>{value}</code>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+})()}

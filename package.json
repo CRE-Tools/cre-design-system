@@ -1,0 +1,15 @@
+{
+  "name": "cre-design-system",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "storybook": "pnpm --filter @cre/web-ui build && pnpm --filter @cre/storybook dev",
+    "build:storybook": "pnpm --filter @cre/storybook build",
+    "build:web-ui": "pnpm --filter @cre/web-ui build",
+    "test": "echo \"No tests configured\""
+  }
+}

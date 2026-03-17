@@ -1,0 +1,47 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Buttons are used to trigger user actions across CRE applications.
+
+Common usage patterns:
+
+- Primary actions (ex: “Confirm”, “Continue”, “Save”)
+- Secondary actions (ex: “Cancel”, “Back”)
+- Inline actions inside panels (ex: “Edit”, “Remove”)
+
+This component is theme-driven by default (Light/Dark) and can also be overridden per instance via the `colors` prop.
+
+---
+
+## Playground
+
+Use the controls below to tweak props and understand how the theme tokens affect the default styling.
+
+<Canvas of={ButtonStories.Playground} />
+
+<Controls of={ButtonStories.Playground} />
+
+---
+
+## States
+
+The button exposes the typical UI states:
+
+- normal
+- hover
+- active (clicked)
+- disabled
+
+<Canvas of={ButtonStories.States} />
+
+---
+
+## Custom colors
+
+If you need a one-off styling override (rare), use `colors` to provide per-state colors.
+
+<Canvas of={ButtonStories.CustomColors} />
