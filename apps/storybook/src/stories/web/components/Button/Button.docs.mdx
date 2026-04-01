@@ -9,17 +9,17 @@ Buttons are used to trigger user actions across CRE applications.
 
 Common usage patterns:
 
-- Primary actions (ex: “Confirm”, “Continue”, “Save”)
-- Secondary actions (ex: “Cancel”, “Back”)
-- Inline actions inside panels (ex: “Edit”, “Remove”)
+- Primary actions (e.g. "Confirm", "Continue", "Save")
+- Secondary actions (e.g. "Cancel", "Back")
+- Inline actions inside panels (e.g. "Edit", "Remove")
 
-This component is theme-driven by default (Light/Dark) and can also be overridden per instance via the `colors` prop.
+All visual values come from CSS custom properties set by `CreThemeProvider`. The button never references raw hex values — it is fully theme-driven and supports light and dark mode out of the box.
 
 ---
 
 ## Playground
 
-Use the controls below to tweak props and understand how the theme tokens affect the default styling.
+Use the controls below to tweak props and see how the component responds.
 
 <Canvas of={ButtonStories.Playground} />
 
@@ -27,21 +27,50 @@ Use the controls below to tweak props and understand how the theme tokens affect
 
 ---
 
-## States
+## Size variants
 
-The button exposes the typical UI states:
+Three sizes are available via the `size` prop:
 
-- normal
-- hover
-- active (clicked)
-- disabled
+| Size | Use case | Font | Height |
+|---|---|---|---|
+| `regular` | Standard web UI | 15px / 500 | 40px fixed |
+| `large` | Desktop primary actions | 16px / 500 | auto (12px vertical padding) |
+| `vr` | VR / spatial UI, extra-large touch targets | 24px / 400 | auto (16px vertical padding) |
 
-<Canvas of={ButtonStories.States} />
+<Canvas of={ButtonStories.SizeComparison} />
 
 ---
 
-## Custom colors
+## Icon variants
 
-If you need a one-off styling override (rare), use `colors` to provide per-state colors.
+Use `leadingIcon` and `trailingIcon` to render icons before and after the label. Icons are sized and padded via token vars and inherit the button's foreground color.
 
-<Canvas of={ButtonStories.CustomColors} />
+<Canvas of={ButtonStories.WithLeadingIcon} />
+
+<Canvas of={ButtonStories.WithTrailingIcon} />
+
+<Canvas of={ButtonStories.WithBothIcons} />
+
+---
+
+## Disabled state
+
+Set `disabled` to block all interaction and apply disabled token colors.
+
+<Canvas of={ButtonStories.Disabled} />
+
+---
+
+## All states
+
+Quick visual QA across all icon configurations.
+
+<Canvas of={ButtonStories.AllStates} />
+
+---
+
+## Icon alignment
+
+Verifies icon slot dimensions, gap, and padding across all three sizes.
+
+<Canvas of={ButtonStories.IconAlignment} />
