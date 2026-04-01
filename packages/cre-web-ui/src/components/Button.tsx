@@ -21,6 +21,8 @@
  */
 
 import React, { type ReactNode, type ButtonHTMLAttributes } from 'react';
+import { Box } from '../primitives/Box';
+import { IconSlot } from '../primitives/IconSlot';
 
 // ─── Singleton style injection ────────────────────────────────────────────────
 
@@ -123,34 +125,6 @@ function injectButtonStyles() {
 
 injectButtonStyles();
 
-// ─── Icon slot ────────────────────────────────────────────────────────────────
-
-/**
- * Fixed icon container. Dimensions and padding come from --cre-button-icon-*
- * vars, which are overridden per size alongside the other button vars.
- * Only mounts when children are provided.
- */
-function IconSlot({ children }: { children?: ReactNode }) {
-  if (!children) return null;
-  return (
-    <span
-      aria-hidden="true"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 'var(--cre-button-icon-size)',
-        height: 'var(--cre-button-icon-size)',
-        padding: 'var(--cre-button-icon-padding)',
-        flexShrink: 0,
-        color: 'inherit',
-      }}
-    >
-      {children}
-    </span>
-  );
-}
-
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 /** Button size variant. Affects padding, gap, radius, icon size, and typography. */
@@ -190,7 +164,8 @@ export function Button({
   onClick,
 }: CreButtonProps) {
   return (
-    <button
+    <Box
+      as="button"
       data-cre="button"
       data-size={size}
       type={type}
@@ -201,6 +176,6 @@ export function Button({
       <IconSlot>{leadingIcon}</IconSlot>
       {children}
       <IconSlot>{trailingIcon}</IconSlot>
-    </button>
+    </Box>
   );
 }

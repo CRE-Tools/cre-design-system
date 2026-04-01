@@ -47,6 +47,8 @@ const _br = coreJson['border']['radius'];
 const _bw = coreJson['border']['width'];
 const _op = coreJson['opacity'];
 const _ff = coreJson['typography']['font-family'];
+const _fs = coreJson['typography']['font-size'];
+const _layout = coreJson['layout'];
 
 /**
  * Foundational tokens that do not change between light and dark mode.
@@ -138,6 +140,40 @@ export const coreTokens = {
     button:   s(_ff['button']),   // Poppins
     caption:  s(_ff['caption']),  // Source Sans Pro
     overline: s(_ff['overline']), // Source Sans Pro
+  },
+
+  /**
+   * Font-size scale (pixel values).
+   * Maps to CSS vars: --cre-font-size-{name}
+   */
+  fontSize: {
+    quark:    n(_fs['quark']),
+    nano:     n(_fs['nano']),
+    pico:     n(_fs['pico']),
+    micro:    n(_fs['micro']),
+    tiny:     n(_fs['tiny']),
+    xxxsmall: n(_fs['xxxsmall']),
+    xxsmall:  n(_fs['xxsmall']),
+    xsmall:   n(_fs['xsmall']),
+    small:    n(_fs['small']),
+    medium:   n(_fs['medium']),
+    large:    n(_fs['large']),
+    xlarge:   n(_fs['xlarge']),
+    xxlarge:  n(_fs['xxlarge']),
+    xxxlarge: n(_fs['xxxlarge']),
+    huge:     n(_fs['huge']),
+  },
+
+  /**
+   * Common layout widths (pixel values).
+   * Maps to CSS vars: --cre-layout-{name}
+   */
+  layout: {
+    mainW: n(_layout['main_w']),
+    secoW: n(_layout['seco_w']),
+    focuW: n(_layout['focu_w']),
+    readW: n(_layout['read_w']),
+    fullW: n(_layout['full_w']),
   },
 } as const;
 

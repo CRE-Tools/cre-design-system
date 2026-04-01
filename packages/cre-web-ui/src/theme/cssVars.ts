@@ -31,7 +31,7 @@ export type CreCssVars = Record<string, string>;
  * These are applied once and never change between light/dark switches.
  */
 export function coreTokensToCssVars(): CreCssVars {
-  const { space, radius, borderWidth, opacity, fontFamily } = coreTokens;
+  const { space, radius, borderWidth, opacity, fontFamily, fontSize, layout } = coreTokens;
 
   return {
     // Spacing
@@ -91,6 +91,30 @@ export function coreTokensToCssVars(): CreCssVars {
     '--cre-font-family-button':   fontFamily.button,
     '--cre-font-family-caption':  fontFamily.caption,
     '--cre-font-family-overline': fontFamily.overline,
+
+    // Font size
+    '--cre-font-size-quark':    `${fontSize.quark}px`,
+    '--cre-font-size-nano':     `${fontSize.nano}px`,
+    '--cre-font-size-pico':     `${fontSize.pico}px`,
+    '--cre-font-size-micro':    `${fontSize.micro}px`,
+    '--cre-font-size-tiny':     `${fontSize.tiny}px`,
+    '--cre-font-size-xxxsmall': `${fontSize.xxxsmall}px`,
+    '--cre-font-size-xxsmall':  `${fontSize.xxsmall}px`,
+    '--cre-font-size-xsmall':   `${fontSize.xsmall}px`,
+    '--cre-font-size-small':    `${fontSize.small}px`,
+    '--cre-font-size-medium':   `${fontSize.medium}px`,
+    '--cre-font-size-large':    `${fontSize.large}px`,
+    '--cre-font-size-xlarge':   `${fontSize.xlarge}px`,
+    '--cre-font-size-xxlarge':  `${fontSize.xxlarge}px`,
+    '--cre-font-size-xxxlarge': `${fontSize.xxxlarge}px`,
+    '--cre-font-size-huge':     `${fontSize.huge}px`,
+
+    // Layout widths
+    '--cre-layout-main': `${layout.mainW}px`,
+    '--cre-layout-seco': `${layout.secoW}px`,
+    '--cre-layout-focu': `${layout.focuW}px`,
+    '--cre-layout-read': `${layout.readW}px`,
+    '--cre-layout-full': `${layout.fullW}px`,
 
     // ── Button structural tokens ──────────────────────────────────────────────
     // These alias core tokens so the Button component never references raw

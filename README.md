@@ -11,9 +11,13 @@ This repository is intended to host:
 ## Repository structure
 
 - **`apps/storybook`**
-  Storybook app (pnpm workspace) used to document and demo the design system.
+  Storybook app (React + Vite) used to document and demo the design system.
+- **`packages/cre-web-ui`**
+  React component library (web) including the token-based theme system.
+- **`packages/cre-unity-bridge`**
+  React → Unity WebGL communication bridge (used by Storybook Unity stories).
 - **`packages/cre-unity-ui`**
-  Unity package(s) for CRE UI.
+  Unity project/package(s) for CRE UI.
 
 ## Prerequisites
 
@@ -38,6 +42,8 @@ pnpm storybook
 
 Storybook runs at `http://localhost:6006`.
 
+The toolbar includes a **Theme** toggle (`light` / `dark`) which is provided via a global `themeMode` and applied with `CreThemeProvider`.
+
 ## Build Storybook
 
 ```bash
@@ -49,4 +55,4 @@ Output will be generated under `apps/storybook/storybook-static`.
 ## Notes
 
 - Unity-specific generated folders are ignored via the root `.gitignore`.
-- The Unity WebGL + Storybook integration will be added next (embedding the WebGL build into a Storybook story and wiring a messaging bridge).
+- Unity WebGL build artifacts can be placed under `apps/storybook/public/unity/` and are loaded by the `UnityCanvas` Storybook stories.
