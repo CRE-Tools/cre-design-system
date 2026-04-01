@@ -44,6 +44,10 @@ Storybook runs at `http://localhost:6006`.
 
 The toolbar includes a **Theme** toggle (`light` / `dark`) which is provided via a global `themeMode` and applied with `CreThemeProvider`.
 
+Web component stories live under `apps/storybook/src/stories/web/`.
+
+If you add new exports to `@cre/web-ui`, run `pnpm build:web-ui` (or `pnpm -C packages/cre-web-ui build`) so Storybook picks up updated TypeScript declarations.
+
 ## Build Storybook
 
 ```bash
