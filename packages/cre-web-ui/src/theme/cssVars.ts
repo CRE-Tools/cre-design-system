@@ -156,6 +156,18 @@ export function themeTokensToCssVars(tokens: CreThemeTokens): CreCssVars {
     '--cre-color-border-strong': semantic.borderStrong,
     '--cre-color-focus':         semantic.focusRing,
 
+    // ── Semantic accent/action ──
+    '--cre-accent-bg':            semantic.accentBg,
+    '--cre-accent-fg':            semantic.accentFg,
+    '--cre-accent-border':        semantic.accentBorder,
+    '--cre-accent-hover-bg':      semantic.accentHoverBg,
+    '--cre-accent-hover-border':  semantic.accentHoverBorder,
+    '--cre-accent-active-bg':     semantic.accentActiveBg,
+    '--cre-accent-active-border': semantic.accentActiveBorder,
+    '--cre-accent-disabled-bg':     semantic.accentDisabledBg,
+    '--cre-accent-disabled-fg':     semantic.accentDisabledFg,
+    '--cre-accent-disabled-border': semantic.accentDisabledBorder,
+
     // ── Feedback / status ──
     '--cre-feedback-success-bg':     feedback.success.bg,
     '--cre-feedback-success-text':   feedback.success.text,

@@ -55,6 +55,18 @@ export type CreThemeTokens = {
     borderStrong: string;
     /** Keyboard-focus ring. */
     focusRing: string;
+
+    /** Primary accent/action color group used for selected/active states outside of Button. */
+    accentBg: string;
+    accentFg: string;
+    accentBorder: string;
+    accentHoverBg: string;
+    accentHoverBorder: string;
+    accentActiveBg: string;
+    accentActiveBorder: string;
+    accentDisabledBg: string;
+    accentDisabledFg: string;
+    accentDisabledBorder: string;
   };
 
   /**
@@ -98,6 +110,17 @@ function buildSemanticTokens(p: ColorTokens): CreThemeTokens['semantic'] {
     border:       p.neutral[200],
     borderStrong: p.neutral[400],
     focusRing:    p.effects.focus,
+
+    accentBg: p.primary[600],
+    accentFg: p.fix.pureWhite,
+    accentBorder: p.primary[700],
+    accentHoverBg: p.primary[700],
+    accentHoverBorder: p.primary[800],
+    accentActiveBg: p.primary[800],
+    accentActiveBorder: p.primary[800],
+    accentDisabledBg: p.neutral[300],
+    accentDisabledFg: p.neutral[700],
+    accentDisabledBorder: p.neutral[400],
   };
 }
 
@@ -153,9 +176,16 @@ function buildButtonTokens(
 export function createThemeTokens(mode: CreThemeMode): CreThemeTokens {
   const p = mode === 'dark' ? darkColorTokens : lightColorTokens;
 
+  const semantic = buildSemanticTokens(p);
+
+  const accentFg = mode === 'dark' ? p.fix.pureBlack : p.fix.pureWhite;
+
   return {
     mode,
-    semantic:   buildSemanticTokens(p),
+    semantic: {
+      ...semantic,
+      accentFg,
+    },
     feedback:   buildFeedbackTokens(p),
     components: { button: buildButtonTokens(p, mode) },
   };

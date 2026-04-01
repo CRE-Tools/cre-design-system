@@ -23,6 +23,7 @@
 import React, { type ReactNode, type ButtonHTMLAttributes } from 'react';
 import { Box } from '../primitives/Box';
 import { IconSlot } from '../primitives/IconSlot';
+import { injectStyles } from '../internal/injectStyles';
 
 // ─── Singleton style injection ────────────────────────────────────────────────
 
@@ -114,16 +115,7 @@ const BUTTON_CSS = `
 }
 `;
 
-function injectButtonStyles() {
-  if (typeof document === 'undefined') return;
-  if (document.getElementById('cre-button-styles')) return;
-  const el = document.createElement('style');
-  el.id = 'cre-button-styles';
-  el.textContent = BUTTON_CSS;
-  document.head.appendChild(el);
-}
-
-injectButtonStyles();
+injectStyles('cre-button-styles', BUTTON_CSS);
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
