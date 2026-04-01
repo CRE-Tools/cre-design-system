@@ -8,7 +8,8 @@
     "build": "storybook build"
   },
   "dependencies": {
-    "@cre/web-ui": "workspace:*"
+    "@cre/web-ui": "workspace:*",
+    "@cre/unity-bridge": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.0.0",
