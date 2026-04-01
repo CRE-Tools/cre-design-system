@@ -20,12 +20,12 @@ export function ControlsRow({ left, right, gap = 'micro', wrap = true, className
       className={className}
       style={{ width: '100%', ...style }}
     >
-      <div style={{ display: 'flex', gap: 'var(--cre-space-nano)', flexWrap: wrap ? 'wrap' : 'nowrap', alignItems: 'center' }}>
+      <Inline gap="nano" wrap={wrap} align="center">
         {left}
-      </div>
-      <div style={{ display: 'flex', gap: 'var(--cre-space-nano)', flexWrap: wrap ? 'wrap' : 'nowrap', alignItems: 'center' }}>
+      </Inline>
+      <Inline gap="nano" wrap={wrap} align="center">
         {right}
-      </div>
+      </Inline>
     </Inline>
   );
 }

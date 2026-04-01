@@ -83,8 +83,8 @@ export { CreThemeProvider, useCreTheme } from './theme/CreThemeProvider';
 export type { CreThemeProviderProps } from './theme/CreThemeProvider';
 
 // ── Token factories & types ───────────────────────────────────────────────────
-export { createThemeTokens, getBasePalette } from './theme/tokens';
-export type { CreThemeMode, CreThemeTokens, CrePalette } from './theme/tokens';
+export { createThemeTokens } from './theme/tokens';
+export type { CreThemeMode, CreThemeTokens } from './theme/tokens';
 
 // ── Raw tokens (source-of-truth values from the Figma JSON exports) ───────────
 export { coreTokens, lightColorTokens, darkColorTokens } from './theme/rawTokens';

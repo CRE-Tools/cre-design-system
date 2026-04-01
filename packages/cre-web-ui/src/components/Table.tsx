@@ -224,7 +224,7 @@ export function Table<Row>({
                   ) : null}
                   {columns.map((c) => (
                     <td key={c.key} data-cre="td">
-                      {c.render ? c.render(row) : (row as any)?.[c.key]}
+                      {c.render ? c.render(row) : (row as Record<string, unknown>)?.[c.key] as React.ReactNode}
                     </td>
                   ))}
                 </tr>

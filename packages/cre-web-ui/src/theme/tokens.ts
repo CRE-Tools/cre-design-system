@@ -191,22 +191,3 @@ export function createThemeTokens(mode: CreThemeMode): CreThemeTokens {
   };
 }
 
-// ─── Backwards-compat re-exports (used in existing Storybook story / tests) ──
-
-/**
- * @deprecated Prefer importing from rawTokens directly.
- * Returns the raw primary + neutral palette for the given mode.
- */
-export function getBasePalette(mode: CreThemeMode = 'light') {
-  const p = mode === 'dark' ? darkColorTokens : lightColorTokens;
-  return {
-    primary: p.primary,
-    neutral: p.neutral,
-  };
-}
-
-// Palette type kept for external consumers that were typed against it
-export type CrePalette = {
-  primary: ColorTokens['primary'];
-  neutral: ColorTokens['neutral'];
-};

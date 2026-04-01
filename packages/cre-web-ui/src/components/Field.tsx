@@ -34,7 +34,7 @@ export function Field({
           {description}
         </Text>
       ) : null}
-      <div>{children}</div>
+      {children}
       {error ? (
         <Text as="p" variant="caption" style={{ color: 'var(--cre-feedback-error-text)' }}>
           {error}

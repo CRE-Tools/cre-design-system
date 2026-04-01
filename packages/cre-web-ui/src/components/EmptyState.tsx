@@ -20,7 +20,7 @@ export function EmptyState({ title, description, actions, className, style }: Em
           {description}
         </Text>
       ) : null}
-      {actions ? <div>{actions}</div> : null}
+      {actions ?? null}
     </Stack>
   );
 }
