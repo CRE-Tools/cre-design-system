@@ -7,9 +7,10 @@
     "packages/*"
   ],
   "scripts": {
-    "storybook": "pnpm --filter @cre/web-ui build && pnpm --filter @cre/storybook dev",
+    "storybook": "pnpm --filter @cre/storybook dev",
     "build:storybook": "pnpm --filter @cre/storybook build",
     "build:web-ui": "pnpm --filter @cre/web-ui build",
+    "build:unity-bridge": "pnpm --filter @cre/unity-bridge build",
     "test": "echo \"No tests configured\""
   }
 }

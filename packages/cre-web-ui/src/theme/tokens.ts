@@ -1,173 +1,182 @@
+/**
+ * tokens.ts
+ *
+ * Builds theme token objects from the raw token values parsed in rawTokens.ts.
+ * This is the semantic layer: it maps raw palette entries to meaningful roles
+ * (background, text, action, feedback) that components can consume without
+ * ever knowing which palette step they're referencing.
+ *
+ * Semantic mapping rationale:
+ *
+ *   neutral scale  — Inverted per mode in the source JSON, so the same key
+ *                    (e.g. neutral.50) is near-white in Light and near-black
+ *                    in Dark. Semantic aliases reference the scale uniformly.
+ *
+ *   primary.600    — The primary action color in both modes.
+ *                    Light: #8A0538 (deep red/cranberry)
+ *                    Dark:  #CDB1FC (lilac purple)
+ *
+ *   fix.pureBlack  — Absolute near-black (#1B1819). Used as foreground on
+ *                    light-colored buttons in dark mode.
+ *   fix.pureWhite  — Absolute near-white (#FCFBFB). Used as foreground on
+ *                    dark-colored buttons in light mode.
+ */
+
+import { lightColorTokens, darkColorTokens } from './rawTokens';
+import type { ColorTokens } from './rawTokens';
+
 export type CreThemeMode = 'light' | 'dark';
 
-export type CrePalette = {
-  primary: {
-    50: string;
-    100: string;
-    200: string;
-    300: string;
-    400: string;
-    500: string;
-    600: string;
-    700: string;
-    800: string;
-    900: string;
-  };
-  neutral: {
-    0: string;
-    50: string;
-    100: string;
-    200: string;
-    300: string;
-    400: string;
-    500: string;
-    600: string;
-    700: string;
-    800: string;
-    900: string;
-    1000: string;
-  };
-};
+// ─── Theme token shape ────────────────────────────────────────────────────────
 
 export type CreThemeTokens = {
   mode: CreThemeMode;
-  palette: CrePalette;
+
+  /**
+   * Semantic surface / content / border tokens.
+   * Components reference these rather than raw palette steps.
+   */
   semantic: {
-    background: string;
+    /** Page / root background. */
+    bg: string;
+    /** Elevated card / container surface. */
     surface: string;
+    /** Higher-elevation surface (e.g. modals, tooltips). */
+    surfaceRaised: string;
+    /** Primary text. */
     text: string;
+    /** Secondary / muted text. */
     textMuted: string;
+    /** Subtle / placeholder text. */
+    textSubtle: string;
+    /** Default border. */
     border: string;
+    /** Stronger border for emphasis. */
+    borderStrong: string;
+    /** Keyboard-focus ring. */
+    focusRing: string;
   };
+
+  /**
+   * Feedback / status colors.
+   * Use the mid-scale values (300-400) for foreground; light values (100-200)
+   * for tinted backgrounds; dark values (500-600) for dark-surface contexts.
+   */
+  feedback: {
+    success: { bg: string; text: string; border: string };
+    alert:   { bg: string; text: string; border: string };
+    error:   { bg: string; text: string; border: string };
+  };
+
+  /**
+   * Component-level tokens for the Button.
+   * Covers all interactive states.
+   */
   components: {
     button: {
-      bg: string;
-      fg: string;
-      border: string;
-      hoverBg: string;
-      hoverFg: string;
-      hoverBorder: string;
-      activeBg: string;
-      activeFg: string;
-      activeBorder: string;
-      disabledBg: string;
-      disabledFg: string;
-      disabledBorder: string;
+      bg: string; fg: string; border: string;
+      hoverBg: string; hoverFg: string; hoverBorder: string;
+      activeBg: string; activeFg: string; activeBorder: string;
+      disabledBg: string; disabledFg: string; disabledBorder: string;
     };
   };
 };
 
-function getNeutralPalette(): CrePalette['neutral'] {
+// ─── Semantic builder ─────────────────────────────────────────────────────────
+
+function buildSemanticTokens(p: ColorTokens): CreThemeTokens['semantic'] {
+  // neutral.50  → most-background (near-white in light, near-black in dark)
+  // neutral.1050 → most-foreground (near-black in light, near-white in dark)
+  // This works because the JSON files invert the neutral scale per mode.
   return {
-    0: '#FFFFFF',
-    50: '#FAFAFA',
-    100: '#F5F5F5',
-    200: '#E5E5E5',
-    300: '#D4D4D4',
-    400: '#A3A3A3',
-    500: '#737373',
-    600: '#525252',
-    700: '#404040',
-    800: '#262626',
-    900: '#171717',
-    1000: '#0A0A0A'
+    bg:           p.neutral[50],
+    surface:      p.neutral[100],
+    surfaceRaised: p.neutral[200],
+    text:         p.neutral[1050],
+    textMuted:    p.neutral[700],
+    textSubtle:   p.neutral[600],
+    border:       p.neutral[200],
+    borderStrong: p.neutral[400],
+    focusRing:    p.effects.focus,
   };
 }
 
-function getLightPrimaryPalette(): CrePalette['primary'] {
+function buildFeedbackTokens(p: ColorTokens): CreThemeTokens['feedback'] {
   return {
-    50: '#FCE7EF',
-    100: '#F7C1D2',
-    200: '#F19AB5',
-    300: '#EA7398',
-    400: '#E44C7B',
-    500: '#8A0538',
-    600: '#760430',
-    700: '#620328',
-    800: '#4E0220',
-    900: '#3A0118'
+    success: {
+      bg:     p.feedback.success[100],
+      text:   p.feedback.success[400],
+      border: p.feedback.success[300],
+    },
+    alert: {
+      bg:     p.feedback.alert[100],
+      text:   p.feedback.alert[400],
+      border: p.feedback.alert[300],
+    },
+    error: {
+      bg:     p.feedback.error[100],
+      text:   p.feedback.error[400],
+      border: p.feedback.error[300],
+    },
   };
 }
 
-function getDarkPrimaryPalette(): CrePalette['primary'] {
+function buildButtonTokens(
+  p: ColorTokens,
+  mode: CreThemeMode
+): CreThemeTokens['components']['button'] {
+  // In light mode the button foreground is near-white (on a dark primary bg).
+  // In dark mode the button foreground is near-black (on a light primary bg).
+  const fg = mode === 'dark' ? p.fix.pureBlack : p.fix.pureWhite;
+
   return {
-    50: '#EFE8FB',
-    100: '#D6C6F6',
-    200: '#BEA5F1',
-    300: '#A684EC',
-    400: '#8E63E7',
-    500: '#591DB9',
-    600: '#4C189E',
-    700: '#3F1483',
-    800: '#320F68',
-    900: '#250B4D'
+    bg:            p.primary[600],
+    fg,
+    border:        p.primary[700],
+
+    hoverBg:       p.primary[700],
+    hoverFg:       fg,
+    hoverBorder:   p.primary[800],
+
+    activeBg:      p.primary[800],
+    activeFg:      fg,
+    activeBorder:  p.primary[800],
+
+    disabledBg:     p.neutral[300],
+    disabledFg:     p.neutral[700],
+    disabledBorder: p.neutral[400],
   };
 }
 
-export function getBasePalette(mode: CreThemeMode = 'light'): CrePalette {
-  return {
-    primary: mode === 'dark' ? getDarkPrimaryPalette() : getLightPrimaryPalette(),
-    neutral: getNeutralPalette()
-  };
-}
+// ─── Public factory ───────────────────────────────────────────────────────────
 
 export function createThemeTokens(mode: CreThemeMode): CreThemeTokens {
-  const palette = getBasePalette(mode);
-
-  const semantic =
-    mode === 'dark'
-      ? {
-          background: palette.neutral[1000],
-          surface: palette.neutral[900],
-          text: palette.neutral[0],
-          textMuted: palette.neutral[300],
-          border: palette.neutral[700]
-        }
-      : {
-          background: palette.neutral[0],
-          surface: palette.neutral[50],
-          text: palette.neutral[900],
-          textMuted: palette.neutral[600],
-          border: palette.neutral[200]
-        };
-
-  const button =
-    mode === 'dark'
-      ? {
-          bg: palette.primary[500],
-          fg: palette.neutral[0],
-          border: palette.primary[700],
-          hoverBg: palette.primary[600],
-          hoverFg: palette.neutral[0],
-          hoverBorder: palette.primary[800],
-          activeBg: palette.primary[700],
-          activeFg: palette.neutral[0],
-          activeBorder: palette.primary[900],
-          disabledBg: palette.neutral[800],
-          disabledFg: palette.neutral[400],
-          disabledBorder: palette.neutral[700]
-        }
-      : {
-          bg: palette.primary[500],
-          fg: palette.neutral[0],
-          border: palette.primary[700],
-          hoverBg: palette.primary[600],
-          hoverFg: palette.neutral[0],
-          hoverBorder: palette.primary[800],
-          activeBg: palette.primary[700],
-          activeFg: palette.neutral[0],
-          activeBorder: palette.primary[900],
-          disabledBg: palette.neutral[200],
-          disabledFg: palette.neutral[600],
-          disabledBorder: palette.neutral[300]
-        };
+  const p = mode === 'dark' ? darkColorTokens : lightColorTokens;
 
   return {
     mode,
-    palette,
-    semantic,
-    components: {
-      button
-    }
+    semantic:   buildSemanticTokens(p),
+    feedback:   buildFeedbackTokens(p),
+    components: { button: buildButtonTokens(p, mode) },
   };
 }
+
+// ─── Backwards-compat re-exports (used in existing Storybook story / tests) ──
+
+/**
+ * @deprecated Prefer importing from rawTokens directly.
+ * Returns the raw primary + neutral palette for the given mode.
+ */
+export function getBasePalette(mode: CreThemeMode = 'light') {
+  const p = mode === 'dark' ? darkColorTokens : lightColorTokens;
+  return {
+    primary: p.primary,
+    neutral: p.neutral,
+  };
+}
+
+// Palette type kept for external consumers that were typed against it
+export type CrePalette = {
+  primary: ColorTokens['primary'];
+  neutral: ColorTokens['neutral'];
+};

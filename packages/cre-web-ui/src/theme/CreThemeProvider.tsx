@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import type { PropsWithChildren } from 'react';
 import type { CreThemeMode, CreThemeTokens } from './tokens';
 import { createThemeTokens } from './tokens';
-import { themeTokensToCssVars } from './cssVars';
+import { coreTokensToCssVars, themeTokensToCssVars } from './cssVars';
 
 type CreThemeContextValue = {
   mode: CreThemeMode;
@@ -28,6 +28,9 @@ export type CreThemeProviderProps = PropsWithChildren<{
   scope?: 'local' | 'global';
 }>;
 
+// Core vars never change — compute once at module load
+const CORE_CSS_VARS = coreTokensToCssVars();
+
 export function CreThemeProvider({
   children,
   initialMode = 'light',
@@ -39,7 +42,12 @@ export function CreThemeProvider({
   const mode = controlledMode ?? uncontrolledMode;
 
   const tokens = useMemo(() => createThemeTokens(mode), [mode]);
-  const cssVars = useMemo(() => themeTokensToCssVars(tokens), [tokens]);
+
+  // Merge core (static) + mode-specific (dynamic) CSS vars
+  const cssVars = useMemo(
+    () => ({ ...CORE_CSS_VARS, ...themeTokensToCssVars(tokens) }),
+    [tokens]
+  );
 
   useEffect(() => {
     if (scope !== 'global') return;
