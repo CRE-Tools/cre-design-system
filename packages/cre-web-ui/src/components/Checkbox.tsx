@@ -36,15 +36,15 @@ const CHECKBOX_CSS = `
 }
 
 [data-cre="checkbox"][data-checked="true"] {
-  background: var(--cre-button-bg);
-  border-color: var(--cre-button-border);
+  background: var(--cre-accent-bg);
+  border-color: var(--cre-accent-border);
 }
 
 [data-cre="checkbox"][data-checked="true"]::after {
   content: '';
   width: 8px;
   height: 8px;
-  background: var(--cre-button-fg);
+  background: var(--cre-accent-fg);
   border-radius: 2px;
 }
 

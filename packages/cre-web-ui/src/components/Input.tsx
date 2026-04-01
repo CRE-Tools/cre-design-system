@@ -43,7 +43,7 @@ const INPUT_CSS = `
 }
 
 [data-cre="inputRoot"]:focus-within {
-  box-shadow: 0 0 0 3px var(--cre-color-focus);
+  box-shadow: 0 0 0 var(--cre-border-width-medium) var(--cre-color-focus);
   border-color: var(--cre-color-border-strong);
 }
 

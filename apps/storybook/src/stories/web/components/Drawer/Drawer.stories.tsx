@@ -41,3 +41,55 @@ export const Basic: Story = {
     );
   },
 };
+
+export const LeftSide: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button onClick={() => setOpen(true)}>Open left drawer</Button>
+        <Drawer
+          open={open}
+          side="left"
+          title="Left drawer"
+          onClose={() => setOpen(false)}
+          footer={
+            <Inline gap="nano" justify="flex-end" wrap>
+              <Button onClick={() => setOpen(false)}>Close</Button>
+            </Inline>
+          }
+        >
+          <Stack gap="nano">
+            <Text as="p">Drawer can slide from the left or right.</Text>
+          </Stack>
+        </Drawer>
+      </>
+    );
+  },
+};
+
+export const PopMotion: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button onClick={() => setOpen(true)}>Open pop drawer</Button>
+        <Drawer
+          open={open}
+          motion="pop"
+          title="Pop motion"
+          onClose={() => setOpen(false)}
+          footer={
+            <Inline gap="nano" justify="flex-end" wrap>
+              <Button onClick={() => setOpen(false)}>Close</Button>
+            </Inline>
+          }
+        >
+          <Stack gap="nano">
+            <Text as="p">Pop motion is useful for lighter overlays.</Text>
+          </Stack>
+        </Drawer>
+      </>
+    );
+  },
+};

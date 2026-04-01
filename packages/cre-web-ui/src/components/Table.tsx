@@ -27,10 +27,10 @@ const TABLE_CSS = `
   text-align: left;
   font-size: var(--cre-font-size-micro);
   font-weight: 600;
-  color: var(--cre-color-text-muted);
+  color: var(--cre-accent-fg);
   padding: var(--cre-space-nano) var(--cre-space-micro);
-  border-bottom: var(--cre-border-width-small) solid var(--cre-color-border);
-  background: var(--cre-color-bg);
+  border-bottom: var(--cre-border-width-small) solid var(--cre-accent-border);
+  background: var(--cre-accent-bg);
   position: sticky;
   top: 0;
 }

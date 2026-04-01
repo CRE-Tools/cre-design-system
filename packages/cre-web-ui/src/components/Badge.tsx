@@ -45,9 +45,9 @@ const BADGE_CSS = `
 }
 
 [data-cre="badge"][data-variant="accent"] {
-  background: var(--cre-button-bg);
-  color: var(--cre-button-fg);
-  border-color: var(--cre-button-border);
+  background: var(--cre-accent-bg);
+  color: var(--cre-accent-fg);
+  border-color: var(--cre-accent-border);
 }
 `;
 

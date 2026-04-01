@@ -206,6 +206,37 @@ function TokenReference() {
         ))}
       </Section>
 
+      <Section title="Semantic Accent / Action">
+        {[
+          { label: '--cre-accent-bg',            varName: 'var(--cre-accent-bg)' },
+          { label: '--cre-accent-fg',            varName: 'var(--cre-accent-fg)' },
+          { label: '--cre-accent-border',        varName: 'var(--cre-accent-border)' },
+          { label: '--cre-accent-hover-bg',      varName: 'var(--cre-accent-hover-bg)' },
+          { label: '--cre-accent-hover-border',  varName: 'var(--cre-accent-hover-border)' },
+          { label: '--cre-accent-active-bg',     varName: 'var(--cre-accent-active-bg)' },
+          { label: '--cre-accent-active-border', varName: 'var(--cre-accent-active-border)' },
+          { label: '--cre-accent-disabled-bg',     varName: 'var(--cre-accent-disabled-bg)' },
+          { label: '--cre-accent-disabled-fg',     varName: 'var(--cre-accent-disabled-fg)' },
+          { label: '--cre-accent-disabled-border', varName: 'var(--cre-accent-disabled-border)' },
+        ].map(({ label, varName }) => (
+          <TokenRow
+            key={label}
+            label={label}
+            value={varName}
+            preview={
+              <div style={{
+                width: 28,
+                height: 28,
+                background: varName,
+                borderRadius: 4,
+                border: '1px solid var(--cre-color-border)',
+                flexShrink: 0,
+              }} />
+            }
+          />
+        ))}
+      </Section>
+
       {/* ── Spacing ── */}
       <Section title="Spacing & Padding">
         {Object.entries(coreTokens.space).map(([name, px]) => (
