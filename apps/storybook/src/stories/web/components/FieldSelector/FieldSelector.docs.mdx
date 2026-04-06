@@ -1,0 +1,64 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as FieldSelectorStories from './FieldSelector.stories';
+
+<Meta of={FieldSelectorStories} />
+
+# FieldSelector
+
+A small “columns” trigger button that opens a popover of checkboxes for toggling which fields/columns are visible.
+
+`FieldSelector` is designed to be controlled: you own the `visibleFields` array and update it via `onVisibleFieldsChange`.
+
+---
+
+## When to use
+
+- Table or list views where users can customize visible columns.
+- Dense toolbars where the trigger needs to stay compact.
+
+---
+
+## Field derivation
+
+The list of all selectable fields comes from:
+
+- `fields` (explicit list of dot-paths), or
+- `data` (rows) which are flattened into dot-paths via `flattenFields`.
+
+If neither is provided, the popover shows “No fields available.”
+
+---
+
+## Playground
+
+Interactive playground — toggle columns and observe the visible field list.
+
+<Canvas of={FieldSelectorStories.Playground} />
+
+<Controls of={FieldSelectorStories.Playground} />
+
+---
+
+## Derived from data
+
+<Canvas of={FieldSelectorStories.DerivedFromData} />
+
+---
+
+## Custom labels
+
+<Canvas of={FieldSelectorStories.CustomLabelParser} />
+
+---
+
+## Empty state
+
+If no `fields` are provided (and no `data` to derive from), the popover displays an empty state message.
+
+<Canvas of={FieldSelectorStories.NoFieldsAvailable} />
+
+---
+
+## All states
+
+<Canvas of={FieldSelectorStories.AllStates} />

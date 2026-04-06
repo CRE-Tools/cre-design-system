@@ -23,6 +23,19 @@ const meta: Meta<typeof FieldSelector> = {
   title: 'Web/Components/FieldSelector',
   component: FieldSelector,
   parameters: { layout: 'centered', docs: { page: null } },
+  argTypes: {
+    data: { control: false, description: 'Row data used to derive fields when `fields` is not provided' },
+    fields: { control: false, description: 'Explicit list of dot-path field names (overrides `data` derivation)' },
+    visibleFields: { control: false, description: 'Controlled list of currently-visible field paths' },
+    onVisibleFieldsChange: { action: 'visibleFieldsChange' },
+    labelParser: { control: false, description: 'Custom formatter for a field path label' },
+    ariaLabel: { control: 'text', description: 'Accessible label for the trigger button' },
+    className: { control: false },
+    style: { control: false },
+  },
+  args: {
+    ariaLabel: 'Select visible columns',
+  },
 };
 
 export default meta;
@@ -92,6 +105,31 @@ export const CustomLabelParser: Story = {
             visibleFields={visibleFields}
             onVisibleFieldsChange={setVisibleFields}
             labelParser={labelParser}
+          />
+        </Inline>
+        <Text as="p" tone="muted">
+          Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
+        </Text>
+      </Stack>
+    );
+  },
+};
+
+export const NoFieldsAvailable: Story = {
+  render: (args) => {
+    const [visibleFields, setVisibleFields] = useState<string[]>([]);
+
+    return (
+      <Stack gap="nano" style={{ minWidth: 300 }}>
+        <Inline justify="flex-end">
+          <FieldSelector
+            {...args}
+            fields={[]}
+            visibleFields={visibleFields}
+            onVisibleFieldsChange={(next) => {
+              args.onVisibleFieldsChange?.(next);
+              setVisibleFields(next);
+            }}
           />
         </Inline>
         <Text as="p" tone="muted">
