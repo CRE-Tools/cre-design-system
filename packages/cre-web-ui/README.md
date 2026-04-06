@@ -2,6 +2,8 @@
 
 Token-based React component library for the CRE design system. Ships dual ESM + CJS bundles with full TypeScript declarations.
 
+For a more detailed, AI-friendly guide intended for teams consuming this package from other repositories, see: `./USAGE.md`.
+
 ## Installation
 
 ```bash
