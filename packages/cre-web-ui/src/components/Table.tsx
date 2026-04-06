@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { injectStyles } from '../internal/injectStyles';
+import { defaultLabelParser, flattenFields, getNestedValue } from '../internal/fieldUtils';
 import { Box } from '../primitives/Box';
 import { Text } from '../primitives/Text';
 import { Checkbox } from './Checkbox';
@@ -81,8 +82,26 @@ export type TableColumn<Row> = {
 };
 
 export type TableProps<Row> = {
-  columns: TableColumn<Row>[];
+  /** Explicit column definitions. If omitted and deriveColumns is true, columns are auto-derived from rows. */
+  columns?: TableColumn<Row>[];
   rows: Row[];
+  /**
+   * When true and columns is empty/omitted, columns are automatically derived
+   * from the row data using flattenFields. Nested objects are flattened into
+   * dot-path keys (e.g. "address.city").
+   */
+  deriveColumns?: boolean;
+  /**
+   * Restricts which columns are displayed. The values must match column keys.
+   * When provided, only columns whose key is in this array are shown.
+   */
+  visibleFields?: string[];
+  /**
+   * Custom label parser for column headers derived from field paths.
+   * Receives a dot-path like "address.city" and returns a display string.
+   * Defaults to defaultLabelParser (splits on dots + camelCase).
+   */
+  labelParser?: (path: string) => string;
   getRowId?: (row: Row, index: number) => string;
   onRowClick?: (row: Row) => void;
   selectableRows?: boolean;
@@ -96,8 +115,11 @@ export type TableProps<Row> = {
 };
 
 export function Table<Row>({
-  columns,
+  columns: columnsProp = [],
   rows,
+  deriveColumns = false,
+  visibleFields,
+  labelParser,
   getRowId,
   onRowClick,
   selectableRows = false,
@@ -118,6 +140,27 @@ export function Table<Row>({
     onSelectedRowIdsChange?.(ids);
     if (selectedRowIds == null) setInternalSelected(ids);
   };
+
+  const resolveLabelParser = labelParser ?? defaultLabelParser;
+
+  // Derive or use explicit columns, then apply visibleFields filter.
+  const columns = useMemo<TableColumn<Row>[]>(() => {
+    let cols: TableColumn<Row>[] = columnsProp;
+
+    if (deriveColumns && cols.length === 0) {
+      const paths = flattenFields(rows as Record<string, unknown>[]);
+      cols = paths.map((path) => ({
+        key: path,
+        header: resolveLabelParser(path),
+      }));
+    }
+
+    if (visibleFields && visibleFields.length > 0) {
+      cols = cols.filter((c) => visibleFields.includes(c.key));
+    }
+
+    return cols;
+  }, [columnsProp, rows, deriveColumns, visibleFields, resolveLabelParser]);
 
   const sortedRows = useMemo(() => {
     if (!sortable || !sortKey) return rows;
@@ -224,7 +267,9 @@ export function Table<Row>({
                   ) : null}
                   {columns.map((c) => (
                     <td key={c.key} data-cre="td">
-                      {c.render ? c.render(row) : (row as Record<string, unknown>)?.[c.key] as React.ReactNode}
+                      {c.render
+                        ? c.render(row)
+                        : (getNestedValue(row, c.key) as React.ReactNode)}
                     </td>
                   ))}
                 </tr>

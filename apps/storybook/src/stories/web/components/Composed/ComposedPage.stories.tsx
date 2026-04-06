@@ -6,9 +6,13 @@ import {
   Card,
   Container,
   ControlsRow,
+  DateRangeFilter,
+  type DateRangeValue,
   Drawer,
   EmptyState,
   Field,
+  FieldSelector,
+  flattenFields,
   Heading,
   Inline,
   Input,
@@ -25,17 +29,43 @@ type RecordRow = {
   name: string;
   owner: string;
   status: 'new' | 'active' | 'archived';
+  contact: {
+    email: string;
+    phone: string;
+  };
+  location: {
+    city: string;
+    country: string;
+  };
+  createdAtMs: number;
 };
 
 const allRows: RecordRow[] = Array.from({ length: 24 }).map((_, i) => {
   const status: RecordRow['status'] = i % 3 === 0 ? 'new' : i % 3 === 1 ? 'active' : 'archived';
+  const now = Date.now();
+  const createdAtMs = now - i * 24 * 60 * 60 * 1000;
+  const owners = ['Alex', 'Jordan', 'Casey'];
+  const cities: [string, string][] = [['New York', 'US'], ['London', 'UK'], ['Berlin', 'DE']];
+  const [city, country] = cities[i % 3];
   return {
     id: `rec-${i + 1}`,
     name: `Record ${i + 1}`,
-    owner: ['Alex', 'Jordan', 'Casey'][i % 3],
+    owner: owners[i % 3],
     status,
+    contact: {
+      email: `${owners[i % 3].toLowerCase()}@example.com`,
+      phone: `+1-555-${String(i + 1).padStart(4, '0')}`,
+    },
+    location: { city, country },
+    createdAtMs,
   };
 });
+
+// Derive all available fields from the data once.
+const allFields = flattenFields(allRows as Record<string, unknown>[]);
+
+// Default visible fields on first render.
+const defaultVisibleFields = ['name', 'owner', 'status', 'location.city'];
 
 const meta: Meta = {
   title: 'Web/Composed/GenericDataPage',
@@ -50,16 +80,23 @@ export const Example: Story = {
   render: () => {
     const [query, setQuery] = useState('');
     const [status, setStatus] = useState('');
+    const [createdRange, setCreatedRange] = useState<{ startMs: number | null; endMs: number | null }>({
+      startMs: null,
+      endMs: null,
+    });
     const [page, setPage] = useState(1);
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+    const [visibleFields, setVisibleFields] = useState<string[]>(defaultVisibleFields);
 
     const filtered = allRows.filter((r) => {
       const q = query.trim().toLowerCase();
       const matchesQuery = !q || r.name.toLowerCase().includes(q) || r.owner.toLowerCase().includes(q);
       const matchesStatus = !status || r.status === status;
-      return matchesQuery && matchesStatus;
+      const startOk = createdRange.startMs == null || r.createdAtMs >= createdRange.startMs;
+      const endOk = createdRange.endMs == null || r.createdAtMs <= createdRange.endMs;
+      return matchesQuery && matchesStatus && startOk && endOk;
     });
 
     const pageSize = 8;
@@ -67,20 +104,28 @@ export const Example: Story = {
     const safePage = Math.min(page, totalPages);
     const pageRows = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
 
+    // Build columns from visibleFields so custom renders (Badge) still apply.
     const columns = useMemo(
-      () => [
-        { key: 'name', header: 'Name' },
-        { key: 'owner', header: 'Owner' },
-        {
-          key: 'status',
-          header: 'Status',
-          render: (r: RecordRow) => {
-            const variant = r.status === 'active' ? 'success' : r.status === 'new' ? 'accent' : 'neutral';
-            return <Badge variant={variant}>{r.status}</Badge>;
-          },
-        },
-      ],
-      []
+      () =>
+        visibleFields.map((field) => {
+          if (field === 'status') {
+            return {
+              key: field,
+              header: 'Status',
+              render: (r: RecordRow) => {
+                const variant = r.status === 'active' ? 'success' : r.status === 'new' ? 'accent' : 'neutral';
+                return <Badge variant={variant}>{r.status}</Badge>;
+              },
+            };
+          }
+          // Auto-derive header label from field path
+          const label = field
+            .split('.')
+            .map((s) => s.replace(/([A-Z])/g, ' $1').replace(/^\w/, (c) => c.toUpperCase()))
+            .join(' / ');
+          return { key: field, header: label };
+        }),
+      [visibleFields]
     );
 
     const selected = selectedId ? allRows.find((r) => r.id === selectedId) : null;
@@ -110,11 +155,25 @@ export const Example: Story = {
                       { value: 'archived', label: 'Archived' },
                     ]}
                   />
+                  <DateRangeFilter
+                    value={createdRange}
+                    onChange={(next: DateRangeValue) => {
+                      setCreatedRange(next);
+                      setPage(1);
+                    }}
+                    placeholder="Created"
+                    triggerVariant="icon"
+                  />
                 </>
               }
               right={
                 <>
-                  <Button onClick={() => { setQuery(''); setStatus(''); }}>Reset</Button>
+                  <FieldSelector
+                    fields={allFields}
+                    visibleFields={visibleFields}
+                    onVisibleFieldsChange={setVisibleFields}
+                  />
+                  <Button onClick={() => { setQuery(''); setStatus(''); setCreatedRange({ startMs: null, endMs: null }); }}>Reset</Button>
                   <Button onClick={() => setModalOpen(true)}>Open modal</Button>
                 </>
               }
@@ -160,6 +219,12 @@ export const Example: Story = {
                   </Field>
                   <Field label="Status">
                     <Text as="p">{selected.status}</Text>
+                  </Field>
+                  <Field label="Email">
+                    <Text as="p">{selected.contact.email}</Text>
+                  </Field>
+                  <Field label="Location">
+                    <Text as="p">{selected.location.city}, {selected.location.country}</Text>
                   </Field>
                 </Stack>
               ) : (

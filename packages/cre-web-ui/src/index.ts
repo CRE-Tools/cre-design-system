@@ -26,8 +26,16 @@ export type { ModalProps } from './components/Modal';
 export { Drawer } from './components/Drawer';
 export type { DrawerProps } from './components/Drawer';
 
+export { DateRangeFilter } from './components/DateRangeFilter';
+export type { DateRangeFilterProps, DateRangeValue, CreDateRangeFilterTriggerVariant } from './components/DateRangeFilter';
+
 export { Table } from './components/Table';
 export type { TableProps, TableColumn, TableSortDirection } from './components/Table';
+
+export { FieldSelector } from './components/FieldSelector';
+export type { FieldSelectorProps } from './components/FieldSelector';
+
+export { flattenFields, defaultLabelParser, getNestedValue } from './internal/fieldUtils';
 
 export { Pagination } from './components/Pagination';
 export type { PaginationProps } from './components/Pagination';
