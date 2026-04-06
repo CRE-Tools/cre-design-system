@@ -5,7 +5,7 @@ import { Checkbox, Stack, Text } from '@cre/web-ui';
 const meta: Meta<typeof Checkbox> = {
   title: 'Web/Components/Checkbox',
   component: Checkbox,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

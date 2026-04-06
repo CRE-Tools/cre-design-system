@@ -1,0 +1,46 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ContainerStories from './Container.stories';
+
+<Meta of={ContainerStories} />
+
+# Container
+
+Centers page content horizontally and constrains its maximum width using layout tokens. Always apply horizontal padding so content doesn't touch viewport edges.
+
+---
+
+## When to use
+
+- Wrapping top-level page content.
+- Constraining a content column to a readable or structured width.
+- Do **not** use Container inside another Container — nest layout primitives (Stack, Grid) inside a single Container.
+
+---
+
+## Example
+
+<Canvas of={ContainerStories.PageWidth} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | HTML element to render |
+| `size` | `CreContainerSize` | `'main'` | Max-width preset |
+| `paddingX` | `CreSpace` | `'micro'` | Horizontal padding applied on both sides |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+---
+
+## Size presets
+
+| Size | Token | Use case |
+|------|-------|----------|
+| `read` | `--cre-layout-read` | Long-form reading (prose, articles) |
+| `focu` | `--cre-layout-focu` | Focused task UIs (forms, wizards) |
+| `seco` | `--cre-layout-seco` | Secondary / sidebar-adjacent content |
+| `main` | `--cre-layout-main` | Default app shell content area |
+| `full` | `--cre-layout-full` | Full-bleed (dashboards, data tables) |

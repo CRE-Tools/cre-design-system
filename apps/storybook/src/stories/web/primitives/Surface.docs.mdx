@@ -1,0 +1,47 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as SurfaceStories from './Surface.stories';
+
+<Meta of={SurfaceStories} />
+
+# Surface
+
+An elevated, bordered container that uses semantic background tokens to communicate hierarchy. Three elevation variants map to distinct background levels.
+
+---
+
+## When to use
+
+- Grouping related content visually (forms, settings sections, data panels).
+- As the outer shell of a Card, panel, or sidebar.
+- Use `variant="raised"` for things that float above the page (tooltips, popovers, Modal panels).
+- Do **not** use Surface for interactive elements — use `Button` instead.
+
+---
+
+## Variants
+
+<Canvas of={SurfaceStories.Variants} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | HTML element to render |
+| `variant` | `'default' \| 'subtle' \| 'raised'` | `'default'` | Elevation level — controls background token |
+| `padding` | `CreSpace` | `'micro'` | Inner padding |
+| `radius` | `CreRadius` | `'small'` | Border radius |
+| `border` | `boolean` | `true` | Show/hide the border |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+---
+
+## Elevation mapping
+
+| Variant | CSS variable | Role |
+|---------|-------------|------|
+| `subtle` | `--cre-color-bg` | Page background — de-emphasised area |
+| `default` | `--cre-color-surface` | Primary surface — cards, panels |
+| `raised` | `--cre-color-surface-raised` | Above surface — modals, dropdowns |

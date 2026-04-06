@@ -5,7 +5,7 @@ import { Card, Heading, Stack, Text, Button, Inline } from '@cre/web-ui';
 const meta: Meta<typeof Card> = {
   title: 'Web/Components/Card',
   component: Card,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

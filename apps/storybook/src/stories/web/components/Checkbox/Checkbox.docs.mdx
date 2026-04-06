@@ -1,0 +1,58 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CheckboxStories from './Checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+A binary toggle input that also supports an indeterminate (mixed) state. Commonly used in forms and table row selection.
+
+---
+
+## When to use
+
+- Boolean settings and opt-in preferences.
+- "Select all" controls for a list — pair with the `indeterminate` prop when some but not all items are selected.
+- Individual row selection in a Table.
+- For a single forced choice use `Select`; for mutually exclusive options use a radio group.
+
+---
+
+## Basic
+
+<Canvas of={CheckboxStories.Basic} />
+
+---
+
+## Indeterminate
+
+The `indeterminate` prop is useful for parent checkboxes that represent a partial selection. It renders the native indeterminate state via a ref.
+
+<Canvas of={CheckboxStories.Indeterminate} />
+
+---
+
+## Disabled
+
+<Canvas of={CheckboxStories.Disabled} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `checked` | `boolean` | — | Controlled checked state |
+| `defaultChecked` | `boolean` | — | Uncontrolled initial checked state |
+| `indeterminate` | `boolean` | `false` | Renders indeterminate state (mixed selection) |
+| `disabled` | `boolean` | `false` | Disables interaction |
+| `onChange` | `(checked: boolean) => void` | — | Called when the value changes |
+| `label` | `string` | — | Visible label rendered next to the checkbox |
+| `ariaLabel` | `string` | — | Accessible label when no visible `label` is provided |
+
+---
+
+## Notes
+
+- If both `indeterminate` and `checked` are true, `checked` takes precedence and indeterminate is cleared.
+- Always provide either `label` or `ariaLabel` — a checkbox without accessible text fails WCAG SC 1.3.1.

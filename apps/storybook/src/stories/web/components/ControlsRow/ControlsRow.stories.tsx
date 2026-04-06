@@ -5,7 +5,7 @@ import { ControlsRow, Input, Select, Button } from '@cre/web-ui';
 const meta: Meta<typeof ControlsRow> = {
   title: 'Web/Components/ControlsRow',
   component: ControlsRow,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

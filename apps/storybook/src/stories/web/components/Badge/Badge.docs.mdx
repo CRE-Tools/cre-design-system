@@ -1,0 +1,53 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as BadgeStories from './Badge.stories';
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+A small inline status label. Badges communicate the category or state of an item — they never trigger actions.
+
+---
+
+## When to use
+
+- Displaying the status of a record in a table row (active, new, archived).
+- Tagging an item with a category or label.
+- Showing notification counts or feature flags.
+- Do **not** use Badge as a button or clickable element.
+
+---
+
+## Variants
+
+Five semantic variants map to the token system's feedback and accent palettes.
+
+<Canvas of={BadgeStories.Variants} />
+
+---
+
+## Usage in context
+
+<Canvas of={BadgeStories.WithLabels} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'neutral' \| 'success' \| 'warning' \| 'error' \| 'accent'` | `'neutral'` | Semantic colour variant |
+| `children` | `React.ReactNode` | — | Badge label |
+| `className` | `string` | — | Additional CSS class |
+
+---
+
+## Variant guide
+
+| Variant | CSS tokens | Use case |
+|---------|-----------|----------|
+| `neutral` | `--cre-color-bg` / `--cre-color-text-muted` | Draft, inactive, default state |
+| `success` | `--cre-feedback-success-*` | Live, published, healthy |
+| `warning` | `--cre-feedback-alert-*` | Review needed, degraded |
+| `error` | `--cre-feedback-error-*` | Failed, blocked, critical |
+| `accent` | `--cre-accent-*` | Selected, highlighted, new |

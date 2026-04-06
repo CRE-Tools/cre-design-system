@@ -1,0 +1,36 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as CompositionStories from './Composition.stories';
+
+<Meta of={CompositionStories} />
+
+# Primitive composition
+
+Primitives are designed to compose. None of them own visual opinions beyond spacing and type — you stack them to build any layout.
+
+This story demonstrates how `Container`, `Stack`, `Inline`, `Cluster`, `Grid`, `Surface`, `ScrollArea`, `Heading`, and `Text` combine into a functional admin shell without any custom CSS or design-system components.
+
+---
+
+## Admin shell example
+
+<Canvas of={CompositionStories.AdminShellExample} />
+
+---
+
+## Composition principles
+
+**Primitives handle structure, components handle interaction.**
+
+- Use `Container` once at the page root to constrain width.
+- Use `Stack` for vertical sections; `Inline`/`Cluster` for horizontal groups.
+- Use `Grid` for equal-width tile sets that need to reflow.
+- Use `Surface` to visually separate regions — not for interactive affordances.
+- Use `ScrollArea` inside any height-bounded panel.
+
+**All spacing comes from tokens.**
+
+Never hardcode `padding` or `margin` values in layout code. Use the `gap`, `padding`, or `paddingX` props on primitives — they reference `--cre-space-*` tokens and respond to future token changes automatically.
+
+**All colours come from CSS variables.**
+
+Inline `style` that sets a background or color should always reference a `var(--cre-*)` variable so the element responds to theme mode changes.

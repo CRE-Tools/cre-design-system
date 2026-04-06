@@ -5,7 +5,7 @@ import { EmptyState, Button, Stack } from '@cre/web-ui';
 const meta: Meta<typeof EmptyState> = {
   title: 'Web/Components/EmptyState',
   component: EmptyState,
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', docs: { page: null } },
 };
 
 export default meta;

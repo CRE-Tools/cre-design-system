@@ -5,7 +5,7 @@ import { Modal, Button, Stack, Text, Inline } from '@cre/web-ui';
 const meta: Meta<typeof Modal> = {
   title: 'Web/Components/Modal',
   component: Modal,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

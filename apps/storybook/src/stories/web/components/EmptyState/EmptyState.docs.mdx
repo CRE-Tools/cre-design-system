@@ -1,0 +1,59 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as EmptyStateStories from './EmptyState.stories';
+
+<Meta of={EmptyStateStories} />
+
+# EmptyState
+
+A placeholder displayed when a content area has no data to show. Provides a title, optional description, and optional action slot.
+
+---
+
+## When to use
+
+- Inside a Table when the filtered result set is empty.
+- In a panel or card that hasn't been populated yet (onboarding, first-use).
+- Do **not** show EmptyState during loading — use a loading indicator instead. EmptyState communicates that the data resolved to an empty set.
+
+---
+
+## Example
+
+<Canvas of={EmptyStateStories.Basic} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — | Primary message (rendered as `Heading level={4}`) |
+| `description` | `string` | — | Supporting text explaining the empty state |
+| `actions` | `React.ReactNode` | — | Optional call-to-action (typically a Button) |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+---
+
+## Writing good empty states
+
+- **Title**: describe the state, not a failure. "No records yet" not "Nothing found".
+- **Description**: explain why and hint at what to do. "Create your first record to get started."
+- **Action**: only include one if there's a clear next step. A search-filter empty state doesn't need a CTA; a first-use screen does.
+
+---
+
+## Inside Table
+
+```tsx
+<Table
+  columns={columns}
+  rows={filteredRows}
+  emptyState={
+    <EmptyState
+      title="No results"
+      description="Try adjusting your search or filters."
+    />
+  }
+/>
+```

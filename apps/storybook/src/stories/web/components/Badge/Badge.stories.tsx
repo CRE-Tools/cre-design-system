@@ -5,7 +5,7 @@ import { Badge, Inline, Stack, Text, Surface } from '@cre/web-ui';
 const meta: Meta<typeof Badge> = {
   title: 'Web/Components/Badge',
   component: Badge,
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', docs: { page: null } },
 };
 
 export default meta;

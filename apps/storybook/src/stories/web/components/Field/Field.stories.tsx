@@ -5,7 +5,7 @@ import { Field, Input, Select, Stack } from '@cre/web-ui';
 const meta: Meta<typeof Field> = {
   title: 'Web/Components/Field',
   component: Field,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

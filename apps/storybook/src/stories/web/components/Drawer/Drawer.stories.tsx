@@ -5,7 +5,7 @@ import { Drawer, Button, Stack, Text, Inline } from '@cre/web-ui';
 const meta: Meta<typeof Drawer> = {
   title: 'Web/Components/Drawer',
   component: Drawer,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

@@ -1,0 +1,82 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as SelectStories from './Select.stories';
+
+<Meta of={SelectStories} />
+
+# Select
+
+A custom single-select dropdown with keyboard navigation. Replaces the native `<select>` with a token-styled dropdown that matches the Input appearance. Always pair with `Field` for a label and error state.
+
+---
+
+## When to use
+
+- Choosing one option from a small-to-medium list (2–20 items).
+- Filters, status pickers, category selectors.
+- For boolean choices use `Checkbox`; for large lists consider search-driven alternatives.
+
+---
+
+## Basic
+
+<Canvas of={SelectStories.Basic} />
+
+---
+
+## Disabled
+
+<Canvas of={SelectStories.Disabled} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `options` | `SelectOption[]` | — | List of options |
+| `value` | `string` | — | Controlled selected value |
+| `onChange` | `(value: string) => void` | — | Called when selection changes |
+| `placeholder` | `string` | — | Shown when no option is selected |
+| `disabled` | `boolean` | `false` | Disables the trigger and dropdown |
+| `id` | `string` | — | Links to a `<Field htmlFor>` label |
+| `className` | `string` | — | Additional CSS class |
+
+### SelectOption shape
+
+```ts
+type SelectOption = {
+  value: string;
+  label: string;
+  disabled?: boolean;
+};
+```
+
+---
+
+## Keyboard behaviour
+
+| Key | Action |
+|-----|--------|
+| `Enter` / `Space` | Open the dropdown |
+| `ArrowDown` / `ArrowUp` | Navigate options |
+| `Enter` | Select highlighted option |
+| `Escape` | Close without selecting |
+
+---
+
+## With Field
+
+```tsx
+<Field label="Status" htmlFor="status-select">
+  <Select
+    id="status-select"
+    value={status}
+    onChange={setStatus}
+    placeholder="Pick a status…"
+    options={[
+      { value: 'active', label: 'Active' },
+      { value: 'archived', label: 'Archived' },
+    ]}
+  />
+</Field>
+```

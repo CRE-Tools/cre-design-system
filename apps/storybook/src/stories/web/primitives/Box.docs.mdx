@@ -1,0 +1,37 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as BoxStories from './Box.stories';
+
+<Meta of={BoxStories} />
+
+# Box
+
+The lowest-level primitive. A single-element wrapper that forwards all standard DOM props and supports an `as` prop for semantic HTML control.
+
+Box has no visual opinion of its own — no margin, padding, background, or border. It is a composition tool.
+
+---
+
+## When to use
+
+- You need a specific HTML element (`section`, `article`, `li`, `main`) but also want to pass a `className` or `style` prop in a consistent way.
+- You are building a higher-level primitive and need a typed polymorphic base.
+- Use `Surface` instead if you need elevation, border, or background.
+- Use `Stack`, `Inline`, or `Grid` instead if you need layout behaviour.
+
+---
+
+## Example
+
+<Canvas of={BoxStories.Basic} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | The HTML element or component to render |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+| `children` | `React.ReactNode` | — | Content |
+| `...rest` | DOM props | — | All props of the resolved element |

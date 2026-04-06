@@ -5,7 +5,7 @@ import { Input, Stack, Text } from '@cre/web-ui';
 const meta: Meta<typeof Input> = {
   title: 'Web/Components/Input',
   component: Input,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

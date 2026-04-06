@@ -1,0 +1,60 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as DrawerStories from './Drawer.stories';
+
+<Meta of={DrawerStories} />
+
+# Drawer
+
+A side panel overlay. Drawer slides in from the right (or left) while the background remains visible and interactive — the user can see context while focused on a detail task.
+
+---
+
+## When to use
+
+- Displaying detail views for a selected table row.
+- Inline editors (edit a record without navigating away).
+- Filter panels for a data table.
+- Do **not** use Drawer for confirmations that require the user's full attention — use `Modal` instead.
+
+---
+
+## Default (right side, slide motion)
+
+<Canvas of={DrawerStories.Basic} />
+
+---
+
+## Left side
+
+<Canvas of={DrawerStories.LeftSide} />
+
+---
+
+## Pop motion
+
+`motion="pop"` scales in from near the trigger instead of sliding from an edge. Suitable for lighter, more transient panels.
+
+<Canvas of={DrawerStories.PopMotion} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | `boolean` | — | Controls visibility |
+| `title` | `React.ReactNode` | — | Header title rendered above the body |
+| `children` | `React.ReactNode` | — | Scrollable body content |
+| `footer` | `React.ReactNode` | — | Footer slot, pinned below the body |
+| `onClose` | `() => void` | — | Called when overlay or Escape is triggered |
+| `dismissible` | `boolean` | `true` | Whether clicking the overlay or Escape closes the drawer |
+| `side` | `'right' \| 'left'` | `'right'` | Which edge the drawer slides from |
+| `motion` | `'slide' \| 'pop'` | `'slide'` | Entry and exit animation style |
+
+---
+
+## Accessibility
+
+- Renders as `role="dialog"` with `aria-modal="true"`.
+- Escape key triggers `onClose` when `dismissible` is true.
+- The body is wrapped in a `ScrollArea` — long content scrolls within the panel without affecting the page.

@@ -1,0 +1,65 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as FieldStories from './Field.stories';
+
+<Meta of={FieldStories} />
+
+# Field
+
+A form field wrapper that provides a label, optional description text, and an error message slot. Field itself has no visual chrome — it wires accessibility and layout around whatever input component you place inside it.
+
+---
+
+## When to use
+
+- Any time you render an Input, Select, or Checkbox for end-user input, wrap it in a Field.
+- Use the `error` prop to surface validation feedback below the input.
+- Use `required` to append a `*` marker to the label (always explain what `*` means nearby).
+- Do **not** skip Field just to save markup — the `htmlFor`/`id` connection is important for accessibility.
+
+---
+
+## With Input
+
+<Canvas of={FieldStories.WithInput} />
+
+---
+
+## With Select and error state
+
+<Canvas of={FieldStories.WithSelect} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — | Visible label text |
+| `htmlFor` | `string` | — | Links the `<label>` to the input via `id` |
+| `description` | `string` | — | Helper text shown between label and input |
+| `error` | `string` | — | Error message shown below the input in feedback red |
+| `required` | `boolean` | `false` | Appends a `*` to the label |
+| `children` | `React.ReactNode` | — | The input component |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+---
+
+## Layout order
+
+Field stacks its children in this order: **label → description → input → error**. The `gap` between each is `quark` — tight enough to read as a unit, loose enough to breathe.
+
+---
+
+## Full form example
+
+```tsx
+<Stack gap="micro">
+  <Field label="Name" htmlFor="name" required>
+    <Input id="name" value={name} onChange={setName} placeholder="Your name" />
+  </Field>
+  <Field label="Status" htmlFor="status" error={statusError}>
+    <Select id="status" value={status} onChange={setStatus} options={statusOptions} />
+  </Field>
+</Stack>
+```

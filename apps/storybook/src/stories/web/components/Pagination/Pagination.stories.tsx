@@ -5,7 +5,7 @@ import { Pagination } from '@cre/web-ui';
 const meta: Meta<typeof Pagination> = {
   title: 'Web/Components/Pagination',
   component: Pagination,
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', docs: { page: null } },
 };
 
 export default meta;

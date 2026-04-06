@@ -19,7 +19,7 @@ const rows: Row[] = [
 const meta: Meta<typeof Table<Row>> = {
   title: 'Web/Components/Table',
   component: Table,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;

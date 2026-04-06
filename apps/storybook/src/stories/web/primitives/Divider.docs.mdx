@@ -1,0 +1,40 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as DividerStories from './Divider.stories';
+
+<Meta of={DividerStories} />
+
+# Divider
+
+A semantic separator (`<hr>` or `<div role="separator">`) that uses `--cre-color-border` for consistent colour across themes.
+
+---
+
+## When to use
+
+- Separating sections inside a card, panel, or toolbar.
+- Vertical dividers in a horizontal toolbar to group actions.
+- Avoid overusing — rely on spacing (Stack gap) as a first tool before adding a visual line.
+
+---
+
+## Example
+
+<Canvas of={DividerStories.HorizontalAndVertical} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Direction of the separator |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+---
+
+## Notes
+
+- Horizontal Divider renders as `<hr>` with `role="separator"`.
+- Vertical Divider requires a parent with an explicit height — it is `height: 100%` by default.
+- Colour is always `--cre-color-border` and responds to light/dark mode automatically.

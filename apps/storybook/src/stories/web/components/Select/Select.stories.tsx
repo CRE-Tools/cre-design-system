@@ -5,7 +5,7 @@ import { Select, Stack, Text } from '@cre/web-ui';
 const meta: Meta<typeof Select> = {
   title: 'Web/Components/Select',
   component: Select,
-  parameters: { layout: 'padded' },
+  parameters: { layout: 'padded', docs: { page: null } },
 };
 
 export default meta;
