@@ -6,6 +6,22 @@ const meta: Meta<typeof Input> = {
   title: 'Web/Components/Input',
   component: Input,
   parameters: { layout: 'padded', docs: { page: null } },
+  argTypes: {
+    value: { control: false },
+    defaultValue: { control: 'text' },
+    placeholder: { control: 'text' },
+    disabled: { control: 'boolean' },
+    leading: { control: false },
+    trailing: { control: false },
+    onChange: { action: 'changed' },
+    inputProps: { control: false },
+    style: { control: false },
+  },
+  args: {
+    defaultValue: '',
+    placeholder: 'Type…',
+    disabled: false,
+  },
 };
 
 export default meta;
@@ -18,6 +34,16 @@ const SearchIcon = () => (
     <path d="M12.5 12.5 16 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 );
+
+export const Playground: Story = {
+  render: (args) => {
+    return (
+      <Stack gap="nano">
+        <Input {...args} value={undefined} />
+      </Stack>
+    );
+  },
+};
 
 export const Basic: Story = {
   render: () => {

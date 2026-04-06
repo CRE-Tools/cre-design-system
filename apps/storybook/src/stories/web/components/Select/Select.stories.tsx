@@ -6,11 +6,40 @@ const meta: Meta<typeof Select> = {
   title: 'Web/Components/Select',
   component: Select,
   parameters: { layout: 'padded', docs: { page: null } },
+  argTypes: {
+    options: { control: false },
+    value: { control: false },
+    defaultValue: { control: 'text' },
+    placeholder: { control: 'text' },
+    disabled: { control: 'boolean' },
+    onChange: { action: 'changed' },
+    style: { control: false },
+  },
+  args: {
+    options: [
+      { value: 'new', label: 'New' },
+      { value: 'active', label: 'Active' },
+      { value: 'archived', label: 'Archived' },
+    ],
+    defaultValue: '',
+    placeholder: 'Select…',
+    disabled: false,
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Select>;
+
+export const Playground: Story = {
+  render: (args) => {
+    return (
+      <Stack gap="nano">
+        <Select {...args} value={undefined} />
+      </Stack>
+    );
+  },
+};
 
 export const Basic: Story = {
   render: () => {

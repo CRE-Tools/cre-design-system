@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as EmptyStateStories from './EmptyState.stories';
 
 <Meta of={EmptyStateStories} />
@@ -25,13 +25,11 @@ A placeholder displayed when a content area has no data to show. Provides a titl
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | — | Primary message (rendered as `Heading level={4}`) |
-| `description` | `string` | — | Supporting text explaining the empty state |
-| `actions` | `React.ReactNode` | — | Optional call-to-action (typically a Button) |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={EmptyStateStories.Playground} />
+
+<Controls of={EmptyStateStories.Playground} />
 
 ---
 

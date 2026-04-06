@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as DrawerStories from './Drawer.stories';
 
 <Meta of={DrawerStories} />
@@ -40,16 +40,11 @@ A side panel overlay. Drawer slides in from the right (or left) while the backgr
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | — | Controls visibility |
-| `title` | `React.ReactNode` | — | Header title rendered above the body |
-| `children` | `React.ReactNode` | — | Scrollable body content |
-| `footer` | `React.ReactNode` | — | Footer slot, pinned below the body |
-| `onClose` | `() => void` | — | Called when overlay or Escape is triggered |
-| `dismissible` | `boolean` | `true` | Whether clicking the overlay or Escape closes the drawer |
-| `side` | `'right' \| 'left'` | `'right'` | Which edge the drawer slides from |
-| `motion` | `'slide' \| 'pop'` | `'slide'` | Entry and exit animation style |
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={DrawerStories.Playground} />
+
+<Controls of={DrawerStories.Playground} />
 
 ---
 

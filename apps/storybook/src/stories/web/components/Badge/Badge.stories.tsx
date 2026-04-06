@@ -6,11 +6,29 @@ const meta: Meta<typeof Badge> = {
   title: 'Web/Components/Badge',
   component: Badge,
   parameters: { layout: 'centered', docs: { page: null } },
+  argTypes: {
+    variant: {
+      control: 'radio',
+      options: ['neutral', 'success', 'warning', 'error', 'accent'],
+    },
+    children: { control: 'text' },
+    className: { control: false },
+  },
+  args: {
+    variant: 'neutral',
+    children: 'Badge',
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Badge>;
+
+export const Playground: Story = {
+  render: (args) => {
+    return <Badge {...args} />;
+  },
+};
 
 /** All five semantic variants side by side. */
 export const Variants: Story = {

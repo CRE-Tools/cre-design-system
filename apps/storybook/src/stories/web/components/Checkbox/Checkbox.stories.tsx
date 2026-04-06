@@ -6,11 +6,42 @@ const meta: Meta<typeof Checkbox> = {
   title: 'Web/Components/Checkbox',
   component: Checkbox,
   parameters: { layout: 'padded', docs: { page: null } },
+  argTypes: {
+    checked: { control: false },
+    defaultChecked: { control: 'boolean' },
+    indeterminate: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
+    ariaLabel: { control: 'text' },
+    onChange: { action: 'changed' },
+    style: { control: false },
+  },
+  args: {
+    defaultChecked: false,
+    indeterminate: false,
+    disabled: false,
+    label: 'Enable setting',
+    ariaLabel: '',
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Checkbox>;
+
+export const Playground: Story = {
+  render: (args) => {
+    const { label, ariaLabel, ...rest } = args;
+    const effectiveLabel = label ? label : undefined;
+    const effectiveAriaLabel = effectiveLabel == null ? ariaLabel : undefined;
+
+    return (
+      <Stack gap="nano">
+        <Checkbox {...rest} label={effectiveLabel} ariaLabel={effectiveAriaLabel} checked={undefined} />
+      </Stack>
+    );
+  },
+};
 
 export const Basic: Story = {
   render: () => {

@@ -31,25 +31,11 @@ A custom single-select dropdown with keyboard navigation. Replaces the native `<
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `options` | `SelectOption[]` | — | List of options |
-| `value` | `string` | — | Controlled selected value |
-| `onChange` | `(value: string) => void` | — | Called when selection changes |
-| `placeholder` | `string` | — | Shown when no option is selected |
-| `disabled` | `boolean` | `false` | Disables the trigger and dropdown |
-| `id` | `string` | — | Links to a `<Field htmlFor>` label |
-| `className` | `string` | — | Additional CSS class |
+Use the controls below to tweak props and see how the component responds.
 
-### SelectOption shape
+<Canvas of={SelectStories.Playground} />
 
-```ts
-type SelectOption = {
-  value: string;
-  label: string;
-  disabled?: boolean;
-};
-```
+<Controls of={SelectStories.Playground} />
 
 ---
 

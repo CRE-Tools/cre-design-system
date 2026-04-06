@@ -6,11 +6,38 @@ const meta: Meta<typeof Pagination> = {
   title: 'Web/Components/Pagination',
   component: Pagination,
   parameters: { layout: 'centered', docs: { page: null } },
+  argTypes: {
+    page: { control: 'number' },
+    totalPages: { control: 'number' },
+    onPageChange: { action: 'changed' },
+    className: { control: false },
+    style: { control: false },
+  },
+  args: {
+    page: 5,
+    totalPages: 12,
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Pagination>;
+
+export const Playground: Story = {
+  render: (args) => {
+    const [page, setPage] = useState(args.page);
+    return (
+      <Pagination
+        {...args}
+        page={page}
+        onPageChange={(next) => {
+          args.onPageChange?.(next);
+          setPage(next);
+        }}
+      />
+    );
+  },
+};
 
 /** Interactive pagination — Previous and Next both enabled. */
 export const Basic: Story = {

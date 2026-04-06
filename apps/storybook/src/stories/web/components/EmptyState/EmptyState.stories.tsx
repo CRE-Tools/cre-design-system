@@ -6,11 +6,35 @@ const meta: Meta<typeof EmptyState> = {
   title: 'Web/Components/EmptyState',
   component: EmptyState,
   parameters: { layout: 'centered', docs: { page: null } },
+  argTypes: {
+    title: { control: 'text' },
+    description: { control: 'text' },
+    actions: { control: false },
+    className: { control: false },
+    style: { control: false },
+  },
+  args: {
+    title: 'Nothing here',
+    description: 'This area can show guidance and an optional action.',
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof EmptyState>;
+
+export const Playground: Story = {
+  render: (args) => (
+    <EmptyState
+      {...args}
+      actions={
+        <Stack gap="nano">
+          <Button>Primary action</Button>
+        </Stack>
+      }
+    />
+  ),
+};
 
 export const Basic: Story = {
   render: () => (

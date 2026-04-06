@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as TableStories from './Table.stories';
 
 <Meta of={TableStories} />
@@ -52,32 +52,11 @@ Pass an `emptyState` node to replace the default "No results." message.
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `columns` | `TableColumn<Row>[]` | — | Column definitions |
-| `rows` | `Row[]` | — | Data rows |
-| `getRowId` | `(row: Row, index: number) => string` | Index as string | Stable row identity for selection |
-| `onRowClick` | `(row: Row) => void` | — | Makes rows clickable |
-| `sortable` | `boolean` | `true` | Enables sort buttons for columns that have a `sort` function |
-| `selectableRows` | `boolean` | `false` | Adds a checkbox column |
-| `selectedRowIds` | `string[]` | — | Controlled selection |
-| `defaultSelectedRowIds` | `string[]` | — | Uncontrolled initial selection |
-| `onSelectedRowIdsChange` | `(ids: string[]) => void` | — | Called on every selection change |
-| `emptyState` | `React.ReactNode` | `<Text>No results.</Text>` | Shown when `rows` is empty |
-| `className` | `string` | — | Applied to the outer wrapper |
-| `style` | `React.CSSProperties` | — | Inline styles |
+Use the controls below to tweak props and see how the component responds.
 
-### TableColumn shape
+<Canvas of={TableStories.Playground} />
 
-```ts
-type TableColumn<Row> = {
-  key: string;       // Unique column identifier (used for sorting state)
-  header: React.ReactNode;
-  width?: number | string;
-  render?: (row: Row) => React.ReactNode;  // Custom cell renderer
-  sort?: (a: Row, b: Row) => number;       // Comparator for sort
-};
-```
+<Controls of={TableStories.Playground} />
 
 ---
 

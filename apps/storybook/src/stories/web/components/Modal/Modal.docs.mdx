@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ModalStories from './Modal.stories';
 
 <Meta of={ModalStories} />
@@ -28,15 +28,11 @@ Click the button to open the modal. Dismiss by clicking outside or pressing Esca
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | — | Controls visibility. When `false`, the modal is unmounted. |
-| `title` | `React.ReactNode` | — | Header title. A string renders as `Heading level={4}` with an `id` for `aria-labelledby`. |
-| `children` | `React.ReactNode` | — | Body content |
-| `footer` | `React.ReactNode` | — | Footer slot — typically action buttons |
-| `onClose` | `() => void` | — | Called when the overlay is clicked or Escape is pressed |
-| `dismissible` | `boolean` | `true` | If false, clicking outside or pressing Escape does nothing |
-| `className` | `string` | — | Applied to the modal panel |
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={ModalStories.Playground} />
+
+<Controls of={ModalStories.Playground} />
 
 ---
 

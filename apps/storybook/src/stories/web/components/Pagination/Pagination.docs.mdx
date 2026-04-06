@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as PaginationStories from './Pagination.stories';
 
 <Meta of={PaginationStories} />
@@ -39,13 +39,11 @@ When there is only one page, both buttons are disabled.
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `page` | `number` | — | Current page number (1-indexed) |
-| `totalPages` | `number` | — | Total number of pages |
-| `onPageChange` | `(page: number) => void` | — | Called with the new page number when Previous or Next is clicked |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={PaginationStories.Playground} />
+
+<Controls of={PaginationStories.Playground} />
 
 ---
 

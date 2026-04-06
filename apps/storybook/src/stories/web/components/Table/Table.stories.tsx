@@ -20,11 +20,63 @@ const meta: Meta<typeof Table<Row>> = {
   title: 'Web/Components/Table',
   component: Table,
   parameters: { layout: 'padded', docs: { page: null } },
+  argTypes: {
+    columns: { control: false },
+    rows: { control: false },
+    getRowId: { control: false },
+    onRowClick: { action: 'rowClicked' },
+    selectableRows: { control: 'boolean' },
+    selectedRowIds: { control: false },
+    defaultSelectedRowIds: { control: false },
+    onSelectedRowIdsChange: { action: 'selectionChanged' },
+    emptyState: { control: false },
+    sortable: { control: 'boolean' },
+    className: { control: false },
+    style: { control: false },
+  },
+  args: {
+    selectableRows: false,
+    sortable: true,
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Table<Row>>;
+
+export const Playground: Story = {
+  render: (args) => {
+    const columns = useMemo(
+      () => [
+        { key: 'name', header: 'Name', sort: (a: Row, b: Row) => a.name.localeCompare(b.name) },
+        { key: 'status', header: 'Status' },
+        { key: 'count', header: 'Count', sort: (a: Row, b: Row) => a.count - b.count },
+      ],
+      []
+    );
+
+    const [selected, setSelected] = useState<string[]>(['r2']);
+
+    return (
+      <Card padding="none">
+        <Table
+          {...args}
+          columns={columns}
+          rows={rows}
+          getRowId={(r: Row) => r.id}
+          selectedRowIds={args.selectableRows ? selected : undefined}
+          onSelectedRowIdsChange={(ids) => {
+            args.onSelectedRowIdsChange?.(ids);
+            setSelected(ids);
+          }}
+          onRowClick={(row) => {
+            args.onRowClick?.(row);
+          }}
+        />
+      </Card>
+    );
+  },
+};
 
 export const Basic: Story = {
   render: () => {

@@ -6,11 +6,46 @@ const meta: Meta<typeof Card> = {
   title: 'Web/Components/Card',
   component: Card,
   parameters: { layout: 'padded', docs: { page: null } },
+  argTypes: {
+    header: { control: false },
+    footer: { control: false },
+    children: { control: false },
+    padding: { control: 'text' },
+    variant: { control: 'text' },
+    className: { control: false },
+    style: { control: false },
+  },
+  args: {
+    padding: 'micro',
+    variant: 'raised',
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Card>;
+
+export const Playground: Story = {
+  render: (args) => (
+    <Card
+      {...args}
+      header={
+        <Inline align="center" justify="space-between" wrap>
+          <Heading level={4}>Card title</Heading>
+          <Button>Action</Button>
+        </Inline>
+      }
+      footer={<Text as="p" tone="muted">Footer content</Text>}
+    >
+      <Stack gap="nano">
+        <Text as="p">Grouped content goes here.</Text>
+        <Text as="p" tone="muted">
+          Use Card for metrics, forms, tables, or details.
+        </Text>
+      </Stack>
+    </Card>
+  ),
+};
 
 export const Basic: Story = {
   render: () => (

@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ControlsRowStories from './ControlsRow.stories';
 
 <Meta of={ControlsRowStories} />
@@ -25,14 +25,11 @@ A toolbar layout primitive. Distributes content between a left group and a right
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `left` | `React.ReactNode` | — | Content anchored to the left group |
-| `right` | `React.ReactNode` | — | Content anchored to the right group |
-| `gap` | `CreSpace` | `'micro'` | Outer gap between the two groups (used by the outer Inline) |
-| `wrap` | `boolean` | `true` | Whether groups wrap onto a new line on small viewports |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={ControlsRowStories.Playground} />
+
+<Controls of={ControlsRowStories.Playground} />
 
 ---
 

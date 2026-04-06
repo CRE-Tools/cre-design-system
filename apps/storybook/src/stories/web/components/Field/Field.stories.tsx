@@ -6,11 +6,41 @@ const meta: Meta<typeof Field> = {
   title: 'Web/Components/Field',
   component: Field,
   parameters: { layout: 'padded', docs: { page: null } },
+  argTypes: {
+    label: { control: 'text' },
+    description: { control: 'text' },
+    error: { control: 'text' },
+    required: { control: 'boolean' },
+    htmlFor: { control: 'text' },
+    children: { control: false },
+    className: { control: false },
+    style: { control: false },
+  },
+  args: {
+    label: 'Label',
+    description: 'This is help text',
+    error: '',
+    required: false,
+    htmlFor: 'field-playground',
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Field>;
+
+export const Playground: Story = {
+  render: (args) => {
+    return (
+      <Field
+        {...args}
+        error={args.error ? args.error : undefined}
+      >
+        <Input id={args.htmlFor} placeholder="Type…" />
+      </Field>
+    );
+  },
+};
 
 export const WithInput: Story = {
   render: () => {
