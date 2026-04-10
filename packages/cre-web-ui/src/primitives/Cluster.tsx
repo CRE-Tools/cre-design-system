@@ -42,3 +42,4 @@ export function Cluster<T extends React.ElementType = 'div'>({
     </Component>
   );
 }
+Cluster.displayName = 'Cluster';

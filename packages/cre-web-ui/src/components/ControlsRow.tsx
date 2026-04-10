@@ -33,3 +33,4 @@ export function ControlsRow({ left, right, gap = 'micro', wrap = true, className
     </Box>
   );
 }
+ControlsRow.displayName = 'ControlsRow';

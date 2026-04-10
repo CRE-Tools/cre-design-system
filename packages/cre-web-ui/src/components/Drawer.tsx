@@ -174,3 +174,4 @@ export function Drawer({
     </Box>
   );
 }
+Drawer.displayName = 'Drawer';

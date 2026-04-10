@@ -104,3 +104,4 @@ export function Input({
     </Box>
   );
 }
+Input.displayName = 'Input';

@@ -59,3 +59,4 @@ export function Container<T extends React.ElementType = 'div'>({
     </Component>
   );
 }
+Container.displayName = 'Container';

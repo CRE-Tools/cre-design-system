@@ -171,3 +171,4 @@ export function Button({
     </Box>
   );
 }
+Button.displayName = 'Button';

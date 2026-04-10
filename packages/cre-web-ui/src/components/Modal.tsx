@@ -89,3 +89,4 @@ export function Modal({ open, title, children, footer, onClose, dismissible = tr
     </Box>
   );
 }
+Modal.displayName = 'Modal';

@@ -44,3 +44,4 @@ export function Inline<T extends React.ElementType = 'div'>({
     </Component>
   );
 }
+Inline.displayName = 'Inline';

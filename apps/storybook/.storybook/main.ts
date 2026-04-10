@@ -14,6 +14,10 @@ const config: StorybookConfig = {
     const existing = viteConfig.plugins ?? [];
     return {
       ...viteConfig,
+      esbuild: {
+        ...((viteConfig as any).esbuild ?? {}),
+        keepNames: true,
+      },
       plugins: [
         ...existing,
         {

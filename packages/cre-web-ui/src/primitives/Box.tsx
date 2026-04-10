@@ -17,3 +17,5 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps<'div'>>(function Bo
     </Component>
   );
 }) as <T extends React.ElementType = 'div'>(props: BoxProps<T> & { ref?: React.ForwardedRef<HTMLDivElement> }) => React.ReactElement;
+
+(Box as any).displayName = 'Box';

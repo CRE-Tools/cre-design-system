@@ -38,3 +38,4 @@ export function Pagination({ page, totalPages, onPageChange, className, style }:
     </Box>
   );
 }
+Pagination.displayName = 'Pagination';

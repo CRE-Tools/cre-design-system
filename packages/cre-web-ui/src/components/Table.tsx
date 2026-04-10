@@ -290,3 +290,4 @@ export function Table<Row>({
     </Box>
   );
 }
+Table.displayName = 'Table';

@@ -62,3 +62,4 @@ export function Surface<T extends React.ElementType = 'div'>({
     </Component>
   );
 }
+Surface.displayName = 'Surface';

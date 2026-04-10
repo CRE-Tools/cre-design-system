@@ -93,3 +93,4 @@ export function CreThemeProvider({
     </CreThemeContext.Provider>
   );
 }
+CreThemeProvider.displayName = 'CreThemeProvider';
