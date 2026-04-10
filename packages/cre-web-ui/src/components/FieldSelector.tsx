@@ -231,3 +231,4 @@ export function FieldSelector({
     </div>
   );
 }
+FieldSelector.displayName = 'FieldSelector';

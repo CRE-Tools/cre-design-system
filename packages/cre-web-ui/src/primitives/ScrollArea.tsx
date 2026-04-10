@@ -33,3 +33,4 @@ export function ScrollArea<T extends React.ElementType = 'div'>({
     </Component>
   );
 }
+ScrollArea.displayName = 'ScrollArea';

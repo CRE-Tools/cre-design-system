@@ -41,3 +41,4 @@ export function Stack<T extends React.ElementType = 'div'>({
     </Component>
   );
 }
+Stack.displayName = 'Stack';

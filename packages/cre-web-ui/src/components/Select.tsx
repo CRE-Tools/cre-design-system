@@ -333,3 +333,4 @@ export function Select({
     </Box>
   );
 }
+Select.displayName = 'Select';

@@ -38,3 +38,4 @@ export function EmptyState({ title, description, actions, className, style }: Em
     </Box>
   );
 }
+EmptyState.displayName = 'EmptyState';

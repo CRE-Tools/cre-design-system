@@ -45,3 +45,4 @@ export function Heading({ level = 2, className, style, children, ...rest }: Head
     </Text>
   );
 }
+Heading.displayName = 'Heading';

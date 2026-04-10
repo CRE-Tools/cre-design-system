@@ -500,3 +500,4 @@ export function DateRangeFilter({
     </div>
   );
 }
+DateRangeFilter.displayName = 'DateRangeFilter';

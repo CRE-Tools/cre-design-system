@@ -56,3 +56,4 @@ export function Grid<T extends React.ElementType = 'div'>({
     </Component>
   );
 }
+Grid.displayName = 'Grid';

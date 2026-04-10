@@ -72,3 +72,4 @@ export function Text<T extends React.ElementType = 'span'>({
     </Component>
   );
 }
+Text.displayName = 'Text';

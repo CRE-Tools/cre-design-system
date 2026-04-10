@@ -37,3 +37,4 @@ export function IconSlot({
     </span>
   );
 }
+IconSlot.displayName = 'IconSlot';

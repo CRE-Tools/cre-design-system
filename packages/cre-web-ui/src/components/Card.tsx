@@ -49,3 +49,4 @@ export function Card({
     </Box>
   );
 }
+Card.displayName = 'Card';

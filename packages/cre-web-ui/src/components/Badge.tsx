@@ -68,3 +68,4 @@ export function Badge({ variant = 'neutral', children, className }: BadgeProps) 
     </Box>
   );
 }
+Badge.displayName = 'Badge';
