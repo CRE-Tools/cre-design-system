@@ -1,0 +1,39 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as IconSlotStories from './IconSlot.stories';
+
+<Meta of={IconSlotStories} />
+
+# IconSlot
+
+A fixed-size, `aria-hidden` flex container that keeps icons consistently sized and aligned with Button's icon sizing and padding tokens. Use it when you need a standalone icon aligned with text or other elements.
+
+---
+
+## When to use
+
+- Placing an icon beside a Text label outside of a Button.
+- Status indicators, decorative markers, or icon-only list prefixes.
+- Do **not** use IconSlot inside Button — Button already manages icon slots via `leadingIcon` / `trailingIcon` props.
+
+---
+
+## Example
+
+<Canvas of={IconSlotStories.Basic} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `number` | CSS var default | Override icon box size in px |
+| `padding` | `number` | CSS var default | Override padding around the icon in px |
+| `children` | `React.ReactNode` | — | The icon element |
+
+---
+
+## Notes
+
+- `IconSlot` renders a `<span>` with `aria-hidden="true"` — the icon is purely decorative. Ensure the parent element has accessible text.
+- Default size and padding are driven by `--cre-button-icon-size` and `--cre-button-icon-padding` CSS variables, keeping them visually consistent with Button icons.

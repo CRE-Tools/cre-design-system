@@ -1,0 +1,57 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as GridStories from './Grid.stories';
+
+<Meta of={GridStories} />
+
+# Grid
+
+CSS Grid layout primitive. Two modes: fixed column count or responsive `auto-fit` based on a minimum item width.
+
+---
+
+## When to use
+
+- Dashboard stat cards or metric tiles that should reflow as the viewport narrows.
+- Equal-width column layouts (form rows, image galleries).
+- Any scenario where Stack or Inline don't give you 2D control.
+
+---
+
+## Example
+
+<Canvas of={GridStories.ResponsiveCards} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | HTML element to render |
+| `columns` | `number` | — | Fixed column count. Mutually exclusive with `minItemWidth`. |
+| `minItemWidth` | `number` | — | Minimum item width in px. Grid uses `auto-fit` + `minmax`. |
+| `gap` | `CreSpace` | `'micro'` | Gap between cells — references `--cre-space-*` tokens |
+| `align` | `React.CSSProperties['alignItems']` | — | Cross-axis alignment per row |
+| `justify` | `React.CSSProperties['justifyContent']` | — | Main-axis alignment |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+---
+
+## Responsive vs fixed
+
+Use `minItemWidth` when you want items to collapse from multi-column to single-column automatically:
+
+```tsx
+<Grid minItemWidth={240} gap="micro">
+  {items.map(item => <StatCard key={item.id} {...item} />)}
+</Grid>
+```
+
+Use `columns` when you need a strict, fixed layout:
+
+```tsx
+<Grid columns={3} gap="nano">
+  <FormField /><FormField /><FormField />
+</Grid>
+```

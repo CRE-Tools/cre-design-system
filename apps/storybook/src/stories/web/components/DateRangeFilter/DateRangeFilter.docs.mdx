@@ -1,0 +1,56 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as DateRangeFilterStories from './DateRangeFilter.stories';
+
+<Meta of={DateRangeFilterStories} />
+
+# DateRangeFilter
+
+A compact date-range picker rendered as a trigger button with a lightweight calendar popover.
+
+It supports both **controlled** (`value`) and **uncontrolled** (`defaultValue`) usage, and reports changes as `{ startMs, endMs }` where values are **milliseconds since epoch**.
+
+---
+
+## When to use
+
+- Filter lists or tables by a created/updated date.
+- Drive analytics or time-window queries.
+- Use `triggerVariant="icon"` when space is constrained (e.g. toolbar / table header).
+
+---
+
+## Behaviour
+
+- First day click sets `startMs`.
+- Second day click sets `endMs`.
+- Clicking a day when a full range is already set starts a new range (resets `endMs` to `null`).
+- If `startMs > endMs`, the component normalizes the range so `startMs <= endMs`.
+- The popover closes on outside click or `Escape`.
+
+---
+
+## Playground
+
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={DateRangeFilterStories.Playground} />
+
+<Controls of={DateRangeFilterStories.Playground} />
+
+---
+
+## Uncontrolled usage
+
+<Canvas of={DateRangeFilterStories.UncontrolledDefaultValue} />
+
+---
+
+## Normalization
+
+<Canvas of={DateRangeFilterStories.NormalizesRange} />
+
+---
+
+## All states
+
+<Canvas of={DateRangeFilterStories.AllStates} />

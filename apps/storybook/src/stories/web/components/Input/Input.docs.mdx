@@ -1,0 +1,61 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as InputStories from './Input.stories';
+
+<Meta of={InputStories} />
+
+# Input
+
+A text input field with optional leading and trailing icon slots. Always pair Input with a `Field` component to provide a label, description, and error state.
+
+---
+
+## When to use
+
+- Single-line text entry — search queries, names, emails, filters.
+- Always wrap in `Field` when presenting to end users (label + error state).
+- For multi-option selection use `Select`; for boolean state use `Checkbox`.
+
+---
+
+## Basic
+
+<Canvas of={InputStories.Basic} />
+
+---
+
+## With leading and trailing slots
+
+The `leading` and `trailing` props accept any React node — typically a small SVG icon or a keyboard shortcut hint.
+
+<Canvas of={InputStories.WithLeadingTrailing} />
+
+---
+
+## Disabled
+
+<Canvas of={InputStories.Disabled} />
+
+---
+
+## Props
+
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={InputStories.Playground} />
+
+<Controls of={InputStories.Playground} />
+
+---
+
+## With Field
+
+```tsx
+<Field label="Email" htmlFor="email-input" error={error}>
+  <Input
+    id="email-input"
+    value={email}
+    onChange={setEmail}
+    placeholder="you@example.com"
+  />
+</Field>
+```

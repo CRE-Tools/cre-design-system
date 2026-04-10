@@ -1,0 +1,57 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as InlineStories from './InlineAndCluster.stories';
+
+<Meta of={InlineStories} />
+
+# Inline + Cluster
+
+Two horizontal layout primitives for different wrapping behaviours.
+
+**Inline** is a non-wrapping (by default) flex row — use it for toolbars, button groups, and labelled controls where you want to control wrapping explicitly.
+
+**Cluster** always wraps — use it for tag clouds, chip groups, and pill lists where items should reflow naturally at any width.
+
+---
+
+## When to use Inline
+
+- Toolbar layouts with left/right groups.
+- Labelled controls — icon + text, avatar + name.
+- Flex rows where you need `justify` and `align` control.
+- Navigation links that should not wrap.
+
+## When to use Cluster
+
+- Tags and filter chips that can overflow to multiple lines.
+- Option groups where items have variable widths.
+- Any bag-of-items UI where order matters but layout is fluid.
+
+---
+
+## Example
+
+<Canvas of={InlineStories.Grouping} />
+
+---
+
+## Inline props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | HTML element to render |
+| `gap` | `CreSpace` | `'micro'` | Spacing between items |
+| `align` | `React.CSSProperties['alignItems']` | `'flex-start'` | Cross-axis alignment |
+| `justify` | `React.CSSProperties['justifyContent']` | `'flex-start'` | Main-axis alignment |
+| `wrap` | `boolean` | `false` | Whether items can wrap |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+## Cluster props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | HTML element to render |
+| `gap` | `CreSpace` | `'nano'` | Spacing between items |
+| `align` | `React.CSSProperties['alignItems']` | `'center'` | Cross-axis alignment |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |

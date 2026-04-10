@@ -1,0 +1,68 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as TypographyStories from './TextAndHeading.stories';
+
+<Meta of={TypographyStories} />
+
+# Text + Heading
+
+Typography primitives. `Text` covers body copy, captions, and labels. `Heading` covers document headings (`h1`–`h6`). Both are polymorphic and fully theme-driven.
+
+---
+
+## When to use Text
+
+- Body copy inside cards, drawers, modals.
+- Helper text, descriptions, and captions.
+- Inline labels for icon groups or metadata.
+- Prefer `Text` over raw `<p>` or `<span>` so tone and variant are token-driven.
+
+## When to use Heading
+
+- Section headings inside a page or panel.
+- Card titles, drawer titles.
+- Use `level` to control the semantic element (`h1`–`h6`) and the visual scale automatically follows.
+
+---
+
+## Example
+
+<Canvas of={TypographyStories.Typography} />
+
+---
+
+## Text props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'span'` | HTML element to render |
+| `variant` | `'body' \| 'caption' \| 'label'` | `'body'` | Typography scale and weight |
+| `tone` | `'default' \| 'muted' \| 'subtle'` | `'default'` | Colour from semantic text tokens |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+### Variants
+
+| Variant | Size | Weight | Use case |
+|---------|------|--------|----------|
+| `body` | `tiny` | 400 | Default paragraph text |
+| `caption` | `pico` | 400 | Helper text, timestamps, descriptions |
+| `label` | `micro` | 600 | Small section headings, field labels |
+
+### Tones
+
+| Tone | CSS variable | Use case |
+|------|-------------|----------|
+| `default` | `--cre-color-text` | Primary content |
+| `muted` | `--cre-color-text-muted` | Secondary / supporting text |
+| `subtle` | `--cre-color-text-subtle` | Placeholders, tertiary context |
+
+---
+
+## Heading props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | — | Semantic heading level and visual size |
+| `id` | `string` | — | For `aria-labelledby` references |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |

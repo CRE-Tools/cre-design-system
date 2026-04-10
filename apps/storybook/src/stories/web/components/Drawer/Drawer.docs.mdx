@@ -1,0 +1,55 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as DrawerStories from './Drawer.stories';
+
+<Meta of={DrawerStories} />
+
+# Drawer
+
+A side panel overlay. Drawer slides in from the right (or left) while the background remains visible and interactive — the user can see context while focused on a detail task.
+
+---
+
+## When to use
+
+- Displaying detail views for a selected table row.
+- Inline editors (edit a record without navigating away).
+- Filter panels for a data table.
+- Do **not** use Drawer for confirmations that require the user's full attention — use `Modal` instead.
+
+---
+
+## Default (right side, slide motion)
+
+<Canvas of={DrawerStories.Basic} />
+
+---
+
+## Left side
+
+<Canvas of={DrawerStories.LeftSide} />
+
+---
+
+## Pop motion
+
+`motion="pop"` scales in from near the trigger instead of sliding from an edge. Suitable for lighter, more transient panels.
+
+<Canvas of={DrawerStories.PopMotion} />
+
+---
+
+## Props
+
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={DrawerStories.Playground} />
+
+<Controls of={DrawerStories.Playground} />
+
+---
+
+## Accessibility
+
+- Renders as `role="dialog"` with `aria-modal="true"`.
+- Escape key triggers `onClose` when `dismissible` is true.
+- The body is wrapped in a `ScrollArea` — long content scrolls within the panel without affecting the page.

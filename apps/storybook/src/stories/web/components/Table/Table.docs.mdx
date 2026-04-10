@@ -1,0 +1,74 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as TableStories from './Table.stories';
+
+<Meta of={TableStories} />
+
+# Table
+
+A data table with optional column sorting and row selection. Table is purely presentational — all data and state live in the parent. Pair with `Card`, `ControlsRow`, `Pagination`, and `EmptyState` to build complete data pages.
+
+---
+
+## When to use
+
+- Displaying a list of records with multiple attributes per row.
+- Sortable columns for comparing values.
+- Row selection for bulk operations.
+- Do **not** use Table for key/value pairs — use a `Stack` of `Field` components instead.
+
+---
+
+## Basic (with sorting)
+
+Columns with a `sort` function render a clickable header button. Click once to sort ascending, again for descending.
+
+<Canvas of={TableStories.Basic} />
+
+---
+
+## Custom cell rendering
+
+The `render` function on a column receives the full row and can return any React node. Use it for badges, actions, or formatted values.
+
+<Canvas of={TableStories.CustomCells} />
+
+---
+
+## Empty state
+
+Pass an `emptyState` node to replace the default "No results." message.
+
+<Canvas of={TableStories.Empty} />
+
+---
+
+## Selectable rows
+
+`selectableRows` adds a checkbox column. Selection can be controlled (`selectedRowIds` + `onSelectedRowIdsChange`) or uncontrolled (`defaultSelectedRowIds`).
+
+<Canvas of={TableStories.SelectableRows} />
+
+---
+
+## Props
+
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={TableStories.Playground} />
+
+<Controls of={TableStories.Playground} />
+
+---
+
+## Full data page pattern
+
+```tsx
+<ControlsRow
+  left={<><Input value={query} onChange={setQuery} /><Select ... /></>}
+  right={<Button>Export</Button>}
+/>
+<Card padding="none">
+  <Table columns={columns} rows={pageRows} emptyState={<EmptyState ... />} />
+</Card>
+<Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+```

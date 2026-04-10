@@ -1,0 +1,40 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as ScrollAreaStories from './ScrollArea.stories';
+
+<Meta of={ScrollAreaStories} />
+
+# ScrollArea
+
+A minimal overflow wrapper with `overflow: auto` and `-webkit-overflow-scrolling: touch` for smooth momentum scroll on iOS. Use it wherever content may overflow a bounded container.
+
+---
+
+## When to use
+
+- The body of a Drawer or Modal with potentially long content.
+- A data panel with a fixed height.
+- Any `height`-constrained container holding a variable-length list.
+- Do **not** use ScrollArea on the page root — let the browser handle page scroll.
+
+---
+
+## Example
+
+<Canvas of={ScrollAreaStories.Overflow} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | HTML element to render |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Required for setting height; e.g. `style={{ height: '100%' }}` |
+
+---
+
+## Notes
+
+- ScrollArea is intentionally minimal — it only sets `overflow: auto` and the iOS touch flag. You control height via `style` or a parent constraint.
+- To fill the height of a parent Surface or Card, set `style={{ height: '100%' }}` on the ScrollArea and `padding="none"` on the parent.

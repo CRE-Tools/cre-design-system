@@ -1,0 +1,72 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+
+# Unity generated
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity/Visual Studio/Rider
+.vs/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb.meta
+*.log
+
+# Unity meta files for excluded dirs
+[Ll]ibrary.meta
+[Tt]emp.meta
+[Oo]bj.meta
+[Bb]uild.meta
+[Bb]uilds.meta
+[Ll]ogs.meta
+[Uu]ser[Ss]ettings.meta
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / pnpm
+node_modules/
+.pnpm-store/
+.pnp.*
+
+# Storybook
+storybook-static/
+
+# Vite
+dist/
+
+# Env
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# AI
+.claude/
+CLAUDE.md
+AGENTS.md
+tasks/
+ARCHITECTURE.md

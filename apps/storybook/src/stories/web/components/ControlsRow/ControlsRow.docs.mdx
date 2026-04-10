@@ -1,0 +1,60 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as ControlsRowStories from './ControlsRow.stories';
+
+<Meta of={ControlsRowStories} />
+
+# ControlsRow
+
+A toolbar layout primitive. Distributes content between a left group and a right group using `justify-content: space-between`. Items within each group flow in an `Inline` with `nano` gap.
+
+---
+
+## When to use
+
+- Table toolbars — search/filter controls on the left, action buttons on the right.
+- Page headers — title/breadcrumbs on the left, primary actions on the right.
+- Any layout that needs consistent left-right distribution at full width.
+
+---
+
+## Example
+
+<Canvas of={ControlsRowStories.Basic} />
+
+---
+
+## Props
+
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={ControlsRowStories.Playground} />
+
+<Controls of={ControlsRowStories.Playground} />
+
+---
+
+## Data page pattern
+
+ControlsRow is designed to sit above a Card + Table:
+
+```tsx
+<Stack gap="micro">
+  <ControlsRow
+    left={
+      <>
+        <Input value={query} onChange={setQuery} placeholder="Search" />
+        <Select value={status} onChange={setStatus} options={statusOptions} />
+      </>
+    }
+    right={
+      <>
+        <Button onClick={handleReset}>Reset</Button>
+        <Button onClick={handleExport}>Export</Button>
+      </>
+    }
+  />
+  <Card padding="none">
+    <Table ... />
+  </Card>
+</Stack>
+```

@@ -1,0 +1,50 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import * as StackStories from './Stack.stories';
+
+<Meta of={StackStories} />
+
+# Stack
+
+Vertical flex layout with a token-driven gap between items. The default building block for stacking content sections, form fields, and card bodies.
+
+---
+
+## When to use
+
+- Stacking a series of elements top-to-bottom with consistent spacing.
+- Composing a form (Field components flow naturally in a Stack).
+- Laying out content inside a Card, Surface, or Drawer.
+- Use `Inline` for horizontal arrangements; `Grid` for grid layouts.
+
+---
+
+## Example
+
+<Canvas of={StackStories.SpacingAndAlignment} />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `React.ElementType` | `'div'` | HTML element to render |
+| `gap` | `CreSpace` | `'micro'` | Spacing between items — references `--cre-space-*` tokens |
+| `align` | `React.CSSProperties['alignItems']` | `'stretch'` | Cross-axis alignment |
+| `justify` | `React.CSSProperties['justifyContent']` | `'flex-start'` | Main-axis alignment |
+| `className` | `string` | — | Additional CSS class |
+| `style` | `React.CSSProperties` | — | Inline styles |
+
+---
+
+## Spacing scale
+
+`gap` maps directly to the `--cre-space-*` token family. Commonly used values:
+
+| Token | Use |
+|-------|-----|
+| `quark` | Tightest — label + input, badge + text |
+| `nano` | Within a group — inline items, list rows |
+| `micro` | Between groups — card sections, form fields |
+| `small` | Page sections |
+| `large` | Top-level layout gaps |

@@ -1,0 +1,61 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as PaginationStories from './Pagination.stories';
+
+<Meta of={PaginationStories} />
+
+# Pagination
+
+Previous / Next navigation for paginated data sets. Renders a simple control row with a page indicator between the two buttons.
+
+---
+
+## When to use
+
+- At the bottom of a Table to navigate pages of results.
+- Anywhere you split a list into pages and need simple navigation controls.
+- For cursor-based APIs you can show only Previous/Next and drive state externally.
+
+---
+
+## Interactive
+
+<Canvas of={PaginationStories.Basic} />
+
+---
+
+## Edge cases
+
+The Previous button is disabled on the first page; Next is disabled on the last page.
+
+<Canvas of={PaginationStories.FirstPage} />
+
+<Canvas of={PaginationStories.LastPage} />
+
+When there is only one page, both buttons are disabled.
+
+<Canvas of={PaginationStories.SinglePage} />
+
+---
+
+## Props
+
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={PaginationStories.Playground} />
+
+<Controls of={PaginationStories.Playground} />
+
+---
+
+## Pattern: Table + Pagination
+
+```tsx
+<Stack gap="nano">
+  <Card padding="none">
+    <Table columns={columns} rows={pageRows} />
+  </Card>
+  <Inline justify="flex-end">
+    <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+  </Inline>
+</Stack>
+```

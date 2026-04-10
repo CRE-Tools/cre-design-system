@@ -1,0 +1,45 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import * as CardStories from './Card.stories';
+
+<Meta of={CardStories} />
+
+# Card
+
+A structured content container with optional header and footer sections. Built on `Surface variant="raised"` with consistent padding and border radius.
+
+---
+
+## When to use
+
+- Grouping a self-contained unit of information (metric, form section, entity details).
+- Pairing with Table — wrap the table in `<Card padding="none">` to give it a surface and border.
+- Stacking multiple related content blocks inside a page.
+- Do **not** nest Card inside Card — use Surface variants for inner groupings.
+
+---
+
+## Example
+
+<Canvas of={CardStories.Basic} />
+
+---
+
+## Props
+
+Use the controls below to tweak props and see how the component responds.
+
+<Canvas of={CardStories.Playground} />
+
+<Controls of={CardStories.Playground} />
+
+---
+
+## Table inside Card
+
+The most common pattern is wrapping a Table in a Card with `padding="none"` so the table's borders align with the card edge:
+
+```tsx
+<Card padding="none" header={<Heading level={4}>Records</Heading>}>
+  <Table columns={columns} rows={rows} />
+</Card>
+```
