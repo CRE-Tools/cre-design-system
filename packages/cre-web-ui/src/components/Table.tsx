@@ -34,6 +34,11 @@ const TABLE_CSS = `
   background: var(--cre-accent-bg);
   position: sticky;
   top: 0;
+  width: var(--cre-th-width, auto);
+}
+
+[data-cre="th"][data-select-col="true"] {
+  width: 40px;
 }
 
 [data-cre="td"] {
@@ -185,7 +190,7 @@ export function Table<Row>({
         <thead>
           <tr>
             {selectableRows ? (
-              <th data-cre="th" style={{ width: 40 }}>
+              <th data-cre="th" data-select-col="true">
                 <Checkbox
                   ariaLabel="Select all rows"
                   checked={allSelected}
@@ -202,7 +207,11 @@ export function Table<Row>({
               const label = typeof c.header === 'string' ? c.header : undefined;
 
               return (
-                <th key={c.key} data-cre="th" style={{ width: c.width }}>
+                <th
+                  key={c.key}
+                  data-cre="th"
+                  style={c.width !== undefined ? { '--cre-th-width': typeof c.width === 'number' ? `${c.width}px` : c.width } as React.CSSProperties : undefined}
+                >
                   {canSort ? (
                     <button
                       type="button"
