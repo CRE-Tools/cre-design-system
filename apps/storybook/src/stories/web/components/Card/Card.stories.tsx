@@ -47,6 +47,23 @@ export const Playground: Story = {
   ),
 };
 
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => (
+    <Stack gap="micro">
+      <Card padding="micro" variant="raised">
+        <Text as="p">Raised / micro</Text>
+      </Card>
+      <Card padding="none" variant="raised">
+        <Stack gap="nano">
+          <Text as="p">Raised / none</Text>
+          <Text as="p" tone="muted">Shows content flush to edges (e.g. tables).</Text>
+        </Stack>
+      </Card>
+    </Stack>
+  ),
+};
+
 export const Basic: Story = {
   render: () => (
     <Card

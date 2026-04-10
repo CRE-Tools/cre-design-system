@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
-import { FieldSelector, flattenFields, Stack, Text, Inline } from '@cre/web-ui';
+import { FieldSelector, flattenFields, Stack, Text, Inline, Card } from '@cre/web-ui';
 
 const sampleData: Record<string, unknown>[] = [
   {
@@ -48,18 +48,20 @@ export const Playground: Story = {
     const [visibleFields, setVisibleFields] = useState<string[]>(allFields.slice(0, 3));
 
     return (
-      <Stack gap="nano" style={{ minWidth: 300 }}>
-        <Inline justify="flex-end">
-          <FieldSelector
-            fields={allFields}
-            visibleFields={visibleFields}
-            onVisibleFieldsChange={setVisibleFields}
-          />
-        </Inline>
-        <Text as="p" tone="muted">
-          Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
-        </Text>
-      </Stack>
+      <Card>
+        <Stack gap="nano">
+          <Inline justify="flex-end">
+            <FieldSelector
+              fields={allFields}
+              visibleFields={visibleFields}
+              onVisibleFieldsChange={setVisibleFields}
+            />
+          </Inline>
+          <Text as="p" tone="muted">
+            Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
+          </Text>
+        </Stack>
+      </Card>
     );
   },
 };
@@ -70,18 +72,20 @@ export const DerivedFromData: Story = {
     const [visibleFields, setVisibleFields] = useState<string[]>(allFields);
 
     return (
-      <Stack gap="nano" style={{ minWidth: 300 }}>
-        <Inline justify="flex-end">
-          <FieldSelector
-            data={sampleData}
-            visibleFields={visibleFields}
-            onVisibleFieldsChange={setVisibleFields}
-          />
-        </Inline>
-        <Text as="p" tone="muted">
-          Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
-        </Text>
-      </Stack>
+      <Card>
+        <Stack gap="nano">
+          <Inline justify="flex-end">
+            <FieldSelector
+              data={sampleData}
+              visibleFields={visibleFields}
+              onVisibleFieldsChange={setVisibleFields}
+            />
+          </Inline>
+          <Text as="p" tone="muted">
+            Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
+          </Text>
+        </Stack>
+      </Card>
     );
   },
 };
@@ -98,19 +102,21 @@ export const CustomLabelParser: Story = {
         .join(' › ');
 
     return (
-      <Stack gap="nano" style={{ minWidth: 300 }}>
-        <Inline justify="flex-end">
-          <FieldSelector
-            fields={allFields}
-            visibleFields={visibleFields}
-            onVisibleFieldsChange={setVisibleFields}
-            labelParser={labelParser}
-          />
-        </Inline>
-        <Text as="p" tone="muted">
-          Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
-        </Text>
-      </Stack>
+      <Card>
+        <Stack gap="nano">
+          <Inline justify="flex-end">
+            <FieldSelector
+              fields={allFields}
+              visibleFields={visibleFields}
+              onVisibleFieldsChange={setVisibleFields}
+              labelParser={labelParser}
+            />
+          </Inline>
+          <Text as="p" tone="muted">
+            Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
+          </Text>
+        </Stack>
+      </Card>
     );
   },
 };
@@ -120,22 +126,24 @@ export const NoFieldsAvailable: Story = {
     const [visibleFields, setVisibleFields] = useState<string[]>([]);
 
     return (
-      <Stack gap="nano" style={{ minWidth: 300 }}>
-        <Inline justify="flex-end">
-          <FieldSelector
-            {...args}
-            fields={[]}
-            visibleFields={visibleFields}
-            onVisibleFieldsChange={(next) => {
-              args.onVisibleFieldsChange?.(next);
-              setVisibleFields(next);
-            }}
-          />
-        </Inline>
-        <Text as="p" tone="muted">
-          Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
-        </Text>
-      </Stack>
+      <Card>
+        <Stack gap="nano">
+          <Inline justify="flex-end">
+            <FieldSelector
+              {...args}
+              fields={[]}
+              visibleFields={visibleFields}
+              onVisibleFieldsChange={(next) => {
+                args.onVisibleFieldsChange?.(next);
+                setVisibleFields(next);
+              }}
+            />
+          </Inline>
+          <Text as="p" tone="muted">
+            Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
+          </Text>
+        </Stack>
+      </Card>
     );
   },
 };

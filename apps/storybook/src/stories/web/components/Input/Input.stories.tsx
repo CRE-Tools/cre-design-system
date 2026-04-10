@@ -62,10 +62,42 @@ export const Basic: Story = {
 export const WithLeadingTrailing: Story = {
   render: () => {
     const [value, setValue] = useState('');
-    return <Input value={value} onChange={setValue} placeholder="Search" leading={<SearchIcon />} trailing={<span style={{ color: 'var(--cre-color-text-muted)' }}>⌘K</span>} />;
+    return (
+      <Input
+        value={value}
+        onChange={setValue}
+        placeholder="Search"
+        leading={<SearchIcon />}
+        trailing={
+          <Text as="span" tone="muted">
+            ⌘K
+          </Text>
+        }
+      />
+    );
   },
 };
 
 export const Disabled: Story = {
   render: () => <Input disabled placeholder="Disabled" />,
+};
+
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => (
+    <Stack gap="nano">
+      <Input placeholder="Default" />
+      <Input defaultValue="With value" />
+      <Input placeholder="With leading icon" leading={<SearchIcon />} />
+      <Input
+        placeholder="With trailing"
+        trailing={
+          <Text as="span" tone="muted">
+            ⌘K
+          </Text>
+        }
+      />
+      <Input disabled placeholder="Disabled" />
+    </Stack>
+  ),
 };

@@ -64,3 +64,15 @@ export const Indeterminate: Story = {
 export const Disabled: Story = {
   render: () => <Checkbox disabled label="Disabled" />,
 };
+
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => (
+    <Stack gap="nano">
+      <Checkbox checked={false} label="Unchecked" />
+      <Checkbox checked={true} label="Checked" />
+      <Checkbox indeterminate ariaLabel="Indeterminate" />
+      <Checkbox disabled label="Disabled" />
+    </Stack>
+  ),
+};

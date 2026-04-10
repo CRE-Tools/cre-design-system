@@ -62,6 +62,76 @@ export const Playground: Story = {
   },
 };
 
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => {
+    const [openRight, setOpenRight] = useState(false);
+    const [openLeft, setOpenLeft] = useState(false);
+    const [openPop, setOpenPop] = useState(false);
+
+    return (
+      <Stack gap="micro">
+        <Inline gap="nano" wrap>
+          <Button onClick={() => setOpenRight(true)}>Open right / slide</Button>
+          <Button onClick={() => setOpenLeft(true)}>Open left / slide</Button>
+          <Button onClick={() => setOpenPop(true)}>Open right / pop</Button>
+        </Inline>
+
+        <Drawer
+          open={openRight}
+          side="right"
+          motion="slide"
+          title="Right / Slide"
+          onClose={() => setOpenRight(false)}
+          footer={
+            <Inline gap="nano" justify="flex-end" wrap>
+              <Button onClick={() => setOpenRight(false)}>Close</Button>
+            </Inline>
+          }
+        >
+          <Stack gap="nano">
+            <Text as="p">Right-side drawer with slide motion.</Text>
+          </Stack>
+        </Drawer>
+
+        <Drawer
+          open={openLeft}
+          side="left"
+          motion="slide"
+          title="Left / Slide"
+          onClose={() => setOpenLeft(false)}
+          footer={
+            <Inline gap="nano" justify="flex-end" wrap>
+              <Button onClick={() => setOpenLeft(false)}>Close</Button>
+            </Inline>
+          }
+        >
+          <Stack gap="nano">
+            <Text as="p">Left-side drawer with slide motion.</Text>
+          </Stack>
+        </Drawer>
+
+        <Drawer
+          open={openPop}
+          side="right"
+          motion="pop"
+          title="Right / Pop"
+          onClose={() => setOpenPop(false)}
+          footer={
+            <Inline gap="nano" justify="flex-end" wrap>
+              <Button onClick={() => setOpenPop(false)}>Close</Button>
+            </Inline>
+          }
+        >
+          <Stack gap="nano">
+            <Text as="p">Right-side drawer with pop motion.</Text>
+          </Stack>
+        </Drawer>
+      </Stack>
+    );
+  },
+};
+
 export const Basic: Story = {
   render: () => {
     const [open, setOpen] = useState(false);

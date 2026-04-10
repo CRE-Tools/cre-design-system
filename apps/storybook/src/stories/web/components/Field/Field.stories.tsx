@@ -42,6 +42,33 @@ export const Playground: Story = {
   },
 };
 
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => (
+    <Stack gap="micro">
+      <Field label="Label" htmlFor="allstates-default">
+        <Input id="allstates-default" placeholder="Default" />
+      </Field>
+      <Field label="With description" description="Help text" htmlFor="allstates-description">
+        <Input id="allstates-description" placeholder="Description" />
+      </Field>
+      <Field label="Required" required htmlFor="allstates-required">
+        <Input id="allstates-required" placeholder="Required" />
+      </Field>
+      <Field label="With error" error="Something is wrong" htmlFor="allstates-error">
+        <Select
+          id="allstates-error"
+          placeholder="Select…"
+          options={[
+            { value: 'a', label: 'Option A' },
+            { value: 'b', label: 'Option B' },
+          ]}
+        />
+      </Field>
+    </Stack>
+  ),
+};
+
 export const WithInput: Story = {
   render: () => {
     const [value, setValue] = useState('');

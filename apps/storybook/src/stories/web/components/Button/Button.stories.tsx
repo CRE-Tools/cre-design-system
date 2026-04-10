@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
-import { Button } from '@cre/web-ui';
+import { Button, Inline, Stack, Text } from '@cre/web-ui';
 import type { CreButtonSize } from '@cre/web-ui';
 
 // ─── Inline SVG icons (no icon library dependency) ────────────────────────────
@@ -25,18 +24,11 @@ const IconDownload = () => (
 
 // ─── Shared label helper for comparison stories ───────────────────────────────
 
-const Label = ({ children }: { children: string }) =>
-  React.createElement('div', {
-    style: {
-      fontSize: 11,
-      fontWeight: 600,
-      color: 'var(--cre-color-text-muted)',
-      letterSpacing: '0.1em',
-      textTransform: 'uppercase' as const,
-      marginTop: 20,
-      marginBottom: 8,
-    }
-  }, children);
+const SectionLabel = ({ children }: { children: string }) => (
+  <Text as="p" variant="caption" tone="muted">
+    {children}
+  </Text>
+);
 
 // ─── Meta ─────────────────────────────────────────────────────────────────────
 
@@ -87,7 +79,7 @@ export const Playground: Story = {};
 /** Button with a leading icon — use for create / add actions. */
 export const WithLeadingIcon: Story = {
   args: {
-    leadingIcon: React.createElement(IconPlus),
+    leadingIcon: <IconPlus />,
     children: 'Create new',
   },
 };
@@ -95,7 +87,7 @@ export const WithLeadingIcon: Story = {
 /** Button with a trailing icon — use for navigation / directional actions. */
 export const WithTrailingIcon: Story = {
   args: {
-    trailingIcon: React.createElement(IconArrowRight),
+    trailingIcon: <IconArrowRight />,
     children: 'Continue',
   },
 };
@@ -103,8 +95,8 @@ export const WithTrailingIcon: Story = {
 /** Button with both icons — leading for context, trailing for direction. */
 export const WithBothIcons: Story = {
   args: {
-    leadingIcon: React.createElement(IconDownload),
-    trailingIcon: React.createElement(IconArrowRight),
+    leadingIcon: <IconDownload />,
+    trailingIcon: <IconArrowRight />,
     children: 'Download file',
   },
 };
@@ -123,7 +115,7 @@ export const Disabled: Story = {
 export const DisabledWithIcon: Story = {
   args: {
     disabled: true,
-    leadingIcon: React.createElement(IconPlus),
+    leadingIcon: <IconPlus />,
     children: 'Not available',
   },
 };
@@ -136,38 +128,51 @@ export const DisabledWithIcon: Story = {
  */
 export const SizeComparison: Story = {
   parameters: { layout: 'padded' },
-  render: () =>
-    React.createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 } },
+  render: () => (
+    <Stack gap="micro" align="flex-start">
+      <SectionLabel>Regular (default)</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button size="regular">Button label</Button>
+        <Button size="regular" leadingIcon={<IconPlus />}>
+          Create new
+        </Button>
+        <Button size="regular" trailingIcon={<IconArrowRight />}>
+          Continue
+        </Button>
+        <Button size="regular" disabled>
+          Disabled
+        </Button>
+      </Inline>
 
-      React.createElement(Label, { children: 'Regular (default)' }),
-      React.createElement(
-        'div', { style: { display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' as const } },
-        React.createElement(Button, { size: 'regular', children: 'Button label' }),
-        React.createElement(Button, { size: 'regular', leadingIcon: React.createElement(IconPlus), children: 'Create new' }),
-        React.createElement(Button, { size: 'regular', trailingIcon: React.createElement(IconArrowRight), children: 'Continue' }),
-        React.createElement(Button, { size: 'regular', disabled: true, children: 'Disabled' }),
-      ),
+      <SectionLabel>Large</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button size="large">Button label</Button>
+        <Button size="large" leadingIcon={<IconPlus />}>
+          Create new
+        </Button>
+        <Button size="large" trailingIcon={<IconArrowRight />}>
+          Continue
+        </Button>
+        <Button size="large" disabled>
+          Disabled
+        </Button>
+      </Inline>
 
-      React.createElement(Label, { children: 'Large' }),
-      React.createElement(
-        'div', { style: { display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' as const } },
-        React.createElement(Button, { size: 'large', children: 'Button label' }),
-        React.createElement(Button, { size: 'large', leadingIcon: React.createElement(IconPlus), children: 'Create new' }),
-        React.createElement(Button, { size: 'large', trailingIcon: React.createElement(IconArrowRight), children: 'Continue' }),
-        React.createElement(Button, { size: 'large', disabled: true, children: 'Disabled' }),
-      ),
-
-      React.createElement(Label, { children: 'VR (extra-large)' }),
-      React.createElement(
-        'div', { style: { display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' as const } },
-        React.createElement(Button, { size: 'vr', children: 'Button label' }),
-        React.createElement(Button, { size: 'vr', leadingIcon: React.createElement(IconPlus), children: 'Create new' }),
-        React.createElement(Button, { size: 'vr', trailingIcon: React.createElement(IconArrowRight), children: 'Continue' }),
-        React.createElement(Button, { size: 'vr', disabled: true, children: 'Disabled' }),
-      ),
-    ),
+      <SectionLabel>VR (extra-large)</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button size="vr">Button label</Button>
+        <Button size="vr" leadingIcon={<IconPlus />}>
+          Create new
+        </Button>
+        <Button size="vr" trailingIcon={<IconArrowRight />}>
+          Continue
+        </Button>
+        <Button size="vr" disabled>
+          Disabled
+        </Button>
+      </Inline>
+    </Stack>
+  ),
 };
 
 // ─── All states (for QA) ──────────────────────────────────────────────────────
@@ -175,16 +180,23 @@ export const SizeComparison: Story = {
 /** All icon configurations for the default size — quick visual QA. */
 export const AllStates: Story = {
   parameters: { layout: 'padded' },
-  render: () =>
-    React.createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' } },
-      React.createElement(Button, { onClick: () => {}, children: 'Label only' }),
-      React.createElement(Button, { leadingIcon: React.createElement(IconPlus), onClick: () => {}, children: 'Leading icon' }),
-      React.createElement(Button, { trailingIcon: React.createElement(IconArrowRight), onClick: () => {}, children: 'Trailing icon' }),
-      React.createElement(Button, { leadingIcon: React.createElement(IconDownload), trailingIcon: React.createElement(IconArrowRight), onClick: () => {}, children: 'Both icons' }),
-      React.createElement(Button, { disabled: true, leadingIcon: React.createElement(IconPlus), children: 'Disabled' }),
-    ),
+  render: () => (
+    <Stack gap="nano" align="flex-start">
+      <Button onClick={() => {}}>Label only</Button>
+      <Button leadingIcon={<IconPlus />} onClick={() => {}}>
+        Leading icon
+      </Button>
+      <Button trailingIcon={<IconArrowRight />} onClick={() => {}}>
+        Trailing icon
+      </Button>
+      <Button leadingIcon={<IconDownload />} trailingIcon={<IconArrowRight />} onClick={() => {}}>
+        Both icons
+      </Button>
+      <Button disabled leadingIcon={<IconPlus />}>
+        Disabled
+      </Button>
+    </Stack>
+  ),
 };
 
 // ─── Icon alignment (spatial QA) ─────────────────────────────────────────────
@@ -195,36 +207,49 @@ export const AllStates: Story = {
  */
 export const IconAlignment: Story = {
   parameters: { layout: 'padded' },
-  render: () =>
-    React.createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 } },
+  render: () => (
+    <Stack gap="micro" align="flex-start">
+      <SectionLabel>Regular</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button size="regular">No icon</Button>
+        <Button size="regular" leadingIcon={<IconPlus />}>
+          Leading
+        </Button>
+        <Button size="regular" trailingIcon={<IconArrowRight />}>
+          Trailing
+        </Button>
+        <Button size="regular" leadingIcon={<IconDownload />} trailingIcon={<IconArrowRight />}>
+          Both
+        </Button>
+      </Inline>
 
-      React.createElement(Label, { children: 'Regular' }),
-      React.createElement(
-        'div', { style: { display: 'flex', gap: 12, alignItems: 'center' } },
-        React.createElement(Button, { size: 'regular', children: 'No icon' }),
-        React.createElement(Button, { size: 'regular', leadingIcon: React.createElement(IconPlus), children: 'Leading' }),
-        React.createElement(Button, { size: 'regular', trailingIcon: React.createElement(IconArrowRight), children: 'Trailing' }),
-        React.createElement(Button, { size: 'regular', leadingIcon: React.createElement(IconDownload), trailingIcon: React.createElement(IconArrowRight), children: 'Both' }),
-      ),
+      <SectionLabel>Large</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button size="large">No icon</Button>
+        <Button size="large" leadingIcon={<IconPlus />}>
+          Leading
+        </Button>
+        <Button size="large" trailingIcon={<IconArrowRight />}>
+          Trailing
+        </Button>
+        <Button size="large" leadingIcon={<IconDownload />} trailingIcon={<IconArrowRight />}>
+          Both
+        </Button>
+      </Inline>
 
-      React.createElement(Label, { children: 'Large' }),
-      React.createElement(
-        'div', { style: { display: 'flex', gap: 12, alignItems: 'center' } },
-        React.createElement(Button, { size: 'large', children: 'No icon' }),
-        React.createElement(Button, { size: 'large', leadingIcon: React.createElement(IconPlus), children: 'Leading' }),
-        React.createElement(Button, { size: 'large', trailingIcon: React.createElement(IconArrowRight), children: 'Trailing' }),
-        React.createElement(Button, { size: 'large', leadingIcon: React.createElement(IconDownload), trailingIcon: React.createElement(IconArrowRight), children: 'Both' }),
-      ),
-
-      React.createElement(Label, { children: 'VR' }),
-      React.createElement(
-        'div', { style: { display: 'flex', gap: 12, alignItems: 'center' } },
-        React.createElement(Button, { size: 'vr', children: 'No icon' }),
-        React.createElement(Button, { size: 'vr', leadingIcon: React.createElement(IconPlus), children: 'Leading' }),
-        React.createElement(Button, { size: 'vr', trailingIcon: React.createElement(IconArrowRight), children: 'Trailing' }),
-        React.createElement(Button, { size: 'vr', leadingIcon: React.createElement(IconDownload), trailingIcon: React.createElement(IconArrowRight), children: 'Both' }),
-      ),
-    ),
+      <SectionLabel>VR</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button size="vr">No icon</Button>
+        <Button size="vr" leadingIcon={<IconPlus />}>
+          Leading
+        </Button>
+        <Button size="vr" trailingIcon={<IconArrowRight />}>
+          Trailing
+        </Button>
+        <Button size="vr" leadingIcon={<IconDownload />} trailingIcon={<IconArrowRight />}>
+          Both
+        </Button>
+      </Inline>
+    </Stack>
+  ),
 };

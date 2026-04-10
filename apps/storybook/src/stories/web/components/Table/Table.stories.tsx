@@ -120,6 +120,48 @@ export const Playground: Story = {
   },
 };
 
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => {
+    const columns = useMemo(
+      () => [
+        { key: 'name', header: 'Name' },
+        { key: 'status', header: 'Status' },
+        { key: 'count', header: 'Count' },
+      ],
+      []
+    );
+
+    const [selected, setSelected] = useState<string[]>(['r2']);
+
+    return (
+      <Stack gap="micro">
+        <Card padding="none">
+          <Table columns={columns} rows={rows} getRowId={(r: Row) => r.id} />
+        </Card>
+        <Table
+          columns={columns}
+          rows={[]}
+          emptyState={<EmptyState title="No records" description="Empty state" />}
+        />
+        <Stack gap="nano">
+          <Card padding="none">
+            <Table
+              selectableRows
+              selectedRowIds={selected}
+              onSelectedRowIdsChange={setSelected}
+              columns={columns}
+              rows={rows}
+              getRowId={(r: Row) => r.id}
+            />
+          </Card>
+          <Text as="p" tone="muted">Selected: {selected.join(', ') || '(none)'}</Text>
+        </Stack>
+      </Stack>
+    );
+  },
+};
+
 export const Basic: Story = {
   render: () => {
     const columns = useMemo(

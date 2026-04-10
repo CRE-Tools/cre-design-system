@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
-import { Pagination } from '@cre/web-ui';
+import { Pagination, Inline, Stack, Text } from '@cre/web-ui';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Web/Components/Pagination',
@@ -66,4 +66,28 @@ export const LastPage: Story = {
 /** Single page — both Previous and Next are disabled. */
 export const SinglePage: Story = {
   render: () => <Pagination page={1} totalPages={1} onPageChange={() => {}} />,
+};
+
+export const AllStates: Story = {
+  parameters: { layout: 'centered' },
+  render: () => (
+    <Stack gap="micro">
+      <Stack gap="nano">
+        <Text as="p" variant="label">
+          Multi-page
+        </Text>
+        <Inline gap="nano" align="center" wrap>
+          <Pagination page={1} totalPages={12} onPageChange={() => {}} />
+          <Pagination page={5} totalPages={12} onPageChange={() => {}} />
+          <Pagination page={12} totalPages={12} onPageChange={() => {}} />
+        </Inline>
+      </Stack>
+      <Stack gap="nano">
+        <Text as="p" variant="label">
+          Single page
+        </Text>
+        <Pagination page={1} totalPages={1} onPageChange={() => {}} />
+      </Stack>
+    </Stack>
+  ),
 };

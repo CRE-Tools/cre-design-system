@@ -58,6 +58,67 @@ export const Playground: Story = {
   },
 };
 
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => {
+    const [query, setQuery] = useState('');
+    const [status, setStatus] = useState('');
+
+    return (
+      <>
+        <ControlsRow
+          wrap
+          left={
+            <>
+              <Input value={query} onChange={setQuery} placeholder="Search" />
+              <Select
+                value={status}
+                onChange={setStatus}
+                placeholder="Status"
+                options={[
+                  { value: 'new', label: 'New' },
+                  { value: 'active', label: 'Active' },
+                  { value: 'archived', label: 'Archived' },
+                ]}
+              />
+            </>
+          }
+          right={
+            <>
+              <Button>Reset</Button>
+              <Button>Apply</Button>
+            </>
+          }
+        />
+        <ControlsRow
+          wrap={false}
+          left={
+            <>
+              <Input value={query} onChange={setQuery} placeholder="Search" />
+              <Select
+                value={status}
+                onChange={setStatus}
+                placeholder="Status"
+                options={[
+                  { value: 'new', label: 'New' },
+                  { value: 'active', label: 'Active' },
+                  { value: 'archived', label: 'Archived' },
+                ]}
+              />
+            </>
+          }
+          right={
+            <>
+              <Button>Reset</Button>
+              <Button>Apply</Button>
+            </>
+          }
+        />
+      </>
+    );
+  },
+};
+
 export const Basic: Story = {
   render: () => {
     const [query, setQuery] = useState('');

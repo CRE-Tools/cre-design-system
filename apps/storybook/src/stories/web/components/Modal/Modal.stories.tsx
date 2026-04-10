@@ -55,6 +55,56 @@ export const Playground: Story = {
   },
 };
 
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => {
+    const [openDismissible, setOpenDismissible] = useState(false);
+    const [openLocked, setOpenLocked] = useState(false);
+
+    return (
+      <Stack gap="micro">
+        <Inline gap="nano" wrap>
+          <Button onClick={() => setOpenDismissible(true)}>Open dismissible</Button>
+          <Button onClick={() => setOpenLocked(true)}>Open non-dismissible</Button>
+        </Inline>
+
+        <Modal
+          open={openDismissible}
+          title="Dismissible"
+          dismissible
+          onClose={() => setOpenDismissible(false)}
+          footer={
+            <Inline gap="nano" justify="flex-end" wrap>
+              <Button onClick={() => setOpenDismissible(false)}>Cancel</Button>
+              <Button onClick={() => setOpenDismissible(false)}>Confirm</Button>
+            </Inline>
+          }
+        >
+          <Stack gap="nano">
+            <Text as="p">Dismissible modal (click outside / Escape).</Text>
+          </Stack>
+        </Modal>
+
+        <Modal
+          open={openLocked}
+          title="Non-dismissible"
+          dismissible={false}
+          onClose={() => setOpenLocked(false)}
+          footer={
+            <Inline gap="nano" justify="flex-end" wrap>
+              <Button onClick={() => setOpenLocked(false)}>Close</Button>
+            </Inline>
+          }
+        >
+          <Stack gap="nano">
+            <Text as="p">Non-dismissible modal (must use action to close).</Text>
+          </Stack>
+        </Modal>
+      </Stack>
+    );
+  },
+};
+
 export const Basic: Story = {
   render: () => {
     const [open, setOpen] = useState(false);

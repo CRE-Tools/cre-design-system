@@ -36,6 +36,24 @@ export const Playground: Story = {
   ),
 };
 
+export const AllStates: Story = {
+  parameters: { layout: 'centered' },
+  render: () => (
+    <Stack gap="micro">
+      <EmptyState title="Nothing here" description="No actions." />
+      <EmptyState
+        title="Nothing here"
+        description="With a primary action."
+        actions={
+          <Stack gap="nano">
+            <Button>Primary action</Button>
+          </Stack>
+        }
+      />
+    </Stack>
+  ),
+};
+
 export const Basic: Story = {
   render: () => (
     <EmptyState

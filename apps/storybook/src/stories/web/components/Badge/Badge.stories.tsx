@@ -31,7 +31,7 @@ export const Playground: Story = {
 };
 
 /** All five semantic variants side by side. */
-export const Variants: Story = {
+export const AllStates: Story = {
   render: () => (
     <Inline gap="nano" wrap>
       <Badge variant="neutral">Neutral</Badge>

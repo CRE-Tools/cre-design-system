@@ -67,3 +67,37 @@ export const Basic: Story = {
 export const Disabled: Story = {
   render: () => <Select disabled options={[{ value: 'a', label: 'Option A' }]} />,
 };
+
+export const AllStates: Story = {
+  parameters: { layout: 'padded' },
+  render: () => (
+    <Stack gap="nano">
+      <Select
+        placeholder="Default"
+        options={[
+          { value: 'new', label: 'New' },
+          { value: 'active', label: 'Active' },
+          { value: 'archived', label: 'Archived' },
+        ]}
+      />
+      <Select
+        value="active"
+        placeholder="With value"
+        options={[
+          { value: 'new', label: 'New' },
+          { value: 'active', label: 'Active' },
+          { value: 'archived', label: 'Archived' },
+        ]}
+      />
+      <Select
+        disabled
+        placeholder="Disabled"
+        options={[
+          { value: 'new', label: 'New' },
+          { value: 'active', label: 'Active' },
+          { value: 'archived', label: 'Archived' },
+        ]}
+      />
+    </Stack>
+  ),
+};
