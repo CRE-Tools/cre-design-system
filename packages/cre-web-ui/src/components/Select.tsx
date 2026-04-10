@@ -234,7 +234,8 @@ export function Select({
   };
 
   return (
-    <div
+    <Box
+      as="div"
       data-cre="selectRoot"
       ref={rootRef}
       id={id}
@@ -271,7 +272,8 @@ export function Select({
       </button>
 
       {menuMounted ? (
-        <div
+        <Box
+          as="div"
           data-cre="selectMenu"
           data-state={open ? 'open' : 'closed'}
           role="listbox"
@@ -326,8 +328,8 @@ export function Select({
               </button>
             );
           })}
-        </div>
+        </Box>
       ) : null}
-    </div>
+    </Box>
   );
 }
