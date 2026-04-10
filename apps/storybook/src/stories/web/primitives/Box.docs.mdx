@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as BoxStories from './Box.stories';
 
 <Meta of={BoxStories} />
@@ -20,18 +20,60 @@ Box has no visual opinion of its own — no margin, padding, background, or bord
 
 ---
 
-## Example
+## Playground
 
-<Canvas of={BoxStories.Basic} />
+<Canvas of={BoxStories.Playground} />
+<Controls of={BoxStories.Playground} />
+
+---
+
+## All states
+
+<Canvas of={BoxStories.AllStates} />
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `as` | `React.ElementType` | `'div'` | The HTML element or component to render |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
-| `children` | `React.ReactNode` | — | Content |
-| `...rest` | DOM props | — | All props of the resolved element |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>as</code></td>
+      <td><code>React.ElementType</code></td>
+      <td><code>'div'</code></td>
+      <td>The HTML element or component to render</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>React.ReactNode</code></td>
+      <td>—</td>
+      <td>Content</td>
+    </tr>
+    <tr>
+      <td><code>...rest</code></td>
+      <td>DOM props</td>
+      <td>—</td>
+      <td>All props of the resolved element</td>
+    </tr>
+  </tbody>
+</table>

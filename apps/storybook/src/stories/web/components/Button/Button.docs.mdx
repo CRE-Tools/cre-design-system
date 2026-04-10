@@ -31,11 +31,36 @@ Use the controls below to tweak props and see how the component responds.
 
 Three sizes are available via the `size` prop:
 
-| Size | Use case | Font | Height |
-|---|---|---|---|
-| `regular` | Standard web UI | 15px / 500 | 40px fixed |
-| `large` | Desktop primary actions | 16px / 500 | auto (12px vertical padding) |
-| `vr` | VR / spatial UI, extra-large touch targets | 24px / 400 | auto (16px vertical padding) |
+<table>
+  <thead>
+    <tr>
+      <th>Size</th>
+      <th>Use case</th>
+      <th>Font</th>
+      <th>Height</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>regular</code></td>
+      <td>Standard web UI</td>
+      <td>15px / 500</td>
+      <td>40px fixed</td>
+    </tr>
+    <tr>
+      <td><code>large</code></td>
+      <td>Desktop primary actions</td>
+      <td>16px / 500</td>
+      <td>auto (12px vertical padding)</td>
+    </tr>
+    <tr>
+      <td><code>vr</code></td>
+      <td>VR / spatial UI, extra-large touch targets</td>
+      <td>24px / 400</td>
+      <td>auto (16px vertical padding)</td>
+    </tr>
+  </tbody>
+</table>
 
 <Canvas of={ButtonStories.SizeComparison} />
 

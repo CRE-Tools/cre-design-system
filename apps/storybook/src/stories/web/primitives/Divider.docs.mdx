@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as DividerStories from './Divider.stories';
 
 <Meta of={DividerStories} />
@@ -17,24 +17,56 @@ A semantic separator (`<hr>` or `<div role="separator">`) that uses `--cre-color
 
 ---
 
-## Example
+## Playground
 
-<Canvas of={DividerStories.HorizontalAndVertical} />
+<Canvas of={DividerStories.Playground} />
+<Controls of={DividerStories.Playground} />
+
+---
+
+## All states
+
+<Canvas of={DividerStories.AllStates} />
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Direction of the separator |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>orientation</code></td>
+      <td><code>'horizontal' | 'vertical'</code></td>
+      <td><code>'horizontal'</code></td>
+      <td>Direction of the separator</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## Notes
 
-- Horizontal Divider renders as `<hr>` with `role="separator"`.
+- Divider always renders as `<div role="separator">` with the appropriate `aria-orientation` attribute.
 - Vertical Divider requires a parent with an explicit height — it is `height: 100%` by default.
 - Colour is always `--cre-color-border` and responds to light/dark mode automatically.

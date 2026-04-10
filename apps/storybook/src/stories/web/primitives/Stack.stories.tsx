@@ -1,35 +1,93 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Stack, Surface, Text, Button } from '@cre/web-ui';
+import { Stack, type StackProps, Surface, Text } from '@cre/web-ui';
 
-const meta: Meta = {
+const meta: Meta<StackProps> = {
   title: 'Web/Primitives/Stack',
-  parameters: { layout: 'padded' },
+  component: Stack,
+  parameters: {
+    layout: 'padded',
+    docs: { page: null },
+  },
+  argTypes: {
+    as: { control: 'text', table: { defaultValue: { summary: "'div'" } } },
+    gap: {
+      control: 'select',
+      options: ['none','quark','nano','pico','micro','tiny','xxxsmall','xxsmall','xsmall','small','medium','large','xlarge','xxlarge','xxxlarge','huge','giant','titan'],
+      table: { defaultValue: { summary: "'micro'" } },
+    },
+    align: { control: 'select', options: ['stretch','flex-start','flex-end','center','baseline'], table: { defaultValue: { summary: '—' } } },
+    justify: { control: 'select', options: ['flex-start','flex-end','center','space-between','space-around','space-evenly'], table: { defaultValue: { summary: '—' } } },
+    children: { control: false },
+    style: { control: false },
+  },
+  args: { gap: 'micro' },
+};
+export default meta;
+type Story = StoryObj<StackProps>;
+
+export const Playground: Story = {
+  render: (args) => (
+    <Stack {...args}>
+      <Surface>
+        <Text as="p">Item 1</Text>
+      </Surface>
+      <Surface>
+        <Text as="p">Item 2</Text>
+      </Surface>
+      <Surface>
+        <Text as="p">Item 3</Text>
+      </Surface>
+    </Stack>
+  ),
 };
 
-export default meta;
-
-type Story = StoryObj;
-
-export const SpacingAndAlignment: Story = {
+export const AllStates: Story = {
   render: () => (
-    <Stack gap="small" align="stretch">
+    <Stack gap="large">
       <Surface>
         <Stack gap="nano">
-          <Text as="p" variant="label">Default stack</Text>
-          <Text as="p" tone="muted">Vertical flex layout with token-driven gap.</Text>
+          <Text as="p" variant="caption" tone="muted">gap="nano"</Text>
+          <Stack gap="nano">
+            <Surface variant="raised"><Text as="p">Item A</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item B</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item C</Text></Surface>
+          </Stack>
         </Stack>
       </Surface>
 
       <Surface>
-        <Stack gap="nano" align="flex-start">
-          <Text as="p" variant="label">Actions</Text>
-          <Stack gap="nano" align="flex-start">
-            <Button size="regular">Primary</Button>
-            <Button size="regular">Secondary</Button>
+        <Stack gap="nano">
+          <Text as="p" variant="caption" tone="muted">gap="micro"</Text>
+          <Stack gap="micro">
+            <Surface variant="raised"><Text as="p">Item A</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item B</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item C</Text></Surface>
+          </Stack>
+        </Stack>
+      </Surface>
+
+      <Surface>
+        <Stack gap="nano">
+          <Text as="p" variant="caption" tone="muted">gap="small"</Text>
+          <Stack gap="small">
+            <Surface variant="raised"><Text as="p">Item A</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item B</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item C</Text></Surface>
+          </Stack>
+        </Stack>
+      </Surface>
+
+      <Surface>
+        <Stack gap="nano">
+          <Text as="p" variant="caption" tone="muted">gap="large"</Text>
+          <Stack gap="large">
+            <Surface variant="raised"><Text as="p">Item A</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item B</Text></Surface>
+            <Surface variant="raised"><Text as="p">Item C</Text></Surface>
           </Stack>
         </Stack>
       </Surface>
     </Stack>
-  )
+  ),
 };

@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as ContainerStories from './Container.stories';
 
 <Meta of={ContainerStories} />
@@ -17,30 +17,101 @@ Centers page content horizontally and constrains its maximum width using layout 
 
 ---
 
-## Example
+## Playground
 
-<Canvas of={ContainerStories.PageWidth} />
+<Canvas of={ContainerStories.Playground} />
+<Controls of={ContainerStories.Playground} />
+
+---
+
+## All states
+
+<Canvas of={ContainerStories.AllStates} />
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `as` | `React.ElementType` | `'div'` | HTML element to render |
-| `size` | `CreContainerSize` | `'main'` | Max-width preset |
-| `paddingX` | `CreSpace` | `'micro'` | Horizontal padding applied on both sides |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>as</code></td>
+      <td><code>React.ElementType</code></td>
+      <td><code>'div'</code></td>
+      <td>HTML element to render</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>CreContainerSize</code></td>
+      <td><code>'main'</code></td>
+      <td>Max-width preset</td>
+    </tr>
+    <tr>
+      <td><code>paddingX</code></td>
+      <td><code>CreSpace</code></td>
+      <td><code>'micro'</code></td>
+      <td>Horizontal padding applied on both sides</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## Size presets
 
-| Size | Token | Use case |
-|------|-------|----------|
-| `read` | `--cre-layout-read` | Long-form reading (prose, articles) |
-| `focu` | `--cre-layout-focu` | Focused task UIs (forms, wizards) |
-| `seco` | `--cre-layout-seco` | Secondary / sidebar-adjacent content |
-| `main` | `--cre-layout-main` | Default app shell content area |
-| `full` | `--cre-layout-full` | Full-bleed (dashboards, data tables) |
+<table>
+  <thead>
+    <tr>
+      <th>Size</th>
+      <th>Token</th>
+      <th>Use case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>read</code></td>
+      <td><code>--cre-layout-read</code></td>
+      <td>Long-form reading (prose, articles)</td>
+    </tr>
+    <tr>
+      <td><code>focu</code></td>
+      <td><code>--cre-layout-focu</code></td>
+      <td>Focused task UIs (forms, wizards)</td>
+    </tr>
+    <tr>
+      <td><code>seco</code></td>
+      <td><code>--cre-layout-seco</code></td>
+      <td>Secondary / sidebar-adjacent content</td>
+    </tr>
+    <tr>
+      <td><code>main</code></td>
+      <td><code>--cre-layout-main</code></td>
+      <td>Default app shell content area</td>
+    </tr>
+    <tr>
+      <td><code>full</code></td>
+      <td><code>--cre-layout-full</code></td>
+      <td>Full-bleed (dashboards, data tables)</td>
+    </tr>
+  </tbody>
+</table>
