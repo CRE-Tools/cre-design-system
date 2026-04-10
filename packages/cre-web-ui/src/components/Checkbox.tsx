@@ -51,6 +51,16 @@ const CHECKBOX_CSS = `
 [data-cre="checkbox"][disabled] {
   cursor: not-allowed;
 }
+
+[data-cre="checkboxLabel"] {
+  color: var(--cre-color-text);
+  font-family: var(--cre-font-family-body);
+  font-size: var(--cre-font-size-tiny);
+}
+
+[data-cre="checkboxRoot"][data-disabled="true"] [data-cre="checkboxLabel"] {
+  color: var(--cre-color-text-muted);
+}
 `;
 
 injectStyles('cre-checkbox-styles', CHECKBOX_CSS);
@@ -124,7 +134,7 @@ export function Checkbox({
       style={style}
     >
       {input}
-      <span style={{ color: 'var(--cre-color-text)', fontFamily: 'var(--cre-font-family-body)', fontSize: 'var(--cre-font-size-tiny)' }}>
+      <span data-cre="checkboxLabel">
         {label}
       </span>
     </Box>
