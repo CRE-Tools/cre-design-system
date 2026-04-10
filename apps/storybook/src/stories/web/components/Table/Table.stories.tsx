@@ -299,3 +299,26 @@ export const WithFieldSelection: Story = {
     );
   },
 };
+
+/**
+ * Column widths can be set using numeric (pixels) or string (percentage/units) values.
+ * The width is applied via CSS custom property to avoid inline styles.
+ */
+export const ColumnWidths: Story = {
+  render: () => {
+    const columns = useMemo(
+      () => [
+        { key: 'name', header: 'Name', width: 150 },
+        { key: 'status', header: 'Status', width: '20%' },
+        { key: 'count', header: 'Count', width: 100 },
+      ],
+      []
+    );
+
+    return (
+      <Card padding="none">
+        <Table columns={columns} rows={rows} getRowId={(r: Row) => r.id} />
+      </Card>
+    );
+  },
+};
