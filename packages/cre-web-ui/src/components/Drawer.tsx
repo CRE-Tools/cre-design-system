@@ -66,6 +66,17 @@ const DRAWER_CSS = `
 
 [data-cre="drawerBody"] {
   overflow: auto;
+  min-height: 0;
+}
+
+[data-cre="drawerPanel"] > [data-cre="surface"] {
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+[data-cre="drawerPanel"] > [data-cre="surface"] > [data-cre="stack"] {
+  min-height: 0;
 }
 `;
 
@@ -147,15 +158,14 @@ export function Drawer({
         className={className}
         padding="micro"
         radius="none"
-        style={{ borderTop: 0, borderRight: 0, borderBottom: 0 }}
       >
-        <Stack gap="micro" style={{ minHeight: 0 }}>
+        <Stack gap="micro">
           {title != null ? (
             <Inline align="center" justify="space-between">
               {typeof title === 'string' ? <Heading level={4} id={titleId}>{title}</Heading> : title}
             </Inline>
           ) : null}
-          <Box as="div" data-cre="drawerBody" style={{ minHeight: 0 }}>
+          <Box as="div" data-cre="drawerBody">
             {children}
           </Box>
           {footer != null ? <Box as="div">{footer}</Box> : null}

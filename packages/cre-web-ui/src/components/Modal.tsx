@@ -27,6 +27,11 @@ const MODAL_CSS = `
 
 [data-cre="modalBody"] {
   overflow: auto;
+  min-height: 0;
+}
+
+[data-cre="modalPanel"] > [data-cre="surface"] > [data-cre="stack"] {
+  min-height: 0;
 }
 `;
 
@@ -69,13 +74,13 @@ export function Modal({ open, title, children, footer, onClose, dismissible = tr
       }}
     >
       <Surface data-cre="modalPanel" variant="raised" className={className} padding="micro" radius="small">
-        <Stack gap="micro" style={{ minHeight: 0 }}>
+        <Stack gap="micro">
           {title != null ? (
             <Inline align="center" justify="space-between">
               {typeof title === 'string' ? <Heading level={4} id={titleId}>{title}</Heading> : title}
             </Inline>
           ) : null}
-          <Box as="div" data-cre="modalBody" style={{ minHeight: 0 }}>
+          <Box as="div" data-cre="modalBody">
             {children}
           </Box>
           {footer != null ? <Box as="div">{footer}</Box> : null}
