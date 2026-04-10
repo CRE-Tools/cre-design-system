@@ -1,7 +1,16 @@
 import React from 'react';
+import { injectStyles } from '../internal/injectStyles';
 import { Surface } from '../primitives/Surface';
 import { Stack } from '../primitives/Stack';
 import { Box } from '../primitives/Box';
+
+const CARD_CSS = `
+[data-cre="card"] {
+  display: flex;
+  flex-direction: column;
+}
+`;
+injectStyles('cre-card-styles', CARD_CSS);
 
 export type CardProps = {
   header?: React.ReactNode;
@@ -25,16 +34,18 @@ export function Card({
   const hasStructured = header != null || footer != null;
 
   return (
-    <Surface variant={variant} padding={padding} className={className} style={style}>
-      {hasStructured ? (
-        <Stack gap="micro">
-          {header != null ? <Box as="div">{header}</Box> : null}
-          <Box as="div">{children}</Box>
-          {footer != null ? <Box as="div">{footer}</Box> : null}
-        </Stack>
-      ) : (
-        children
-      )}
-    </Surface>
+    <Box as="div" data-cre="card" className={className} style={style}>
+      <Surface variant={variant} padding={padding}>
+        {hasStructured ? (
+          <Stack gap="micro">
+            {header != null ? <Box as="div">{header}</Box> : null}
+            <Box as="div">{children}</Box>
+            {footer != null ? <Box as="div">{footer}</Box> : null}
+          </Stack>
+        ) : (
+          children
+        )}
+      </Surface>
+    </Box>
   );
 }
