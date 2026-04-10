@@ -8,7 +8,7 @@ const config: StorybookConfig = {
     options: {}
   },
   docs: {
-    autodocs: 'tag'
+    autodocs: 'tag',
   },
   async viteFinal(viteConfig) {
     const existing = viteConfig.plugins ?? [];

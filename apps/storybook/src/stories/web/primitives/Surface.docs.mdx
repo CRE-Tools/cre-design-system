@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as SurfaceStories from './Surface.stories';
 
 <Meta of={SurfaceStories} />
@@ -18,30 +18,103 @@ An elevated, bordered container that uses semantic background tokens to communic
 
 ---
 
-## Variants
+## Playground
 
-<Canvas of={SurfaceStories.Variants} />
+<Canvas of={SurfaceStories.Playground} />
+<Controls of={SurfaceStories.Playground} />
+
+---
+
+## All states
+
+<Canvas of={SurfaceStories.AllStates} />
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `as` | `React.ElementType` | `'div'` | HTML element to render |
-| `variant` | `'default' \| 'subtle' \| 'raised'` | `'default'` | Elevation level — controls background token |
-| `padding` | `CreSpace` | `'micro'` | Inner padding |
-| `radius` | `CreRadius` | `'small'` | Border radius |
-| `border` | `boolean` | `true` | Show/hide the border |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>as</code></td>
+      <td><code>React.ElementType</code></td>
+      <td><code>'div'</code></td>
+      <td>HTML element to render</td>
+    </tr>
+    <tr>
+      <td><code>variant</code></td>
+      <td><code>'default' | 'subtle' | 'raised'</code></td>
+      <td><code>'default'</code></td>
+      <td>Elevation level — controls background token</td>
+    </tr>
+    <tr>
+      <td><code>padding</code></td>
+      <td><code>CreSpace</code></td>
+      <td><code>'micro'</code></td>
+      <td>Inner padding</td>
+    </tr>
+    <tr>
+      <td><code>radius</code></td>
+      <td><code>CreRadius</code></td>
+      <td><code>'small'</code></td>
+      <td>Border radius</td>
+    </tr>
+    <tr>
+      <td><code>border</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Show/hide the border</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## Elevation mapping
 
-| Variant | CSS variable | Role |
-|---------|-------------|------|
-| `subtle` | `--cre-color-bg` | Page background — de-emphasised area |
-| `default` | `--cre-color-surface` | Primary surface — cards, panels |
-| `raised` | `--cre-color-surface-raised` | Above surface — modals, dropdowns |
+<table>
+  <thead>
+    <tr>
+      <th>Variant</th>
+      <th>CSS variable</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>subtle</code></td>
+      <td><code>--cre-color-bg</code></td>
+      <td>Page background — de-emphasised area</td>
+    </tr>
+    <tr>
+      <td><code>default</code></td>
+      <td><code>--cre-color-surface</code></td>
+      <td>Primary surface — cards, panels</td>
+    </tr>
+    <tr>
+      <td><code>raised</code></td>
+      <td><code>--cre-color-surface-raised</code></td>
+      <td>Above surface — modals, dropdowns</td>
+    </tr>
+  </tbody>
+</table>

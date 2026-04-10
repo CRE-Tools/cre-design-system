@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as IconSlotStories from './IconSlot.stories';
 
 <Meta of={IconSlotStories} />
@@ -17,19 +17,63 @@ A fixed-size, `aria-hidden` flex container that keeps icons consistently sized a
 
 ---
 
-## Example
+## Playground
 
-<Canvas of={IconSlotStories.Basic} />
+<Canvas of={IconSlotStories.Playground} />
+<Controls of={IconSlotStories.Playground} />
+
+---
+
+## All states
+
+<Canvas of={IconSlotStories.AllStates} />
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `number` | CSS var default | Override icon box size in px |
-| `padding` | `number` | CSS var default | Override padding around the icon in px |
-| `children` | `React.ReactNode` | — | The icon element |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>string</code></td>
+      <td><code>'var(--cre-button-icon-size)'</code></td>
+      <td>Override icon box size — any CSS length or custom property</td>
+    </tr>
+    <tr>
+      <td><code>padding</code></td>
+      <td><code>string</code></td>
+      <td><code>'var(--cre-button-icon-padding)'</code></td>
+      <td>Override padding inside the icon box — any CSS length or custom property</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>React.ReactNode</code></td>
+      <td>—</td>
+      <td>The icon element</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 

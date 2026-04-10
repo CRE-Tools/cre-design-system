@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as InlineStories from './InlineAndCluster.stories';
 
 <Meta of={InlineStories} />
@@ -28,30 +28,135 @@ Two horizontal layout primitives for different wrapping behaviours.
 
 ---
 
-## Example
+## Playground
 
-<Canvas of={InlineStories.Grouping} />
+<Canvas of={InlineStories.Playground} />
+<Controls of={InlineStories.Playground} />
+
+---
+
+## All states
+
+<Canvas of={InlineStories.AllStates} />
 
 ---
 
 ## Inline props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `as` | `React.ElementType` | `'div'` | HTML element to render |
-| `gap` | `CreSpace` | `'micro'` | Spacing between items |
-| `align` | `React.CSSProperties['alignItems']` | `'flex-start'` | Cross-axis alignment |
-| `justify` | `React.CSSProperties['justifyContent']` | `'flex-start'` | Main-axis alignment |
-| `wrap` | `boolean` | `false` | Whether items can wrap |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>as</code></td>
+      <td><code>React.ElementType</code></td>
+      <td><code>'div'</code></td>
+      <td>HTML element to render</td>
+    </tr>
+    <tr>
+      <td><code>gap</code></td>
+      <td><code>CreSpace</code></td>
+      <td><code>'micro'</code></td>
+      <td>Spacing between items</td>
+    </tr>
+    <tr>
+      <td><code>align</code></td>
+      <td><code>React.CSSProperties['alignItems']</code></td>
+      <td>—</td>
+      <td>Cross-axis alignment</td>
+    </tr>
+    <tr>
+      <td><code>justify</code></td>
+      <td><code>React.CSSProperties['justifyContent']</code></td>
+      <td>—</td>
+      <td>Main-axis alignment</td>
+    </tr>
+    <tr>
+      <td><code>wrap</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Whether items can wrap</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>React.ReactNode</code></td>
+      <td>—</td>
+      <td>Content</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Cluster props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `as` | `React.ElementType` | `'div'` | HTML element to render |
-| `gap` | `CreSpace` | `'nano'` | Spacing between items |
-| `align` | `React.CSSProperties['alignItems']` | `'center'` | Cross-axis alignment |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>as</code></td>
+      <td><code>React.ElementType</code></td>
+      <td><code>'div'</code></td>
+      <td>HTML element to render</td>
+    </tr>
+    <tr>
+      <td><code>gap</code></td>
+      <td><code>CreSpace</code></td>
+      <td><code>'nano'</code></td>
+      <td>Spacing between items</td>
+    </tr>
+    <tr>
+      <td><code>align</code></td>
+      <td><code>React.CSSProperties['alignItems']</code></td>
+      <td><code>'center'</code></td>
+      <td>Cross-axis alignment</td>
+    </tr>
+    <tr>
+      <td><code>justify</code></td>
+      <td><code>React.CSSProperties['justifyContent']</code></td>
+      <td>—</td>
+      <td>Main-axis alignment</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>React.ReactNode</code></td>
+      <td>—</td>
+      <td>Content</td>
+    </tr>
+  </tbody>
+</table>

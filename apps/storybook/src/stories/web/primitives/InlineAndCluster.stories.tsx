@@ -1,15 +1,47 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Inline, Cluster, Surface, Text, Button, Divider } from '@cre/web-ui';
+import { Inline, type InlineProps, Cluster, Surface, Text, Stack, Divider } from '@cre/web-ui';
 
-const meta: Meta = {
+const meta: Meta<InlineProps> = {
   title: 'Web/Primitives/Inline + Cluster',
-  parameters: { layout: 'padded' },
+  component: Inline,
+  parameters: {
+    layout: 'padded',
+    docs: { page: null },
+  },
+  argTypes: {
+    as: { control: 'text', table: { defaultValue: { summary: "'div'" } } },
+    gap: {
+      control: 'select',
+      options: ['none','quark','nano','pico','micro','tiny','xxxsmall','xxsmall','xsmall','small','medium','large'],
+      table: { defaultValue: { summary: "'micro'" } },
+    },
+    align: { control: 'select', options: ['stretch','flex-start','flex-end','center','baseline'], table: { defaultValue: { summary: '—' } } },
+    justify: { control: 'select', options: ['flex-start','flex-end','center','space-between','space-around'], table: { defaultValue: { summary: '—' } } },
+    wrap: { control: 'boolean', table: { defaultValue: { summary: 'false' } } },
+    children: { control: false },
+    style: { control: false },
+  },
+  args: { gap: 'micro', align: 'center' },
 };
-
 export default meta;
+type Story = StoryObj<InlineProps>;
 
-type Story = StoryObj;
+export const Playground: Story = {
+  render: (args) => (
+    <Inline {...args}>
+      <Surface padding="nano">
+        <Text as="span">A</Text>
+      </Surface>
+      <Surface padding="nano">
+        <Text as="span">B</Text>
+      </Surface>
+      <Surface padding="nano">
+        <Text as="span">C</Text>
+      </Surface>
+    </Inline>
+  ),
+};
 
 function Chip({ children }: { children: string }) {
   return (
@@ -31,29 +63,39 @@ function Chip({ children }: { children: string }) {
   );
 }
 
-export const Grouping: Story = {
+export const AllStates: Story = {
   render: () => (
     <Surface>
-      <Inline gap="micro" align="center" justify="space-between" wrap>
-        <Text as="p" variant="label">Inline toolbar</Text>
-        <Inline gap="nano" align="center" wrap>
-          <Button size="regular">New</Button>
-          <Button size="regular">Export</Button>
-        </Inline>
-      </Inline>
-      <div style={{ margin: 'var(--cre-space-micro) 0' }}>
+      <Stack gap="micro">
+        <Stack gap="nano">
+          <Text as="p" variant="label">Inline toolbar</Text>
+          <Inline gap="micro" align="center" justify="space-between" wrap>
+            <Text as="p" tone="muted">Inline layout with alignment</Text>
+            <Inline gap="nano" align="center" wrap>
+              <Surface padding="nano" variant="raised">
+                <Text as="span">New</Text>
+              </Surface>
+              <Surface padding="nano" variant="raised">
+                <Text as="span">Export</Text>
+              </Surface>
+            </Inline>
+          </Inline>
+        </Stack>
+
         <Divider />
-      </div>
-      <Text as="p" tone="muted">Cluster is optimized for wrapped groups like chips/tags.</Text>
-      <div style={{ marginTop: 'var(--cre-space-nano)' }}>
-        <Cluster gap="nano">
-          <Chip>Open</Chip>
-          <Chip>In progress</Chip>
-          <Chip>Blocked</Chip>
-          <Chip>Awaiting review</Chip>
-          <Chip>Done</Chip>
-        </Cluster>
-      </div>
+
+        <Stack gap="nano">
+          <Text as="p" variant="label">Cluster wrapping</Text>
+          <Text as="p" tone="muted">Cluster is optimized for wrapped groups like chips/tags.</Text>
+          <Cluster gap="nano">
+            <Chip>Open</Chip>
+            <Chip>In progress</Chip>
+            <Chip>Blocked</Chip>
+            <Chip>Awaiting review</Chip>
+            <Chip>Done</Chip>
+          </Cluster>
+        </Stack>
+      </Stack>
     </Surface>
-  )
+  ),
 };

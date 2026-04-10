@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/blocks';
+import { Meta, Canvas, Controls } from '@storybook/blocks';
 import * as StackStories from './Stack.stories';
 
 <Meta of={StackStories} />
@@ -18,22 +18,75 @@ Vertical flex layout with a token-driven gap between items. The default building
 
 ---
 
-## Example
+## Playground
 
-<Canvas of={StackStories.SpacingAndAlignment} />
+<Canvas of={StackStories.Playground} />
+<Controls of={StackStories.Playground} />
+
+---
+
+## All states
+
+<Canvas of={StackStories.AllStates} />
 
 ---
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `as` | `React.ElementType` | `'div'` | HTML element to render |
-| `gap` | `CreSpace` | `'micro'` | Spacing between items — references `--cre-space-*` tokens |
-| `align` | `React.CSSProperties['alignItems']` | `'stretch'` | Cross-axis alignment |
-| `justify` | `React.CSSProperties['justifyContent']` | `'flex-start'` | Main-axis alignment |
-| `className` | `string` | — | Additional CSS class |
-| `style` | `React.CSSProperties` | — | Inline styles |
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>as</code></td>
+      <td><code>React.ElementType</code></td>
+      <td><code>'div'</code></td>
+      <td>HTML element to render</td>
+    </tr>
+    <tr>
+      <td><code>gap</code></td>
+      <td><code>CreSpace</code></td>
+      <td><code>'micro'</code></td>
+      <td>Spacing between items — references <code>--cre-space-*</code> tokens</td>
+    </tr>
+    <tr>
+      <td><code>align</code></td>
+      <td><code>React.CSSProperties['alignItems']</code></td>
+      <td>—</td>
+      <td>Cross-axis alignment</td>
+    </tr>
+    <tr>
+      <td><code>justify</code></td>
+      <td><code>React.CSSProperties['justifyContent']</code></td>
+      <td>—</td>
+      <td>Main-axis alignment</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Additional CSS class</td>
+    </tr>
+    <tr>
+      <td><code>style</code></td>
+      <td><code>React.CSSProperties</code></td>
+      <td>—</td>
+      <td>Inline styles</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>React.ReactNode</code></td>
+      <td>—</td>
+      <td>Content</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -41,10 +94,33 @@ Vertical flex layout with a token-driven gap between items. The default building
 
 `gap` maps directly to the `--cre-space-*` token family. Commonly used values:
 
-| Token | Use |
-|-------|-----|
-| `quark` | Tightest — label + input, badge + text |
-| `nano` | Within a group — inline items, list rows |
-| `micro` | Between groups — card sections, form fields |
-| `small` | Page sections |
-| `large` | Top-level layout gaps |
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>quark</code></td>
+      <td>Tightest — label + input, badge + text</td>
+    </tr>
+    <tr>
+      <td><code>nano</code></td>
+      <td>Within a group — inline items, list rows</td>
+    </tr>
+    <tr>
+      <td><code>micro</code></td>
+      <td>Between groups — card sections, form fields</td>
+    </tr>
+    <tr>
+      <td><code>small</code></td>
+      <td>Page sections</td>
+    </tr>
+    <tr>
+      <td><code>large</code></td>
+      <td>Top-level layout gaps</td>
+    </tr>
+  </tbody>
+</table>
