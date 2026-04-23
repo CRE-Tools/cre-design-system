@@ -47,15 +47,24 @@ Use the controls below to tweak props and see how the component responds.
 
 ---
 
-## With Field
+## Email input
 
-```tsx
-<Field label="Email" htmlFor="email-input" error={error}>
-  <Input
-    id="email-input"
-    value={email}
-    onChange={setEmail}
-    placeholder="you@example.com"
-  />
-</Field>
-```
+<Canvas of={InputStories.EmailField} />
+
+`type="email"` provides native format validation, and the consumer drives `hasError` / `error` via controlled state.
+
+---
+
+## Password input
+
+<Canvas of={InputStories.PasswordField} />
+
+When `type="password"` and no custom `trailing` is provided, Input auto-renders a visibility toggle button.
+
+---
+
+## Error state
+
+<Canvas of={InputStories.WithError} />
+
+`hasError` controls visual state only — pair it with `Field`'s `error` prop for the message.
