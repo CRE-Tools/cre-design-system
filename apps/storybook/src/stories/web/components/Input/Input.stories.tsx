@@ -59,6 +59,17 @@ export const Basic: Story = {
       </Stack>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [value, setValue] = useState('');
+
+<Input value={value} onChange={setValue} placeholder="Type…" />
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const WithLeadingTrailing: Story = {
@@ -78,23 +89,44 @@ export const WithLeadingTrailing: Story = {
       />
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<Input
+  value={value}
+  onChange={setValue}
+  placeholder="Search"
+  leading={<SearchIcon />}
+  trailing={<span>⌘K</span>}
+/>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const Disabled: Story = {
-  render: () => <Input disabled placeholder="Disabled" />,
+  args: {
+    disabled: true,
+    placeholder: 'Disabled',
+  },
 };
 
 export const WithError: Story = {
-  render: () => <Input hasError={true} placeholder="Error state" />,
+  args: {
+    hasError: true,
+    placeholder: 'Error state',
+  },
 };
 
 export const EmailField: Story = {
   render: () => {
-    const [value, setValue] = useState('');
+    const [email, setEmail] = useState('');
     const [error, setError] = useState('');
 
     const handleBlur = () => {
-      if (value && !value.includes('@')) {
+      if (email && !email.includes('@')) {
         setError('Enter a valid email address');
       } else {
         setError('');
@@ -106,8 +138,8 @@ export const EmailField: Story = {
         <Input
           id="email"
           type="email"
-          value={value}
-          onChange={setValue}
+          value={email}
+          onChange={setEmail}
           hasError={!!error}
           placeholder="you@example.com"
           autoComplete="email"
@@ -116,23 +148,71 @@ export const EmailField: Story = {
       </Field>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [email, setEmail] = useState('');
+const [error, setError] = useState('');
+
+<Field label="Email" htmlFor="email" error={error || undefined}>
+  <Input
+    id="email"
+    type="email"
+    value={email}
+    onChange={setEmail}
+    hasError={!!error}
+    placeholder="you@example.com"
+    autoComplete="email"
+    inputProps={{
+      onBlur: () => {
+        if (email && !email.includes('@')) setError('Enter a valid email address');
+        else setError('');
+      },
+    }}
+  />
+</Field>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const PasswordField: Story = {
   render: () => {
-    const [value, setValue] = useState('');
+    const [password, setPassword] = useState('');
     return (
       <Field label="Password" htmlFor="password">
         <Input
           id="password"
           type="password"
-          value={value}
-          onChange={setValue}
+          value={password}
+          onChange={setPassword}
           placeholder="Enter your password"
           autoComplete="current-password"
         />
       </Field>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [password, setPassword] = useState('');
+
+<Field label="Password" htmlFor="password">
+  <Input
+    id="password"
+    type="password"
+    value={password}
+    onChange={setPassword}
+    placeholder="Enter your password"
+    autoComplete="current-password"
+  />
+</Field>
+        `.trim(),
+      },
+    },
   },
 };
 

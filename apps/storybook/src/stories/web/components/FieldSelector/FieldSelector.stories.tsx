@@ -64,6 +64,21 @@ export const Playground: Story = {
       </Card>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [visibleFields, setVisibleFields] = useState(['name', 'email', 'status']);
+
+<FieldSelector
+  fields={['name', 'email', 'status', 'city', 'createdAt']}
+  visibleFields={visibleFields}
+  onVisibleFieldsChange={setVisibleFields}
+/>
+        `.trim(),
+      },
+    },
+  },
 };
 
 /** Fields derived automatically from row data — no need to specify them explicitly. */
@@ -87,6 +102,22 @@ export const DerivedFromData: Story = {
         </Stack>
       </Card>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const rows = [{ name: 'Alice', contact: { email: 'alice@example.com' } }];
+const [visibleFields, setVisibleFields] = useState(['name', 'contact.email']);
+
+<FieldSelector
+  data={rows}
+  visibleFields={visibleFields}
+  onVisibleFieldsChange={setVisibleFields}
+/>
+        `.trim(),
+      },
+    },
   },
 };
 
@@ -119,6 +150,25 @@ export const CustomLabelParser: Story = {
       </Card>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [visibleFields, setVisibleFields] = useState(['name', 'contact.email']);
+
+const labelParser = (path: string) =>
+  path.split('.').map(s => s[0].toUpperCase() + s.slice(1)).join(' › ');
+
+<FieldSelector
+  fields={['name', 'contact.email', 'address.city']}
+  visibleFields={visibleFields}
+  onVisibleFieldsChange={setVisibleFields}
+  labelParser={labelParser}
+/>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const NoFieldsAvailable: Story = {
@@ -145,6 +195,21 @@ export const NoFieldsAvailable: Story = {
         </Stack>
       </Card>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [visibleFields, setVisibleFields] = useState<string[]>([]);
+
+<FieldSelector
+  fields={[]}
+  visibleFields={visibleFields}
+  onVisibleFieldsChange={setVisibleFields}
+/>
+        `.trim(),
+      },
+    },
   },
 };
 
@@ -183,5 +248,20 @@ export const AllStates: Story = {
         </Stack>
       </Stack>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [visibleFields, setVisibleFields] = useState(['name', 'email']);
+
+<FieldSelector
+  fields={['name', 'email', 'status', 'city']}
+  visibleFields={visibleFields}
+  onVisibleFieldsChange={setVisibleFields}
+/>
+        `.trim(),
+      },
+    },
   },
 };

@@ -78,6 +78,19 @@ export const WithInput: Story = {
       </Field>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [value, setValue] = useState('');
+
+<Field label="Name" description="This is help text" htmlFor="name">
+  <Input id="name" value={value} onChange={setValue} placeholder="Type…" />
+</Field>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const WithSelect: Story = {
@@ -103,5 +116,28 @@ export const WithSelect: Story = {
         </Field>
       </Stack>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [value, setValue] = useState('');
+
+<Field label="Category" description="Pick one" htmlFor="category">
+  <Select
+    id="category"
+    value={value}
+    onChange={setValue}
+    placeholder="Select…"
+    options={[
+      { value: 'a', label: 'Option A' },
+      { value: 'b', label: 'Option B' },
+      { value: 'c', label: 'Option C' },
+    ]}
+  />
+</Field>
+        `.trim(),
+      },
+    },
   },
 };
