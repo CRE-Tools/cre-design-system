@@ -62,10 +62,32 @@ export const Basic: Story = {
       </Stack>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [value, setValue] = useState('');
+
+<Select
+  value={value}
+  onChange={setValue}
+  placeholder="Select…"
+  options={[
+    { value: 'new', label: 'New' },
+    { value: 'active', label: 'Active' },
+    { value: 'archived', label: 'Archived' },
+  ]}
+/>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const Disabled: Story = {
-  render: () => <Select disabled options={[{ value: 'a', label: 'Option A' }]} />,
+  args: {
+    disabled: true,
+  },
 };
 
 export const AllStates: Story = {

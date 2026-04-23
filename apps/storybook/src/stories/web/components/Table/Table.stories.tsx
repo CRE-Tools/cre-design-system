@@ -179,6 +179,23 @@ export const Basic: Story = {
       </Card>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const columns = [
+  { key: 'name', header: 'Name', sort: (a, b) => a.name.localeCompare(b.name) },
+  { key: 'status', header: 'Status' },
+  { key: 'count', header: 'Count', sort: (a, b) => a.count - b.count },
+];
+
+<Card padding="none">
+  <Table columns={columns} rows={rows} getRowId={(r) => r.id} />
+</Card>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const CustomCells: Story = {
@@ -202,6 +219,28 @@ export const CustomCells: Story = {
 
     return <Table columns={columns} rows={rows} getRowId={(r: Row) => r.id} />;
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const columns = [
+  { key: 'name', header: 'Name' },
+  {
+    key: 'status',
+    header: 'Status',
+    render: (row) => {
+      const variant = row.status === 'active' ? 'success' : row.status === 'new' ? 'accent' : 'neutral';
+      return <Badge variant={variant}>{row.status}</Badge>;
+    },
+  },
+  { key: 'count', header: 'Count' },
+];
+
+<Table columns={columns} rows={rows} getRowId={(r) => r.id} />
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const Empty: Story = {
@@ -214,6 +253,19 @@ export const Empty: Story = {
         emptyState={<EmptyState title="No records" description="Try adjusting filters or adding a new record." />}
       />
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<Table
+  columns={[{ key: 'name', header: 'Name' }]}
+  rows={[]}
+  emptyState={<EmptyState title="No records" description="Try adjusting filters or adding a new record." />}
+/>
+        `.trim(),
+      },
+    },
   },
 };
 
@@ -242,6 +294,24 @@ export const SelectableRows: Story = {
         <Text as="p" tone="muted">Selected: {selected.join(', ') || '(none)'}</Text>
       </Stack>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+
+<Table
+  selectableRows
+  columns={columns}
+  rows={rows}
+  getRowId={(r) => r.id}
+  selectedRowIds={selectedRowIds}
+  onSelectedRowIdsChange={setSelectedRowIds}
+/>
+        `.trim(),
+      },
+    },
   },
 };
 

@@ -130,4 +130,30 @@ export const Basic: Story = {
       </>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [open, setOpen] = useState(false);
+
+<>
+  <Button onClick={() => setOpen(true)}>Open modal</Button>
+  <Modal
+    open={open}
+    title="Modal title"
+    onClose={() => setOpen(false)}
+    footer={
+      <Inline gap="nano" justify="flex-end">
+        <Button onClick={() => setOpen(false)}>Cancel</Button>
+        <Button onClick={() => setOpen(false)}>Confirm</Button>
+      </Inline>
+    }
+  >
+    <Text as="p">Use Modal for confirmations and focused tasks.</Text>
+  </Modal>
+</>
+        `.trim(),
+      },
+    },
+  },
 };

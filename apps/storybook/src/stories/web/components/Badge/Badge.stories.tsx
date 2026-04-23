@@ -24,11 +24,7 @@ export default meta;
 
 type Story = StoryObj<typeof Badge>;
 
-export const Playground: Story = {
-  render: (args) => {
-    return <Badge {...args} />;
-  },
-};
+export const Playground: Story = {};
 
 /** All five semantic variants side by side. */
 export const AllStates: Story = {
@@ -41,6 +37,21 @@ export const AllStates: Story = {
       <Badge variant="accent">Accent</Badge>
     </Inline>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<Inline gap="nano">
+  <Badge variant="neutral">Neutral</Badge>
+  <Badge variant="success">Success</Badge>
+  <Badge variant="warning">Warning</Badge>
+  <Badge variant="error">Error</Badge>
+  <Badge variant="accent">Accent</Badge>
+</Inline>
+        `.trim(),
+      },
+    },
+  },
 };
 
 /** Badges paired with text labels — the most common real-world usage. */
@@ -63,4 +74,28 @@ export const WithLabels: Story = {
       </Stack>
     </Surface>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<Surface padding="micro" radius="small">
+  <Stack gap="nano">
+    <Inline gap="nano" align="center" justify="space-between">
+      <Text as="span">Deployment pipeline</Text>
+      <Badge variant="success">Live</Badge>
+    </Inline>
+    <Inline gap="nano" align="center" justify="space-between">
+      <Text as="span">User onboarding flow</Text>
+      <Badge variant="warning">Review</Badge>
+    </Inline>
+    <Inline gap="nano" align="center" justify="space-between">
+      <Text as="span">Payment integration</Text>
+      <Badge variant="error">Failed</Badge>
+    </Inline>
+  </Stack>
+</Surface>
+        `.trim(),
+      },
+    },
+  },
 };
