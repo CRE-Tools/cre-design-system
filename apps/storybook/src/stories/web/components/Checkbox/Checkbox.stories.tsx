@@ -55,14 +55,31 @@ export const Basic: Story = {
       </Stack>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [checked, setChecked] = useState(false);
+
+<Checkbox checked={checked} onChange={setChecked} label="Enable setting" />
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const Indeterminate: Story = {
-  render: () => <Checkbox indeterminate ariaLabel="Mixed" />,
+  args: {
+    indeterminate: true,
+    ariaLabel: 'Mixed',
+  },
 };
 
 export const Disabled: Story = {
-  render: () => <Checkbox disabled label="Disabled" />,
+  args: {
+    disabled: true,
+    label: 'Disabled',
+  },
 };
 
 export const AllStates: Story = {

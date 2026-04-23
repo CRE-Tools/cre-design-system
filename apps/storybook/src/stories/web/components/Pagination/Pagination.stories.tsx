@@ -45,6 +45,17 @@ export const Basic: Story = {
     const [page, setPage] = useState(5);
     return <Pagination page={page} totalPages={12} onPageChange={setPage} />;
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [page, setPage] = useState(5);
+
+<Pagination page={page} totalPages={12} onPageChange={setPage} />
+        `.trim(),
+      },
+    },
+  },
 };
 
 /** First page — Previous is disabled. */
@@ -52,6 +63,17 @@ export const FirstPage: Story = {
   render: () => {
     const [page, setPage] = useState(1);
     return <Pagination page={page} totalPages={12} onPageChange={setPage} />;
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [page, setPage] = useState(1);
+
+<Pagination page={page} totalPages={12} onPageChange={setPage} />
+        `.trim(),
+      },
+    },
   },
 };
 
@@ -61,11 +83,22 @@ export const LastPage: Story = {
     const [page, setPage] = useState(12);
     return <Pagination page={page} totalPages={12} onPageChange={setPage} />;
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [page, setPage] = useState(12);
+
+<Pagination page={page} totalPages={12} onPageChange={setPage} />
+        `.trim(),
+      },
+    },
+  },
 };
 
 /** Single page — both Previous and Next are disabled. */
 export const SinglePage: Story = {
-  render: () => <Pagination page={1} totalPages={1} onPageChange={() => {}} />,
+  args: { page: 1, totalPages: 1 },
 };
 
 export const AllStates: Story = {

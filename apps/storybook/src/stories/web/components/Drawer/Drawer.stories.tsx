@@ -160,6 +160,31 @@ export const Basic: Story = {
       </>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [open, setOpen] = useState(false);
+
+<>
+  <Button onClick={() => setOpen(true)}>Open drawer</Button>
+  <Drawer
+    open={open}
+    title="Drawer title"
+    onClose={() => setOpen(false)}
+    footer={
+      <Inline gap="nano" justify="flex-end">
+        <Button onClick={() => setOpen(false)}>Close</Button>
+      </Inline>
+    }
+  >
+    <Text as="p">Drawer content goes here.</Text>
+  </Drawer>
+</>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const LeftSide: Story = {
@@ -186,6 +211,32 @@ export const LeftSide: Story = {
       </>
     );
   },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [open, setOpen] = useState(false);
+
+<>
+  <Button onClick={() => setOpen(true)}>Open left drawer</Button>
+  <Drawer
+    open={open}
+    side="left"
+    title="Left drawer"
+    onClose={() => setOpen(false)}
+    footer={
+      <Inline gap="nano" justify="flex-end">
+        <Button onClick={() => setOpen(false)}>Close</Button>
+      </Inline>
+    }
+  >
+    <Text as="p">Drawer content goes here.</Text>
+  </Drawer>
+</>
+        `.trim(),
+      },
+    },
+  },
 };
 
 export const PopMotion: Story = {
@@ -211,5 +262,31 @@ export const PopMotion: Story = {
         </Drawer>
       </>
     );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [open, setOpen] = useState(false);
+
+<>
+  <Button onClick={() => setOpen(true)}>Open pop drawer</Button>
+  <Drawer
+    open={open}
+    motion="pop"
+    title="Pop motion"
+    onClose={() => setOpen(false)}
+    footer={
+      <Inline gap="nano" justify="flex-end">
+        <Button onClick={() => setOpen(false)}>Close</Button>
+      </Inline>
+    }
+  >
+    <Text as="p">Drawer content goes here.</Text>
+  </Drawer>
+</>
+        `.trim(),
+      },
+    },
   },
 };
