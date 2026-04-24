@@ -50,6 +50,19 @@ Pass an `emptyState` node to replace the default "No results." message.
 
 ---
 
+## Grouped column headers
+
+When column keys contain a separator (default `/`), the table automatically renders multi-row headers that group related columns under shared ancestor cells. Flat columns span all header rows, and group cells span their leaf descendants.
+
+<Canvas of={TableStories.GroupedHeaders} />
+
+The `groupSeparator` prop controls this behavior:
+- Default `'/'` — keys like `scene/buttonClicks/buttonA` are grouped hierarchically
+- Set to `'.'` for dot-separated keys
+- Set to `null` to disable grouping entirely
+
+---
+
 ## Props
 
 Use the controls below to tweak props and see how the component responds.

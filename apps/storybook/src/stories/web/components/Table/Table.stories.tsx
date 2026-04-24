@@ -392,3 +392,69 @@ export const ColumnWidths: Story = {
     );
   },
 };
+
+type GroupedRow = {
+  platform: string;
+  sessionDurationMs: number;
+  'tutorial_scene_a/durationMs': number;
+  'tutorial_scene_a/buttonClicks/buttonA': number;
+  'tutorial_scene_a/buttonClicks/buttonB': number;
+  'main_experience/durationMs': number;
+  'main_experience/buttonClicks/rightTrigger': number;
+};
+
+export const GroupedHeaders: Story = {
+  render: () => {
+    const groupedRows: GroupedRow[] = [
+      {
+        platform: 'quest_3',
+        sessionDurationMs: 300000,
+        'tutorial_scene_a/durationMs': 120000,
+        'tutorial_scene_a/buttonClicks/buttonA': 40,
+        'tutorial_scene_a/buttonClicks/buttonB': 20,
+        'main_experience/durationMs': 180000,
+        'main_experience/buttonClicks/rightTrigger': 7,
+      },
+    ];
+
+    const columns = useMemo(
+      () => [
+        { key: 'platform', header: 'Platform' },
+        { key: 'sessionDurationMs', header: 'Session (ms)' },
+        { key: 'tutorial_scene_a/durationMs', header: 'Duration (ms)' },
+        { key: 'tutorial_scene_a/buttonClicks/buttonA', header: 'Button A' },
+        { key: 'tutorial_scene_a/buttonClicks/buttonB', header: 'Button B' },
+        { key: 'main_experience/durationMs', header: 'Duration (ms)' },
+        { key: 'main_experience/buttonClicks/rightTrigger', header: 'Right Trigger' },
+      ],
+      []
+    );
+
+    return (
+      <Card padding="none">
+        <Table columns={columns} rows={groupedRows} />
+      </Card>
+    );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const columns = [
+  { key: 'platform', header: 'Platform' },
+  { key: 'sessionDurationMs', header: 'Session (ms)' },
+  { key: 'tutorial_scene_a/durationMs', header: 'Duration (ms)' },
+  { key: 'tutorial_scene_a/buttonClicks/buttonA', header: 'Button A' },
+  { key: 'tutorial_scene_a/buttonClicks/buttonB', header: 'Button B' },
+  { key: 'main_experience/durationMs', header: 'Duration (ms)' },
+  { key: 'main_experience/buttonClicks/rightTrigger', header: 'Right Trigger' },
+];
+
+<Card padding="none">
+  <Table columns={columns} rows={rows} />
+</Card>
+        `.trim(),
+      },
+    },
+  },
+};
