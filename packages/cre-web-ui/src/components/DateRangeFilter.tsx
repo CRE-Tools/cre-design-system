@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { injectStyles } from '../internal/injectStyles';
+import { Button } from './Button';
 import { Box } from '../primitives/Box';
 import { Inline } from '../primitives/Inline';
 import { Stack } from '../primitives/Stack';
@@ -10,46 +11,6 @@ const DATE_RANGE_FILTER_CSS = `
 [data-cre="dateRangeFilterRoot"] {
   position: relative;
   display: inline-flex;
-}
-
-[data-cre="dateRangeFilterTrigger"] {
-  appearance: none;
-  border: var(--cre-border-width-small) solid var(--cre-color-border);
-  background: var(--cre-color-surface);
-  color: var(--cre-color-text);
-  border-radius: var(--cre-radius-xsmall);
-  height: 40px;
-  padding: 0 var(--cre-space-nano);
-  cursor: pointer;
-  user-select: none;
-  font-family: var(--cre-font-family-body);
-  font-size: var(--cre-font-size-tiny);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--cre-space-quark);
-  box-sizing: border-box;
-  outline: none;
-}
-
-[data-cre="dateRangeFilterTrigger"][data-open="true"] {
-  border-color: var(--cre-color-border-strong);
-  box-shadow: 0 0 0 3px var(--cre-color-focus);
-}
-
-[data-cre="dateRangeFilterTrigger"]:focus-visible {
-  box-shadow: 0 0 0 3px var(--cre-color-focus);
-  border-color: var(--cre-color-border-strong);
-}
-
-[data-cre="dateRangeFilterTrigger"][disabled] {
-  cursor: not-allowed;
-  opacity: var(--cre-opacity-opaque);
-}
-
-[data-cre="dateRangeFilterTrigger"][data-variant="icon"] {
-  width: 40px;
-  padding: 0;
-  justify-content: center;
 }
 
 [data-cre="dateRangeFilterIcon"] {
@@ -86,25 +47,6 @@ const DATE_RANGE_FILTER_CSS = `
   align-items: center;
   justify-content: space-between;
   gap: var(--cre-space-nano);
-}
-
-[data-cre="dateRangeFilterNavButton"] {
-  appearance: none;
-  border: var(--cre-border-width-small) solid var(--cre-color-border);
-  background: var(--cre-color-surface);
-  color: var(--cre-color-text);
-  border-radius: var(--cre-radius-xsmall);
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-[data-cre="dateRangeFilterNavButton"]:focus-visible {
-  box-shadow: 0 0 0 3px var(--cre-color-focus);
-  border-color: var(--cre-color-border-strong);
 }
 
 [data-cre="dateRangeFilterGrid"] {
@@ -159,24 +101,6 @@ const DATE_RANGE_FILTER_CSS = `
   align-items: center;
   justify-content: space-between;
   gap: var(--cre-space-nano);
-}
-
-[data-cre="dateRangeFilterAction"] {
-  appearance: none;
-  border: var(--cre-border-width-small) solid var(--cre-color-border);
-  background: var(--cre-color-surface);
-  color: var(--cre-color-text);
-  border-radius: var(--cre-radius-xsmall);
-  height: 32px;
-  padding: 0 var(--cre-space-nano);
-  cursor: pointer;
-  font-family: var(--cre-font-family-body);
-  font-size: var(--cre-font-size-tiny);
-}
-
-[data-cre="dateRangeFilterAction"]:focus-visible {
-  box-shadow: 0 0 0 3px var(--cre-color-focus);
-  border-color: var(--cre-color-border-strong);
 }
 `;
 
@@ -359,34 +283,39 @@ export function DateRangeFilter({
 
   const triggerLabel = useMemo(() => {
     const { startMs, endMs } = currentValue;
-    if (startMs == null && endMs == null) return placeholder;
-    if (startMs != null && endMs == null) return `${formatShortDate(startMs)} —`;
-    if (startMs != null && endMs != null) return `${formatShortDate(startMs)} — ${formatShortDate(endMs)}`;
-    return placeholder;
+    if (startMs == null) return placeholder;
+    if (endMs == null) return `${formatShortDate(startMs)} —`;
+    return `${formatShortDate(startMs)} — ${formatShortDate(endMs)}`;
   }, [currentValue, placeholder]);
 
   return (
     <div data-cre="dateRangeFilterRoot" ref={rootRef} className={className} style={style}>
-      <button
-        ref={triggerRef}
-        type="button"
-        data-cre="dateRangeFilterTrigger"
-        data-open={open ? 'true' : 'false'}
-        data-variant={triggerVariant}
-        disabled={disabled}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        aria-label={typeof placeholder === 'string' ? placeholder : undefined}
-        onClick={() => {
-          if (disabled) return;
-          setOpen((o) => !o);
-        }}
-      >
-        <span data-cre="dateRangeFilterIcon">
-          <CalendarIcon />
-        </span>
-        {triggerVariant === 'field' ? <span>{triggerLabel}</span> : null}
-      </button>
+      {triggerVariant === 'icon' ? (
+        <Button
+          ref={triggerRef}
+          variant="secondary"
+          iconOnly
+          leadingIcon={<span data-cre="dateRangeFilterIcon"><CalendarIcon /></span>}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-label={placeholder}
+          disabled={disabled}
+          onClick={() => { if (!disabled) setOpen((o) => !o); }}
+        />
+      ) : (
+        <Button
+          ref={triggerRef}
+          variant="secondary"
+          leadingIcon={<span data-cre="dateRangeFilterIcon"><CalendarIcon /></span>}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-label={placeholder}
+          disabled={disabled}
+          onClick={() => { if (!disabled) setOpen((o) => !o); }}
+        >
+          {triggerLabel}
+        </Button>
+      )}
 
       {mounted ? (
         <div
@@ -398,40 +327,40 @@ export function DateRangeFilter({
           <Surface variant="raised" padding="micro" radius="small">
             <Stack gap="nano">
               <Box as="div" data-cre="dateRangeFilterHeader">
-                <button
-                  type="button"
-                  data-cre="dateRangeFilterNavButton"
+                <Button
+                  size="small"
+                  variant="secondary"
+                  iconOnly
+                  leadingIcon={<Text as="span" variant="label">‹</Text>}
                   aria-label="Previous month"
                   onClick={() => {
                     const d = new Date(viewYear, viewMonth - 1, 1);
                     setViewYear(d.getFullYear());
                     setViewMonth(d.getMonth());
                   }}
-                >
-                  <Text as="span" variant="label">‹</Text>
-                </button>
+                />
 
                 <Text as="div" variant="label">
                   {monthLabel(viewYear, viewMonth)}
                 </Text>
 
-                <button
-                  type="button"
-                  data-cre="dateRangeFilterNavButton"
+                <Button
+                  size="small"
+                  variant="secondary"
+                  iconOnly
+                  leadingIcon={<Text as="span" variant="label">›</Text>}
                   aria-label="Next month"
                   onClick={() => {
                     const d = new Date(viewYear, viewMonth + 1, 1);
                     setViewYear(d.getFullYear());
                     setViewMonth(d.getMonth());
                   }}
-                >
-                  <Text as="span" variant="label">›</Text>
-                </button>
+                />
               </Box>
 
               <Box as="div" data-cre="dateRangeFilterGrid">
-                {DOW.map((d) => (
-                  <Box key={d} as="div" data-cre="dateRangeFilterDow">
+                {DOW.map((d, i) => (
+                  <Box key={i} as="div" data-cre="dateRangeFilterDow">
                     {d}
                   </Box>
                 ))}
@@ -471,26 +400,26 @@ export function DateRangeFilter({
                 </Text>
 
                 <Inline gap="quark" align="center">
-                  <button
-                    type="button"
-                    data-cre="dateRangeFilterAction"
+                  <Button
+                    size="small"
+                    variant="secondary"
                     onClick={() => {
                       commit({ startMs: null, endMs: null });
                     }}
                   >
                     Clear
-                  </button>
+                  </Button>
 
-                  <button
-                    type="button"
-                    data-cre="dateRangeFilterAction"
+                  <Button
+                    size="small"
+                    variant="secondary"
                     onClick={() => {
                       setOpen(false);
                       triggerRef.current?.focus();
                     }}
                   >
                     Done
-                  </button>
+                  </Button>
                 </Inline>
               </Box>
             </Stack>

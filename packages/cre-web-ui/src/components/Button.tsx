@@ -20,8 +20,7 @@
  * Hover / active states are CSS pseudo-classes; focus uses :focus-visible.
  */
 
-import React, { type ReactNode, type ButtonHTMLAttributes } from 'react';
-import { Box } from '../primitives/Box';
+import React, { type ReactNode, type ButtonHTMLAttributes, forwardRef } from 'react';
 import { IconSlot } from '../primitives/IconSlot';
 import { injectStyles } from '../internal/injectStyles';
 
@@ -74,6 +73,14 @@ const BUTTON_CSS = `
   --cre-button-line-height:  24px;
 }
 
+/* large icon-only — square button with no horizontal padding */
+[data-cre="button"][data-size="large"][data-icon-only="true"] {
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+}
+
 /* regular — standard web button (default size) */
 [data-cre="button"][data-size="regular"] {
   --cre-button-padding-y:    var(--cre-space-nano);    /*  8px */
@@ -87,6 +94,56 @@ const BUTTON_CSS = `
   --cre-button-font-weight:  500;
   --cre-button-line-height:  24px;
   height: 40px;
+}
+
+/* regular icon-only — square button with no horizontal padding */
+[data-cre="button"][data-size="regular"][data-icon-only="true"] {
+  padding: 0;
+  width: 40px;
+  justify-content: center;
+}
+
+/* small — compact button for secondary actions */
+[data-cre="button"][data-size="small"] {
+  --cre-button-padding-y:    var(--cre-space-quark);    /*  4px */
+  --cre-button-padding-x:    var(--cre-space-quark);    /*  4px */
+  --cre-button-gap:          var(--cre-space-quark);    /*  4px */
+  --cre-button-radius:       var(--cre-radius-xsmall);  /*  8px */
+  --cre-button-icon-size:    16px;
+  --cre-button-icon-padding: 0px;
+  --cre-button-font-size:    var(--cre-font-size-micro); /* 12px */
+  --cre-button-font-weight:  500;
+  --cre-button-line-height:  16px;
+  height: 32px;
+}
+
+/* small icon-only — square button with no horizontal padding */
+[data-cre="button"][data-size="small"][data-icon-only="true"] {
+  padding: 0;
+  width: 32px;
+  justify-content: center;
+}
+
+/* ── Variant: secondary ───────────────────────────────────────────────────── */
+/* Locally re-maps the base --cre-button-* vars so interactive states work    */
+/* without duplicating hover/active/disabled rules.                           */
+
+[data-cre="button"][data-variant="secondary"] {
+  --cre-button-bg:     var(--cre-button-secondary-bg);
+  --cre-button-fg:     var(--cre-button-secondary-fg);
+  --cre-button-border: var(--cre-button-secondary-border);
+
+  --cre-button-hover-bg:     var(--cre-button-secondary-hover-bg);
+  --cre-button-hover-fg:     var(--cre-button-secondary-hover-fg);
+  --cre-button-hover-border: var(--cre-button-secondary-hover-border);
+
+  --cre-button-active-bg:     var(--cre-button-secondary-active-bg);
+  --cre-button-active-fg:     var(--cre-button-secondary-active-fg);
+  --cre-button-active-border: var(--cre-button-secondary-active-border);
+
+  --cre-button-disabled-bg:     var(--cre-button-secondary-disabled-bg);
+  --cre-button-disabled-fg:     var(--cre-button-secondary-disabled-fg);
+  --cre-button-disabled-border: var(--cre-button-secondary-disabled-border);
 }
 
 /* ── Interactive states ───────────────────────────────────────────────────── */
@@ -120,7 +177,10 @@ injectStyles('cre-button-styles', BUTTON_CSS);
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 /** Button size variant. Affects padding, gap, radius, icon size, and typography. */
-export type CreButtonSize = 'regular' | 'large' | 'vr';
+export type CreButtonSize = 'small' | 'regular' | 'large' | 'vr';
+
+/** Button visual variant. */
+export type CreButtonVariant = 'primary' | 'secondary';
 
 export type CreButtonProps = {
   /** Button label content. */
@@ -131,11 +191,20 @@ export type CreButtonProps = {
   trailingIcon?: ReactNode;
   /**
    * Size variant.
+   * - `small`   — 12px / 4×4 padding / 8px radius / 32px height  (compact)
    * - `regular` — 15px / 8×16 padding / 8px radius / 40px height  (default)
    * - `large`   — 16px / 12×16 padding / 8px radius
    * - `vr`      — 24px / 16×20 padding / 12px radius  (VR / extra-large)
    */
   size?: CreButtonSize;
+  /**
+   * Visual variant.
+   * - `primary`   — accent-colored CTA (default)
+   * - `secondary` — neutral surface appearance for toolbar and utility controls
+   */
+  variant?: CreButtonVariant;
+  /** When true: collapses padding, enforces a square size, renders only the leading icon. */
+  iconOnly?: boolean;
   /** Disables the button and applies disabled token colors. */
   disabled?: boolean;
   /** HTML button type. Defaults to "button". */
@@ -143,32 +212,54 @@ export type CreButtonProps = {
   /** Additional CSS class name(s) for layout or composition overrides. */
   className?: string;
   onClick?: () => void;
+  /** ARIA haspopup attribute for accessibility. */
+  'aria-haspopup'?: ButtonHTMLAttributes<HTMLButtonElement>['aria-haspopup'];
+  /** ARIA expanded attribute for accessibility. */
+  'aria-expanded'?: ButtonHTMLAttributes<HTMLButtonElement>['aria-expanded'];
+  /** ARIA label attribute for accessibility. */
+  'aria-label'?: ButtonHTMLAttributes<HTMLButtonElement>['aria-label'];
 };
 
-export function Button({
+export const Button = forwardRef<HTMLButtonElement, CreButtonProps>(({
   children,
   leadingIcon,
   trailingIcon,
   size = 'regular',
+  variant = 'primary',
+  iconOnly,
   disabled,
   type = 'button',
   className,
   onClick,
-}: CreButtonProps) {
+  'aria-haspopup': ariaHasPopup,
+  'aria-expanded': ariaExpanded,
+  'aria-label': ariaLabel,
+}, ref) => {
   return (
-    <Box
-      as="button"
+    <button
+      ref={ref}
       data-cre="button"
       data-size={size}
+      data-variant={variant}
+      data-icon-only={iconOnly ? 'true' : undefined}
       type={type}
       disabled={disabled}
       className={className}
       onClick={disabled ? undefined : onClick}
+      aria-haspopup={ariaHasPopup}
+      aria-expanded={ariaExpanded}
+      aria-label={ariaLabel}
     >
-      <IconSlot>{leadingIcon}</IconSlot>
-      {children}
-      <IconSlot>{trailingIcon}</IconSlot>
-    </Box>
+      {iconOnly ? (
+        <IconSlot>{leadingIcon}</IconSlot>
+      ) : (
+        <>
+          <IconSlot>{leadingIcon}</IconSlot>
+          {children}
+          <IconSlot>{trailingIcon}</IconSlot>
+        </>
+      )}
+    </button>
   );
-}
+});
 Button.displayName = 'Button';
