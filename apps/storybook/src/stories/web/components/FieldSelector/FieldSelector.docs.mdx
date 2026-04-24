@@ -51,6 +51,16 @@ Interactive playground — toggle columns and observe the visible field list.
 
 ---
 
+## Hierarchical grouping
+
+When field paths contain a separator character (default `/`), they are automatically rendered as an indented tree with group checkboxes. Clicking a group checkbox toggles all descendant leaves on or off.
+
+The `groupSeparator` prop controls which character splits paths into levels (default `'/'`). Use `'.'` if your paths are dot-separated.
+
+<Canvas of={FieldSelectorStories.HierarchicalFields} />
+
+---
+
 ## Empty state
 
 If no `fields` are provided (and no `data` to derive from), the popover displays an empty state message.

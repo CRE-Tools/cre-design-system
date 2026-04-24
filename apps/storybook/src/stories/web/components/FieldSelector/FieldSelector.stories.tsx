@@ -213,6 +213,73 @@ const [visibleFields, setVisibleFields] = useState<string[]>([]);
   },
 };
 
+/** Hierarchical fields with slash-separated paths — renders as an indented tree with group checkboxes. */
+export const HierarchicalFields: Story = {
+  render: () => {
+    const fields = [
+      'sessionDurationMs',
+      'platform',
+      'tutorial_scene_a/durationMs',
+      'tutorial_scene_a/buttonClicks/buttonA',
+      'tutorial_scene_a/buttonClicks/buttonB',
+      'main_experience/durationMs',
+      'main_experience/buttonClicks/rightTrigger',
+    ];
+
+    const [visibleFields, setVisibleFields] = useState<string[]>([
+      'sessionDurationMs',
+      'platform',
+      'tutorial_scene_a/durationMs',
+    ]);
+
+    return (
+      <Card>
+        <Stack gap="nano">
+          <Inline justify="flex-end">
+            <FieldSelector
+              fields={fields}
+              visibleFields={visibleFields}
+              onVisibleFieldsChange={setVisibleFields}
+            />
+          </Inline>
+          <Text as="p" tone="muted">
+            Visible: {visibleFields.length > 0 ? visibleFields.join(', ') : '(none)'}
+          </Text>
+        </Stack>
+      </Card>
+    );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const fields = [
+  'sessionDurationMs',
+  'platform',
+  'tutorial_scene_a/durationMs',
+  'tutorial_scene_a/buttonClicks/buttonA',
+  'tutorial_scene_a/buttonClicks/buttonB',
+  'main_experience/durationMs',
+  'main_experience/buttonClicks/rightTrigger',
+];
+
+const [visibleFields, setVisibleFields] = useState([
+  'sessionDurationMs',
+  'platform',
+  'tutorial_scene_a/durationMs',
+]);
+
+<FieldSelector
+  fields={fields}
+  visibleFields={visibleFields}
+  onVisibleFieldsChange={setVisibleFields}
+/>
+        `.trim(),
+      },
+    },
+  },
+};
+
 /** All states — open trigger (simulated via inline rendering). */
 export const AllStates: Story = {
   render: () => {

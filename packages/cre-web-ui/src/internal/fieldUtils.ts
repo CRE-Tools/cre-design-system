@@ -65,3 +65,88 @@ export function getNestedValue(obj: unknown, path: string): unknown {
   }
   return current;
 }
+
+export type FieldTreeNode = {
+  /** Full path from root to this node joined by separator. e.g. "scene/buttonClicks" */
+  key: string;
+  /** The last segment label only. e.g. "buttonClicks" */
+  segment: string;
+  children: FieldTreeNode[];
+  isLeaf: boolean;
+};
+
+/**
+ * Build a tree from flat field path strings.
+ * ["sessionId", "scene/durationMs", "scene/buttonA"]
+ * → [ {key:"sessionId", leaf}, {key:"scene", group → [{key:"scene/durationMs"}, {key:"scene/buttonA"}]} ]
+ */
+export function buildFieldTree(fields: string[], separator = '/'): FieldTreeNode[] {
+  const root: FieldTreeNode[] = [];
+  for (const field of fields) {
+    const parts = field.split(separator);
+    let level = root;
+    for (let i = 0; i < parts.length; i++) {
+      const segment = parts[i];
+      const key = parts.slice(0, i + 1).join(separator);
+      const isLeaf = i === parts.length - 1;
+      let node = level.find((n) => n.key === key);
+      if (!node) {
+        node = { key, segment, children: [], isLeaf };
+        level.push(node);
+      } else if (isLeaf) {
+        node.isLeaf = true;
+      }
+      level = node.children;
+    }
+  }
+  return root;
+}
+
+export type HeaderTreeNode = {
+  key: string;
+  segment: string;
+  children: HeaderTreeNode[];
+  isLeaf: boolean;
+  depth: number;
+};
+
+export function buildHeaderTree(keys: string[], separator = '/'): HeaderTreeNode[] {
+  const root: HeaderTreeNode[] = [];
+  for (const key of keys) {
+    const parts = key.split(separator);
+    let level = root;
+    for (let i = 0; i < parts.length; i++) {
+      const segment = parts[i];
+      const nodeKey = parts.slice(0, i + 1).join(separator);
+      const isLeaf = i === parts.length - 1;
+      let node = level.find((n) => n.key === nodeKey);
+      if (!node) {
+        node = { key: nodeKey, segment, children: [], isLeaf, depth: i };
+        level.push(node);
+      } else if (isLeaf) {
+        node.isLeaf = true;
+      }
+      level = node.children;
+    }
+  }
+  return root;
+}
+
+export function countHeaderLeaves(node: HeaderTreeNode): number {
+  if (node.isLeaf && node.children.length === 0) return 1;
+  let count = node.isLeaf ? 1 : 0;
+  for (const child of node.children) count += countHeaderLeaves(child);
+  return count;
+}
+
+export function headerTreeMaxDepth(nodes: HeaderTreeNode[]): number {
+  let max = 0;
+  function walk(ns: HeaderTreeNode[], d: number) {
+    for (const n of ns) {
+      if (n.isLeaf) max = Math.max(max, d);
+      walk(n.children, d + 1);
+    }
+  }
+  walk(nodes, 0);
+  return max;
+}

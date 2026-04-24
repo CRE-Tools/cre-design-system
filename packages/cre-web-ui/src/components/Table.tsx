@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { injectStyles } from '../internal/injectStyles';
-import { defaultLabelParser, flattenFields, getNestedValue } from '../internal/fieldUtils';
+import { defaultLabelParser, flattenFields, getNestedValue, buildHeaderTree, countHeaderLeaves, headerTreeMaxDepth, type HeaderTreeNode } from '../internal/fieldUtils';
 import { Box } from '../primitives/Box';
 import { Text } from '../primitives/Text';
 import { Checkbox } from './Checkbox';
@@ -31,6 +31,7 @@ const TABLE_CSS = `
   color: var(--cre-accent-fg);
   padding: var(--cre-space-nano) var(--cre-space-micro);
   border-bottom: var(--cre-border-width-small) solid var(--cre-accent-border);
+  border-right: var(--cre-border-width-small) solid var(--cre-accent-border);
   background: var(--cre-accent-bg);
   position: sticky;
   top: 0;
@@ -67,6 +68,24 @@ const TABLE_CSS = `
   display: inline-flex;
   align-items: center;
   gap: var(--cre-space-quark);
+}
+
+[data-cre="thGroup"] {
+  text-align: center;
+  font-size: var(--cre-font-size-micro);
+  font-weight: 600;
+  color: var(--cre-accent-fg);
+  padding: var(--cre-space-nano) var(--cre-space-micro);
+  border-bottom: var(--cre-border-width-small) solid var(--cre-accent-border);
+  border-right: var(--cre-border-width-small) solid var(--cre-accent-border);
+  background: var(--cre-accent-bg);
+  position: sticky;
+  top: 0;
+}
+
+[data-cre="th"]:last-child,
+[data-cre="thGroup"]:last-child {
+  border-right: none;
 }
 
 [data-cre="emptyCell"] {
@@ -107,6 +126,11 @@ export type TableProps<Row> = {
    * Defaults to defaultLabelParser (splits on dots + camelCase).
    */
   labelParser?: (path: string) => string;
+  /**
+   * Separator used to parse column keys into header groups.
+   * Default '/'. Set to '.' for dot-separated keys, or null to disable grouping entirely.
+   */
+  groupSeparator?: string | null;
   getRowId?: (row: Row, index: number) => string;
   onRowClick?: (row: Row) => void;
   selectableRows?: boolean;
@@ -119,12 +143,82 @@ export type TableProps<Row> = {
   style?: React.CSSProperties;
 };
 
+function renderGroupedHeader<Row>(
+  headerTree: HeaderTreeNode[],
+  maxDepth: number,
+  columns: TableColumn<Row>[],
+  selectableRows: boolean,
+  sortable: boolean,
+  sortKey: string | null,
+  sortDir: TableSortDirection,
+  onSortClick: (key: string) => void,
+  selectAllCheckbox: React.ReactNode,
+): React.ReactNode {
+  const rows: React.ReactNode[][] = Array.from({ length: maxDepth + 1 }, () => []);
+
+  function walk(nodes: HeaderTreeNode[]) {
+    for (const node of nodes) {
+      if (node.isLeaf) {
+        const col = columns.find((c) => c.key === node.key);
+        const canSort = sortable && !!col?.sort;
+        const active = sortKey === node.key;
+        const label = typeof col?.header === 'string' ? col.header : undefined;
+        const rowspan = maxDepth - node.depth + 1;
+
+        rows[node.depth].push(
+          <th
+            key={node.key}
+            data-cre="th"
+            rowSpan={rowspan}
+            style={col?.width !== undefined ? { '--cre-th-width': typeof col.width === 'number' ? `${col.width}px` : col.width } as React.CSSProperties : undefined}
+          >
+            {canSort ? (
+              <button
+                type="button"
+                data-cre="thButton"
+                aria-label={label ? `Sort by ${label}` : undefined}
+                onClick={() => onSortClick(node.key)}
+              >
+                {col?.header}
+                {active ? <Text as="span">{sortDir === 'asc' ? '↑' : '↓'}</Text> : null}
+              </button>
+            ) : (
+              col?.header
+            )}
+          </th>,
+        );
+      } else {
+        const colspan = countHeaderLeaves(node);
+        rows[node.depth].push(
+          <th key={node.key} data-cre="thGroup" colSpan={colspan}>
+            {node.segment}
+          </th>,
+        );
+      }
+      walk(node.children);
+    }
+  }
+
+  walk(headerTree);
+
+  if (selectableRows) {
+    rows[0].unshift(
+      <th key="__select" data-cre="th" data-select-col="true" rowSpan={maxDepth + 1}>
+        {selectAllCheckbox}
+      </th>,
+    );
+  }
+
+  return rows.map((cells, i) => <tr key={i}>{cells}</tr>);
+}
+
 export function Table<Row>({
   columns: columnsProp = [],
   rows,
   deriveColumns = false,
   visibleFields,
   labelParser,
+  groupSeparator = '/',
   getRowId,
   onRowClick,
   selectableRows = false,
@@ -184,58 +278,92 @@ export function Table<Row>({
   const allSelected = selectableRows && allIds.length > 0 && allIds.every((id) => effectiveSelected.includes(id));
   const someSelected = selectableRows && allIds.some((id) => effectiveSelected.includes(id));
 
+  const useGroupedHeaders =
+    !!groupSeparator &&
+    columns.some((c) => c.key.includes(groupSeparator));
+
+  const headerTree = useMemo(() => {
+    if (!useGroupedHeaders || !groupSeparator) return null;
+    return buildHeaderTree(columns.map((c) => c.key), groupSeparator);
+  }, [columns, useGroupedHeaders, groupSeparator]);
+
+  const headerMaxDepth = useMemo(
+    () => (headerTree ? headerTreeMaxDepth(headerTree) : 0),
+    [headerTree],
+  );
+
+  const handleSortClick = (key: string) => {
+    if (sortKey !== key) {
+      setSortKey(key);
+      setSortDir('asc');
+      return;
+    }
+    setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+  };
+
+  const selectAllCheckbox = (
+    <Checkbox
+      ariaLabel="Select all rows"
+      checked={allSelected}
+      indeterminate={!allSelected && someSelected}
+      onChange={(next) => {
+        setSelected(next ? allIds : []);
+      }}
+    />
+  );
+
   return (
     <Box as="div" data-cre="tableWrap" className={className} style={style}>
       <table data-cre="table">
         <thead>
-          <tr>
-            {selectableRows ? (
-              <th data-cre="th" data-select-col="true">
-                <Checkbox
-                  ariaLabel="Select all rows"
-                  checked={allSelected}
-                  indeterminate={!allSelected && someSelected}
-                  onChange={(next) => {
-                    setSelected(next ? allIds : []);
-                  }}
-                />
-              </th>
-            ) : null}
-            {columns.map((c) => {
-              const canSort = sortable && !!c.sort;
-              const active = sortKey === c.key;
-              const label = typeof c.header === 'string' ? c.header : undefined;
+          {useGroupedHeaders && headerTree
+            ? renderGroupedHeader(
+                headerTree,
+                headerMaxDepth,
+                columns,
+                selectableRows,
+                sortable,
+                sortKey,
+                sortDir,
+                handleSortClick,
+                selectAllCheckbox,
+              )
+            : (
+              <tr>
+                {selectableRows ? (
+                  <th data-cre="th" data-select-col="true">
+                    {selectAllCheckbox}
+                  </th>
+                ) : null}
+                {columns.map((c) => {
+                  const canSort = sortable && !!c.sort;
+                  const active = sortKey === c.key;
+                  const label = typeof c.header === 'string' ? c.header : undefined;
 
-              return (
-                <th
-                  key={c.key}
-                  data-cre="th"
-                  style={c.width !== undefined ? { '--cre-th-width': typeof c.width === 'number' ? `${c.width}px` : c.width } as React.CSSProperties : undefined}
-                >
-                  {canSort ? (
-                    <button
-                      type="button"
-                      data-cre="thButton"
-                      aria-label={label ? `Sort by ${label}` : undefined}
-                      onClick={() => {
-                        if (!active) {
-                          setSortKey(c.key);
-                          setSortDir('asc');
-                          return;
-                        }
-                        setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
-                      }}
+                  return (
+                    <th
+                      key={c.key}
+                      data-cre="th"
+                      style={c.width !== undefined ? { '--cre-th-width': typeof c.width === 'number' ? `${c.width}px` : c.width } as React.CSSProperties : undefined}
                     >
-                      {c.header}
-                      {active ? <Text as="span">{sortDir === 'asc' ? '↑' : '↓'}</Text> : null}
-                    </button>
-                  ) : (
-                    c.header
-                  )}
-                </th>
-              );
-            })}
-          </tr>
+                      {canSort ? (
+                        <button
+                          type="button"
+                          data-cre="thButton"
+                          aria-label={label ? `Sort by ${label}` : undefined}
+                          onClick={() => handleSortClick(c.key)}
+                        >
+                          {c.header}
+                          {active ? <Text as="span">{sortDir === 'asc' ? '↑' : '↓'}</Text> : null}
+                        </button>
+                      ) : (
+                        c.header
+                      )}
+                    </th>
+                  );
+                })}
+              </tr>
+            )}
         </thead>
         <tbody>
           {isEmpty ? (

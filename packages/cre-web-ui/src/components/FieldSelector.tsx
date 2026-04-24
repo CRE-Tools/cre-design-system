@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { injectStyles } from '../internal/injectStyles';
-import { defaultLabelParser, flattenFields } from '../internal/fieldUtils';
+import { defaultLabelParser, flattenFields, buildFieldTree, type FieldTreeNode } from '../internal/fieldUtils';
 import { Box } from '../primitives/Box';
 import { Stack } from '../primitives/Stack';
 import { Surface } from '../primitives/Surface';
@@ -38,11 +38,23 @@ const FIELD_SELECTOR_CSS = `
   transform: translateY(0) scale(1);
 }
 
+[data-cre="fieldSelectorScroll"] {
+  max-height: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 [data-cre="fieldSelectorItem"] {
   display: flex;
   align-items: center;
   gap: var(--cre-space-nano);
   padding: var(--cre-space-quark) 0;
+  padding-left: calc(var(--cre-field-selector-depth, 0) * var(--cre-space-small));
+  white-space: nowrap;
+}
+
+[data-cre="fieldSelectorItem"] input[type="checkbox"] {
+  flex-shrink: 0;
 }
 `;
 
@@ -68,6 +80,12 @@ export type FieldSelectorProps = {
    * returns a display label. Defaults to defaultLabelParser.
    */
   labelParser?: (path: string) => string;
+  /**
+   * Separator used to split field paths into tree groups.
+   * Default '/' — e.g. "scene/buttonClicks/buttonA" becomes three levels.
+   * Use '.' if paths are dot-separated.
+   */
+  groupSeparator?: string;
   /** Accessible label for the trigger button. */
   ariaLabel?: string;
   /** Disables the trigger button. */
@@ -94,12 +112,64 @@ function ColumnsIcon() {
   );
 }
 
+function collectLeaves(node: FieldTreeNode): string[] {
+  if (node.isLeaf && node.children.length === 0) return [node.key];
+  const leaves: string[] = [];
+  if (node.isLeaf) leaves.push(node.key);
+  for (const child of node.children) leaves.push(...collectLeaves(child));
+  return leaves;
+}
+
+function renderTree(
+  nodes: FieldTreeNode[],
+  depth: number,
+  visibleFields: string[],
+  onToggle: (key: string, checked: boolean) => void,
+  onToggleGroup: (leaves: string[], checked: boolean) => void,
+  labelParser: (seg: string) => string,
+): React.ReactNode {
+  return nodes.map((node) => {
+    if (node.isLeaf && node.children.length === 0) {
+      return (
+        <Box key={node.key} as="div" data-cre="fieldSelectorItem"
+          style={{ '--cre-field-selector-depth': String(depth) } as React.CSSProperties}>
+          <Checkbox
+            id={`field-selector-${node.key}`}
+            checked={visibleFields.includes(node.key)}
+            label={labelParser(node.segment)}
+            onChange={(checked) => onToggle(node.key, checked)}
+          />
+        </Box>
+      );
+    }
+    const leaves = collectLeaves(node);
+    const allChecked = leaves.every((k) => visibleFields.includes(k));
+    const someChecked = leaves.some((k) => visibleFields.includes(k));
+    return (
+      <React.Fragment key={node.key}>
+        <Box as="div" data-cre="fieldSelectorItem"
+          style={{ '--cre-field-selector-depth': String(depth) } as React.CSSProperties}>
+          <Checkbox
+            id={`field-selector-group-${node.key}`}
+            checked={allChecked}
+            indeterminate={!allChecked && someChecked}
+            label={labelParser(node.segment)}
+            onChange={(checked) => onToggleGroup(leaves, checked)}
+          />
+        </Box>
+        {renderTree(node.children, depth + 1, visibleFields, onToggle, onToggleGroup, labelParser)}
+      </React.Fragment>
+    );
+  });
+}
+
 export function FieldSelector({
   data,
   fields: fieldsProp,
   visibleFields,
   onVisibleFieldsChange,
   labelParser,
+  groupSeparator = '/',
   ariaLabel = 'Select visible columns',
   disabled,
   className,
@@ -157,6 +227,15 @@ export function FieldSelector({
     onVisibleFieldsChange(next);
   };
 
+  const toggleGroup = (leafKeys: string[], checked: boolean) => {
+    const next = checked
+      ? Array.from(new Set([...visibleFields, ...leafKeys]))
+      : visibleFields.filter((f) => !leafKeys.includes(f));
+    onVisibleFieldsChange(next);
+  };
+
+  const tree = buildFieldTree(allFields, groupSeparator);
+
   return (
     <div data-cre="fieldSelectorRoot" ref={rootRef} className={className} style={style}>
       <Button
@@ -189,16 +268,9 @@ export function FieldSelector({
                   No fields available.
                 </Text>
               ) : (
-                allFields.map((field) => (
-                  <Box key={field} as="div" data-cre="fieldSelectorItem">
-                    <Checkbox
-                      id={`field-selector-${field}`}
-                      checked={visibleFields.includes(field)}
-                      label={resolveLabelParser(field)}
-                      onChange={(checked) => toggle(field, checked)}
-                    />
-                  </Box>
-                ))
+                <div data-cre="fieldSelectorScroll">
+                  {renderTree(tree, 0, visibleFields, toggle, toggleGroup, resolveLabelParser)}
+                </div>
               )}
             </Stack>
           </Surface>
