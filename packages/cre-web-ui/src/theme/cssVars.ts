@@ -197,5 +197,21 @@ export function themeTokensToCssVars(tokens: CreThemeTokens): CreCssVars {
     '--cre-button-disabled-bg':     button.disabledBg,
     '--cre-button-disabled-fg':     button.disabledFg,
     '--cre-button-disabled-border': button.disabledBorder,
+
+    '--cre-button-secondary-bg':     button.secondaryBg,
+    '--cre-button-secondary-fg':     button.secondaryFg,
+    '--cre-button-secondary-border': button.secondaryBorder,
+
+    '--cre-button-secondary-hover-bg':     button.secondaryHoverBg,
+    '--cre-button-secondary-hover-fg':     button.secondaryHoverFg,
+    '--cre-button-secondary-hover-border': button.secondaryHoverBorder,
+
+    '--cre-button-secondary-active-bg':     button.secondaryActiveBg,
+    '--cre-button-secondary-active-fg':     button.secondaryActiveFg,
+    '--cre-button-secondary-active-border': button.secondaryActiveBorder,
+
+    '--cre-button-secondary-disabled-bg':     button.secondaryDisabledBg,
+    '--cre-button-secondary-disabled-fg':     button.secondaryDisabledFg,
+    '--cre-button-secondary-disabled-border': button.secondaryDisabledBorder,
   };
 }

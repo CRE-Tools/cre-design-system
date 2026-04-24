@@ -90,6 +90,11 @@ export type CreThemeTokens = {
       hoverBg: string; hoverFg: string; hoverBorder: string;
       activeBg: string; activeFg: string; activeBorder: string;
       disabledBg: string; disabledFg: string; disabledBorder: string;
+
+      secondaryBg: string; secondaryFg: string; secondaryBorder: string;
+      secondaryHoverBg: string; secondaryHoverFg: string; secondaryHoverBorder: string;
+      secondaryActiveBg: string; secondaryActiveFg: string; secondaryActiveBorder: string;
+      secondaryDisabledBg: string; secondaryDisabledFg: string; secondaryDisabledBorder: string;
     };
   };
 };
@@ -168,6 +173,22 @@ function buildButtonTokens(
     disabledBg:     p.neutral[300],
     disabledFg:     p.neutral[700],
     disabledBorder: p.neutral[400],
+
+    secondaryBg:     p.neutral[100],
+    secondaryFg:     p.neutral[1050],
+    secondaryBorder: p.neutral[200],
+
+    secondaryHoverBg:     p.neutral[200],
+    secondaryHoverFg:     p.neutral[1050],
+    secondaryHoverBorder: p.neutral[300],
+
+    secondaryActiveBg:     p.neutral[300],
+    secondaryActiveFg:     p.neutral[1050],
+    secondaryActiveBorder: p.neutral[400],
+
+    secondaryDisabledBg:     p.neutral[100],
+    secondaryDisabledFg:     p.neutral[600],
+    secondaryDisabledBorder: p.neutral[200],
   };
 }
 

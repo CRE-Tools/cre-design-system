@@ -27,6 +27,32 @@ Use the controls below to tweak props and see how the component responds.
 
 ---
 
+## Variants
+
+Two visual variants are available via the `variant` prop:
+
+- **`primary`** (default) — Accent-colored CTA with high visual prominence. Use for primary actions like "Save", "Confirm", "Create", or "Continue".
+- **`secondary`** — Neutral surface appearance with border. Use for toolbar controls, utility actions, and secondary buttons that should not compete with primary CTAs.
+
+### Primary vs Secondary
+
+<Canvas of={ButtonStories.Playground} />
+
+<Canvas of={ButtonStories.SecondaryVariant} />
+
+**When to use primary:**
+- Main call-to-action on a page or dialog
+- Confirmation actions ("Save", "Submit", "Confirm")
+- Navigational actions that advance the user forward ("Continue", "Next")
+
+**When to use secondary:**
+- Toolbar controls (e.g., column selector, date range filter)
+- Utility actions inside panels ("Clear", "Reset", "Cancel")
+- Navigation buttons inside popovers or dialogs ("Done", "Close")
+- Any button that should blend into the UI rather than stand out
+
+---
+
 ## Size variants
 
 Three sizes are available via the `size` prop:
@@ -75,6 +101,19 @@ Use `leadingIcon` and `trailingIcon` to render icons before and after the label.
 <Canvas of={ButtonStories.WithTrailingIcon} />
 
 <Canvas of={ButtonStories.WithBothIcons} />
+
+---
+
+## Icon-only
+
+Set `iconOnly` to render a square button with no label. This is useful for toolbar actions, menu toggles, and other compact controls where only an icon is needed.
+
+When `iconOnly` is `true`:
+- Horizontal padding is removed
+- The button becomes a square (40px × 40px for `regular`, 48px × 48px for `large`)
+- Only the `leadingIcon` is rendered — `children` and `trailingIcon` are ignored
+
+<Canvas of={ButtonStories.IconOnly} />
 
 ---
 

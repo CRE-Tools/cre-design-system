@@ -237,6 +237,78 @@ function TokenReference() {
         ))}
       </Section>
 
+      <Section title="Button Component Tokens">
+        <p style={{ fontSize: 13, color: 'var(--cre-color-text-muted)', marginBottom: 16 }}>
+          Component-level tokens for Button. These cascade through the variant system — override them locally per variant rather than changing the global values.
+        </p>
+
+        {/* Primary variant */}
+        <div style={{ marginBottom: 16, fontWeight: 600, fontSize: 13, color: 'var(--cre-color-text)' }}>Primary (default)</div>
+        {[
+          '--cre-button-bg',
+          '--cre-button-fg',
+          '--cre-button-border',
+          '--cre-button-hover-bg',
+          '--cre-button-hover-fg',
+          '--cre-button-hover-border',
+          '--cre-button-active-bg',
+          '--cre-button-active-fg',
+          '--cre-button-active-border',
+          '--cre-button-disabled-bg',
+          '--cre-button-disabled-fg',
+          '--cre-button-disabled-border',
+        ].map((varName) => (
+          <TokenRow
+            key={varName}
+            label={varName}
+            value={`var(${varName})`}
+            preview={
+              <div style={{
+                width: 28,
+                height: 28,
+                background: `var(${varName})`,
+                borderRadius: 4,
+                border: '1px solid var(--cre-color-border)',
+                flexShrink: 0,
+              }} />
+            }
+          />
+        ))}
+
+        {/* Secondary variant */}
+        <div style={{ marginTop: 16, marginBottom: 16, fontWeight: 600, fontSize: 13, color: 'var(--cre-color-text)' }}>Secondary</div>
+        {[
+          '--cre-button-secondary-bg',
+          '--cre-button-secondary-fg',
+          '--cre-button-secondary-border',
+          '--cre-button-secondary-hover-bg',
+          '--cre-button-secondary-hover-fg',
+          '--cre-button-secondary-hover-border',
+          '--cre-button-secondary-active-bg',
+          '--cre-button-secondary-active-fg',
+          '--cre-button-secondary-active-border',
+          '--cre-button-secondary-disabled-bg',
+          '--cre-button-secondary-disabled-fg',
+          '--cre-button-secondary-disabled-border',
+        ].map((varName) => (
+          <TokenRow
+            key={varName}
+            label={varName}
+            value={`var(${varName})`}
+            preview={
+              <div style={{
+                width: 28,
+                height: 28,
+                background: `var(${varName})`,
+                borderRadius: 4,
+                border: '1px solid var(--cre-color-border)',
+                flexShrink: 0,
+              }} />
+            }
+          />
+        ))}
+      </Section>
+
       {/* ── Spacing ── */}
       <Section title="Spacing & Padding">
         {Object.entries(coreTokens.space).map(([name, px]) => (
@@ -283,6 +355,20 @@ function TokenReference() {
             }}>
               The quick brown fox jumps over the lazy dog
             </div>
+          </div>
+        ))}
+      </Section>
+
+      <Section title="Font Size">
+        {Object.entries(coreTokens.fontSize).map(([name, px]) => (
+          <div key={name} style={{ marginBottom: 12, display: 'flex', alignItems: 'baseline', gap: 12 }}>
+            <code style={{ fontFamily: 'monospace', fontSize: 12, color: 'var(--cre-color-text-muted)', minWidth: 200 }}>
+              --cre-font-size-{name}
+            </code>
+            <span style={{ fontSize: 12, color: 'var(--cre-color-text-subtle)', minWidth: 40 }}>{px}px</span>
+            <span style={{ fontFamily: 'var(--cre-font-family-body)', fontSize: px, color: 'var(--cre-color-text)', lineHeight: 1.2 }}>
+              Aa
+            </span>
           </div>
         ))}
       </Section>

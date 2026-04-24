@@ -6,38 +6,12 @@ import { Stack } from '../primitives/Stack';
 import { Surface } from '../primitives/Surface';
 import { Text } from '../primitives/Text';
 import { Checkbox } from './Checkbox';
+import { Button } from './Button';
 
 const FIELD_SELECTOR_CSS = `
 [data-cre="fieldSelectorRoot"] {
   position: relative;
   display: inline-flex;
-}
-
-[data-cre="fieldSelectorTrigger"] {
-  appearance: none;
-  border: var(--cre-border-width-small) solid var(--cre-color-border);
-  background: var(--cre-color-surface);
-  color: var(--cre-color-text);
-  border-radius: var(--cre-radius-xsmall);
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  outline: none;
-}
-
-[data-cre="fieldSelectorTrigger"][data-open="true"] {
-  border-color: var(--cre-color-border-strong);
-  box-shadow: 0 0 0 3px var(--cre-color-focus);
-}
-
-[data-cre="fieldSelectorTrigger"]:focus-visible {
-  box-shadow: 0 0 0 3px var(--cre-color-focus);
-  border-color: var(--cre-color-border-strong);
 }
 
 [data-cre="fieldSelectorPopover"] {
@@ -96,6 +70,8 @@ export type FieldSelectorProps = {
   labelParser?: (path: string) => string;
   /** Accessible label for the trigger button. */
   ariaLabel?: string;
+  /** Disables the trigger button. */
+  disabled?: boolean;
   className?: string;
   style?: React.CSSProperties;
 };
@@ -125,6 +101,7 @@ export function FieldSelector({
   onVisibleFieldsChange,
   labelParser,
   ariaLabel = 'Select visible columns',
+  disabled,
   className,
   style,
 }: FieldSelectorProps) {
@@ -182,18 +159,17 @@ export function FieldSelector({
 
   return (
     <div data-cre="fieldSelectorRoot" ref={rootRef} className={className} style={style}>
-      <button
+      <Button
         ref={triggerRef}
-        type="button"
-        data-cre="fieldSelectorTrigger"
-        data-open={open ? 'true' : 'false'}
+        variant="secondary"
+        iconOnly
+        leadingIcon={<ColumnsIcon />}
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-label={ariaLabel}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <ColumnsIcon />
-      </button>
+        disabled={disabled}
+        onClick={() => !disabled && setOpen((o) => !o)}
+      />
 
       {mounted ? (
         <div

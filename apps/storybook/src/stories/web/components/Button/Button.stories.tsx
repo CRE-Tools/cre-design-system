@@ -55,6 +55,10 @@ const meta: Meta<typeof Button> = {
     },
     leadingIcon: { control: false },
     trailingIcon: { control: false },
+    iconOnly: {
+      description: 'Renders a square icon-only button (no label, no trailing icon)',
+      control: 'boolean',
+    },
     onClick: { action: 'clicked' },
   },
   args: {
@@ -99,6 +103,56 @@ export const WithBothIcons: Story = {
     trailingIcon: <IconArrowRight />,
     children: 'Download file',
   },
+};
+
+/** Icon-only button — square button with no label. Use for toolbar actions. */
+export const IconOnly: Story = {
+  args: {
+    leadingIcon: <IconPlus />,
+    iconOnly: true,
+  },
+};
+
+// ─── Variants ─────────────────────────────────────────────────────────────────
+
+/**
+ * Secondary variant — neutral surface appearance for toolbar and utility controls.
+ * Shows default, hover (simulated via disabled for static view), disabled, and icon-only states.
+ */
+export const SecondaryVariant: Story = {
+  parameters: { layout: 'padded' },
+  render: () => (
+    <Stack gap="micro" align="flex-start">
+      <SectionLabel>Secondary — Default</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button variant="secondary">Button label</Button>
+        <Button variant="secondary" leadingIcon={<IconPlus />}>
+          Create new
+        </Button>
+        <Button variant="secondary" trailingIcon={<IconArrowRight />}>
+          Continue
+        </Button>
+      </Inline>
+
+      <SectionLabel>Secondary — Icon-only</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button variant="secondary" iconOnly leadingIcon={<IconPlus />} />
+        <Button variant="secondary" iconOnly leadingIcon={<IconDownload />} />
+        <Button variant="secondary" size="small" iconOnly leadingIcon={<IconPlus />} />
+      </Inline>
+
+      <SectionLabel>Secondary — Disabled</SectionLabel>
+      <Inline gap="nano" align="center" wrap>
+        <Button variant="secondary" disabled>
+          Not available
+        </Button>
+        <Button variant="secondary" disabled leadingIcon={<IconPlus />}>
+          Not available
+        </Button>
+        <Button variant="secondary" disabled iconOnly leadingIcon={<IconPlus />} />
+      </Inline>
+    </Stack>
+  ),
 };
 
 // ─── States ───────────────────────────────────────────────────────────────────
