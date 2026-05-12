@@ -23,6 +23,11 @@ const meta: Meta<typeof DateRangeFilter> = {
       options: ['field', 'icon'],
       description: 'Trigger appearance: a labeled field-like trigger or icon-only',
     },
+    popoverAlign: {
+      control: 'radio',
+      options: ['left', 'right'],
+      description: "Aligns the popover to the left (default) or right edge of the trigger. Use 'right' when the trigger is near the right edge of the viewport.",
+    },
     className: { control: false },
     style: { control: false },
   },
@@ -127,5 +132,66 @@ export const AllStates: Story = {
         </Stack>
       </Card>
     );
+  },
+};
+
+export const PopoverAlignment: Story = {
+  render: () => {
+    const [value, setValue] = useState<DateRangeValue>({ startMs: null, endMs: null });
+
+    return (
+      <Card>
+        <Stack gap="micro">
+          <Inline gap="nano" align="center">
+            <Stack gap="nano">
+              <Text as="p" tone="muted" variant="caption">
+                Left (default)
+              </Text>
+              <DateRangeFilter
+                value={value}
+                onChange={setValue}
+                placeholder="Created"
+                popoverAlign="left"
+              />
+            </Stack>
+            <Stack gap="nano">
+              <Text as="p" tone="muted" variant="caption">
+                Right
+              </Text>
+              <DateRangeFilter
+                value={value}
+                onChange={setValue}
+                placeholder="Created"
+                popoverAlign="right"
+              />
+            </Stack>
+          </Inline>
+        </Stack>
+      </Card>
+    );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `
+const [value, setValue] = useState<DateRangeValue>({ startMs: null, endMs: null });
+
+<Inline gap="nano" align="center">
+  <DateRangeFilter
+    value={value}
+    onChange={setValue}
+    placeholder="Created"
+    popoverAlign="left"
+  />
+  <DateRangeFilter
+    value={value}
+    onChange={setValue}
+    placeholder="Created"
+    popoverAlign="right"
+  />
+</Inline>
+        `.trim(),
+      },
+    },
   },
 };

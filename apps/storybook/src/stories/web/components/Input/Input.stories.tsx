@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
-import { Field, Input, Stack, Text } from '@cre/web-ui';
+import { Field, Input, Stack, Surface, Text } from '@cre/web-ui';
 
 const meta: Meta<typeof Input> = {
   title: 'Web/Components/Input',
@@ -235,6 +235,22 @@ export const AllStates: Story = {
       <Input type="email" placeholder="Email" autoComplete="email" />
       <Input type="password" placeholder="Password" autoComplete="current-password" />
       <Input disabled placeholder="Disabled" />
+    </Stack>
+  ),
+};
+
+export const FocusedInsideSurface: Story = {
+  render: () => (
+    <Stack gap="nano">
+      <Surface variant="raised">
+        <Stack gap="nano">
+          <Text as="label">Label</Text>
+          <Input placeholder="Focus me" />
+        </Stack>
+      </Surface>
+      <Text as="p" tone="muted">
+        Focus the input and verify the focus ring follows the border-radius and is not clipped by the Surface.
+      </Text>
     </Stack>
   ),
 };

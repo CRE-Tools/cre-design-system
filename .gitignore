@@ -65,8 +65,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # AI
-.claude/
-CLAUDE.md
-AGENTS.md
-tasks/
-ARCHITECTURE.md
+# .claude/
+# CLAUDE.md
+# AGENTS.md
+# tasks/
+# ARCHITECTURE.md
