@@ -13,6 +13,8 @@ generated: 2026-05-12
 
 ## Setup
 
+### 1. Mount the theme provider
+
 ```tsx
 import { CreThemeProvider } from '@cre/web-ui';
 import '@cre/web-ui/dist/index.css'; // if CSS is shipped separately
@@ -29,6 +31,55 @@ import '@cre/web-ui/dist/index.css'; // if CSS is shipped separately
 ```
 
 `scope="global"` is the default. Use `scope="local"` for embedded or widget contexts.
+
+### 2. Load the required fonts
+
+**`@cre/web-ui` does not bundle or load fonts.** The token system declares which font families components expect via CSS custom properties, but loading those fonts is the consumer's responsibility. Without this step every typography element — headings, body text, buttons — will silently render with the system sans-serif fallback.
+
+The design system uses two families:
+
+| Family | Used for | Weights needed |
+|---|---|---|
+| **Poppins** | `--cre-font-family-heading`, `--cre-font-family-subtitle`, `--cre-font-family-button` | 300, 400, 500, 600, 700 (+ 400 italic) |
+| **Source Sans 3** | `--cre-font-family-body`, `--cre-font-family-caption`, `--cre-font-family-overline` | 300, 400, 500, 600, 700 (+ 400 italic) |
+
+**Option A — Google Fonts (quickest, requires network access)**
+
+Add to your HTML `<head>` (or equivalent framework mechanism):
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+  rel="stylesheet"
+/>
+```
+
+**Option B — fontsource (self-hosted, no network dependency, recommended for production)**
+
+```bash
+pnpm add @fontsource/poppins @fontsource/source-sans-3
+```
+
+```ts
+// In your app entry point (e.g. main.tsx / _app.tsx)
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/400-italic.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+
+import '@fontsource/source-sans-3/300.css';
+import '@fontsource/source-sans-3/400.css';
+import '@fontsource/source-sans-3/400-italic.css';
+import '@fontsource/source-sans-3/500.css';
+import '@fontsource/source-sans-3/600.css';
+import '@fontsource/source-sans-3/700.css';
+```
+
+fontsource packages ship woff2 files alongside CSS `@font-face` declarations. Your bundler (Vite, webpack, Next.js) will inline the font loading automatically.
 
 ---
 
@@ -153,19 +204,21 @@ import { DateRangeFilter } from '@cre/web-ui';
 
 1. **`CreThemeProvider` is required.** Without it, CSS custom properties are undefined and components render unstyled.
 
-2. **No hardcoded design values.** Every color, spacing, and radius in component CSS comes from `var(--cre-*)`. If you are extending or overriding components, follow the same rule — never hardcode hex values or pixel sizes.
+2. **Fonts are not bundled — you must load them.** `@cre/web-ui` sets `--cre-font-family-*` CSS vars to `Poppins` and `Source Sans 3`, but does not ship or load those font files. If you skip the font loading step (see Setup §2), all typography silently falls back to the system sans-serif. See the Setup section for Google Fonts and fontsource options.
 
-3. **Peer deps are not bundled.** `react` and `react-dom` must be installed in the consuming project. They are not included in the package output.
+3. **No hardcoded design values.** Every color, spacing, and radius in component CSS comes from `var(--cre-*)`. If you are extending or overriding components, follow the same rule — never hardcode hex values or pixel sizes.
 
-4. **Outputs are ESM and CJS.** Import from `@cre/web-ui` (the package root), never from `@cre/web-ui/src/...`.
+4. **Peer deps are not bundled.** `react` and `react-dom` must be installed in the consuming project. They are not included in the package output.
 
-5. **`injectStyles` is idempotent.** Each component injects its CSS once at module load. If you see a component render without styles in SSR or test environments, ensure `document` is available when the module is first imported.
+5. **Outputs are ESM and CJS.** Import from `@cre/web-ui` (the package root), never from `@cre/web-ui/src/...`.
 
-6. **`DateRangeFilter` values are ms-since-epoch.** `startMs` and `endMs` are plain JavaScript timestamps (`Date.now()` format), not Date objects or ISO strings. Convert at your boundaries.
+6. **`injectStyles` is idempotent.** Each component injects its CSS once at module load. If you see a component render without styles in SSR or test environments, ensure `document` is available when the module is first imported.
 
-7. **`Table` grouped headers and sticky behavior.** When using grouped headers (`groupSeparator` with `/`-keyed columns), group header rows scroll away naturally during vertical scroll. Only the bottom leaf header row is sticky. This is by design — do not add `position: sticky` back to group rows.
+7. **`DateRangeFilter` values are ms-since-epoch.** `startMs` and `endMs` are plain JavaScript timestamps (`Date.now()` format), not Date objects or ISO strings. Convert at your boundaries.
 
-8. **`Input` focus ring inside clipping ancestors.** The focus ring uses a `::before` pseudo-element with `position: absolute`. Ensure the Input's nearest ancestor that has `overflow: hidden` or `border-radius` does not clip it — wrap in a container with adequate padding if needed.
+8. **`Table` grouped headers and sticky behavior.** When using grouped headers (`groupSeparator` with `/`-keyed columns), group header rows scroll away naturally during vertical scroll. Only the bottom leaf header row is sticky. This is by design — do not add `position: sticky` back to group rows.
+
+9. **`Input` focus ring inside clipping ancestors.** The focus ring uses a `::before` pseudo-element with `position: absolute`. Ensure the Input's nearest ancestor that has `overflow: hidden` or `border-radius` does not clip it — wrap in a container with adequate padding if needed.
 
 ---
 

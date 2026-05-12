@@ -33,6 +33,12 @@ export type CreCssVars = Record<string, string>;
 export function coreTokensToCssVars(): CreCssVars {
   const { space, radius, borderWidth, opacity, fontFamily, fontSize, layout } = coreTokens;
 
+  // Helper to format font family with fallback stack
+  const formatFontFamily = (fontName: string): string => {
+    const quoted = fontName.includes(' ') ? `"${fontName}"` : fontName;
+    return `${quoted}, sans-serif`;
+  };
+
   return {
     // Spacing
     '--cre-space-none':     `${space.none}px`,
@@ -85,12 +91,12 @@ export function coreTokensToCssVars(): CreCssVars {
     '--cre-opacity-opaque':     String(opacity.opaque),
 
     // Font family
-    '--cre-font-family-heading':  fontFamily.heading,
-    '--cre-font-family-subtitle': fontFamily.subtitle,
-    '--cre-font-family-body':     fontFamily.body,
-    '--cre-font-family-button':   fontFamily.button,
-    '--cre-font-family-caption':  fontFamily.caption,
-    '--cre-font-family-overline': fontFamily.overline,
+    '--cre-font-family-heading':  formatFontFamily(fontFamily.heading),
+    '--cre-font-family-subtitle': formatFontFamily(fontFamily.subtitle),
+    '--cre-font-family-body':     formatFontFamily(fontFamily.body),
+    '--cre-font-family-button':   formatFontFamily(fontFamily.button),
+    '--cre-font-family-caption':  formatFontFamily(fontFamily.caption),
+    '--cre-font-family-overline': formatFontFamily(fontFamily.overline),
 
     // Font size
     '--cre-font-size-quark':    `${fontSize.quark}px`,
