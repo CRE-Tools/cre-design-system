@@ -28,6 +28,17 @@ function s(token: { $value: string }): string {
 }
 
 /**
+ * Normalizes font family names from Figma exports to match actual CSS font names.
+ * Google Fonts renamed "Source Sans Pro" to "Source Sans 3".
+ */
+function normalizeFontName(fontName: string): string {
+  const fontNameMap: Record<string, string> = {
+    'Source Sans Pro': 'Source Sans 3',
+  };
+  return fontNameMap[fontName] ?? fontName;
+}
+
+/**
  * Extract a color as a CSS hex or rgba string from a Figma color token.
  * Handles the alpha channel when it is less than 1.
  */
@@ -131,15 +142,15 @@ export const coreTokens = {
    * Maps to CSS vars: --cre-font-family-{name}
    *
    * heading / subtitle / button → Poppins
-   * body / caption / overline   → Source Sans Pro
+   * body / caption / overline   → Source Sans 3
    */
   fontFamily: {
-    heading:  s(_ff['heading']),  // Poppins
-    subtitle: s(_ff['subtitle']), // Poppins
-    body:     s(_ff['body']),     // Source Sans Pro
-    button:   s(_ff['button']),   // Poppins
-    caption:  s(_ff['caption']),  // Source Sans Pro
-    overline: s(_ff['overline']), // Source Sans Pro
+    heading:  s(_ff['heading']),           // Poppins
+    subtitle: s(_ff['subtitle']),          // Poppins
+    body:     normalizeFontName(s(_ff['body'])),     // Source Sans 3
+    button:   s(_ff['button']),           // Poppins
+    caption:  normalizeFontName(s(_ff['caption'])),  // Source Sans 3
+    overline: normalizeFontName(s(_ff['overline'])), // Source Sans 3
   },
 
   /**
