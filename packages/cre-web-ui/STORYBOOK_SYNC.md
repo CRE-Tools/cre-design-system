@@ -53,7 +53,7 @@ When ready to sync a batch of changes to the Storybook repo:
 ### [2026-05-05] modified-component: Table
 
 - **Type:** modified-component
-- **Status:** undocumented
+- **Status:** documented
 - **Location:** src/components/Table.tsx
 - **Summary:** Fixed white line bug in grouped table headers by changing from `border-collapse: collapse` to `border-collapse: separate` with `border-spacing: 0`, removing `position: sticky` from group header cells, adding `z-index: 1` to leaf headers, and adding `border-right` to `td` cells.
 - **Props / Changes:**
@@ -68,7 +68,7 @@ When ready to sync a batch of changes to the Storybook repo:
 ### [2026-05-05] modified-component: DateRangeFilter
 
 - **Type:** modified-component
-- **Status:** undocumented
+- **Status:** documented
 - **Location:** src/components/DateRangeFilter.tsx
 - **Summary:** Added `popoverAlign` prop to control popover horizontal alignment, fixing off-screen and position-shift bugs.
 - **Props / Changes:**
@@ -83,7 +83,7 @@ When ready to sync a batch of changes to the Storybook repo:
 ### [2026-05-05] modified-component: Input
 
 - **Type:** modified-component
-- **Status:** undocumented
+- **Status:** documented
 - **Location:** src/components/Input.tsx
 - **Summary:** Changed focus ring from box-shadow to a ::before pseudo-element so it renders correctly when the Input is inside a clipping ancestor (e.g. Drawer, Surface with border-radius) while maintaining proper border-radius.
 - **Props / Changes:**

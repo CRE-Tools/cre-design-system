@@ -1,7 +1,7 @@
 ---
 id: TASK-003
 title: Add Input focus-ring-in-Surface story
-status: pending
+status: done
 model: cheap
 model-name: SWE-1.6
 context:

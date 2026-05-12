@@ -56,6 +56,8 @@ When column keys contain a separator (default `/`), the table automatically rend
 
 <Canvas of={TableStories.GroupedHeaders} />
 
+Group header rows scroll away during vertical scroll — only the leaf header row remains sticky.
+
 The `groupSeparator` prop controls this behavior:
 - Default `'/'` — keys like `scene/buttonClicks/buttonA` are grouped hierarchically
 - Set to `'.'` for dot-separated keys

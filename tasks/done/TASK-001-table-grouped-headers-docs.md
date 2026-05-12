@@ -1,7 +1,7 @@
 ---
 id: TASK-001
 title: Document Table grouped headers sticky behavior
-status: pending
+status: done
 model: cheap
 model-name: SWE-1.6
 context:

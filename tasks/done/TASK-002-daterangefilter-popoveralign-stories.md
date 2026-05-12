@@ -1,7 +1,7 @@
 ---
 id: TASK-002
 title: Add popoverAlign prop to DateRangeFilter stories and docs
-status: pending
+status: completed
 model: cheap
 model-name: SWE-1.6
 context:

@@ -403,6 +403,10 @@ type GroupedRow = {
   'main_experience/buttonClicks/rightTrigger': number;
 };
 
+/**
+ * Grouped headers with sticky behavior: group header rows scroll away during
+ * vertical scroll, while only the leaf header row stays sticky.
+ */
 export const GroupedHeaders: Story = {
   render: () => {
     const groupedRows: GroupedRow[] = [
