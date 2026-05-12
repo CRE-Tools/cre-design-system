@@ -1,7 +1,5 @@
 # Architecture
 
-> Keep this file current. If a decision is made during a Claude session, update it before ending the session.
-
 ---
 
 ## Overview
@@ -55,11 +53,11 @@ cre-design-system/
 │       └── Assets/CRE/Bridge/
 ├── docs/
 │   ├── architecture.md         # ← this file
-│   ├── sync-queue.md           # Windsurf writes; Claude reads and clears
-│   └── context/                # Domain-specific knowledge (managed by Claude)
+│   ├── sync-queue.md           # Pending doc sync entries
+│   └── context/                # Domain-specific knowledge files
 ├── tasks/                      # Task queue (pending) and archive (done/)
-├── AGENTS.md                   # Windsurf executor rules
-└── CLAUDE.md                   # Claude architect rules
+├── AGENTS.md                   # AI tool configuration
+└── CLAUDE.md                   # AI tool configuration
 ```
 
 ---
@@ -123,4 +121,3 @@ Storybook 8 with Vite. Deployed to GitHub Pages. Includes a custom Vite plugin t
 2. **Peer deps are external.** `react` and `react-dom` are never bundled into library outputs.
 3. **tsup outputs both ESM and CJS.** Do not change the build config in a way that drops either format.
 4. **Storybook stories must coexist with mdx docs.** Every component story folder needs both `*.stories.tsx` and `*.docs.mdx`.
-5. **`AGENTS.md`, `docs/architecture.md`, and `docs/context/*.md` are Claude-managed.** Windsurf must not edit them unless a task explicitly says so — and even then, the file must be added to `docs/sync-queue.md`.
